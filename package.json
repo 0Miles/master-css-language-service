@@ -1,0 +1,54 @@
+{
+    "name": "@master/styles-language-service",
+    "displayName": "Master Styles Language Service",
+    "version": "0.0.1",
+    "author": "Aoyue Design LLC.",
+    "funding": "https://docs.master.co/styles/donate",
+    "homepage": "https://styles.master.co",
+    "private": true,
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/master-co/styles-language-service.git"
+    },
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "activationEvents": [
+        "onLanguage:html"
+    ],
+    "main": "./client/out/extension",
+    "contributes": {
+        "grammars": [
+            {
+                "scopeName": "master-styles",
+                "path": "./syntaxes/master-styles.syntax.json",
+                "injectTo": [
+                    "source.css",
+                    "source.php",
+                    "text.html.php",
+                    "source",
+                    "text"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.html": "html"
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run build",
+        "build": "tsc -b",
+        "watch": "tsc -b -w",
+        "postinstall": "cd client && npm install && cd ../server && npm install && cd .."
+    },
+    "devDependencies": {
+        "@types/mocha": "^9.1.0",
+        "@types/node": "^14.17.0",
+        "@typescript-eslint/eslint-plugin": "^5.13.0",
+        "@typescript-eslint/parser": "^5.13.0",
+        "eslint": "^8.10.0",
+        "mocha": "^9.2.1",
+        "typescript": "^4.6.2"
+    }
+}

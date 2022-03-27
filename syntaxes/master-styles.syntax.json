@@ -1,0 +1,65 @@
+{
+    "scopeName": "master-styles",
+    "name": "source.master-styles",
+    "injectionSelector": "L:source - (meta.embedded), L:text - (mate.embedded)",
+    "patterns": [
+        {
+            "include": "#highlight-class"
+        },
+        {
+            "include": "#highlight-single-class"
+        }
+    ],
+    "repository": {
+        "highlight-class": {
+            "begin": "(class)(?:\\=(?:\"|'))",
+            "end": "\"|'",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                }
+            },
+            "contentName": "meta.embedded.block.master-styles.class",
+            "patterns": [
+                {
+                    "match": "(@|(?:[^\\s\"':@]+)):?:?(@?[^\\s\"':@]+)?:?:?(@?[^\\s\"':@]+)?:?:?(@?[^\\s\"':@]+)?",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.string.end.scss"
+                        },
+                        "4": {
+                            "name": "comment.line.double"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-single-class": {
+            "match": "(class)=(@|(?:[^\\s\"':@]+)):?:?(@?[^\\s\"':@]+)?:?:?(@?[^\\s\"':@]+)?:?:?(@?[^\\s\"':@]+)?",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "support.type.property-name.css"
+                },
+                "3": {
+                    "name": "support.constant.property-value.css"
+                },
+                "4": {
+                    "name": "punctuation.definition.string.end.scss"
+                },
+                "5": {
+                    "name": "comment.line.double"
+                }
+            }
+        }
+       
+    }
+}

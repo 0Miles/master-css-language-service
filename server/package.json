@@ -1,0 +1,15 @@
+{
+    "name": "@master/styles-language-service-client",
+    "description": "VSCode part of a language server",
+    "author": "Aoyue Design LLC.",
+    "version": "1.0.0",
+    "license": "MIT",
+    "engines": {
+        "node": "*"
+    },
+    "dependencies": {
+        "vscode-languageserver": "^7.0.0",
+        "vscode-languageserver-textdocument": "^1.0.4"
+    },
+    "scripts": {}
+}
