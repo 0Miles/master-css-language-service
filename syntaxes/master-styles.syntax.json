@@ -31,7 +31,7 @@
                             "name": "support.constant.property-value.css"
                         },
                         "3": {
-                            "name": "punctuation.definition.string.end.scss"
+                            "name": "constant.character"
                         },
                         "4": {
                             "name": "comment.line.double"
@@ -53,7 +53,7 @@
                     "name": "support.constant.property-value.css"
                 },
                 "4": {
-                    "name": "punctuation.definition.string.end.scss"
+                    "name": "constant.character"
                 },
                 "5": {
                     "name": "comment.line.double"
