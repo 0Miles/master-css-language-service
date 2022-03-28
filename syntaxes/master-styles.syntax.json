@@ -12,17 +12,31 @@
     ],
     "repository": {
         "highlight-class": {
-            "begin": "(class)(?:\\=\")",
-            "end": "\"",
+            "begin": "(class)(\\=)(\")",
+            "end": "(\")",
             "captures": {
                 "1": {
                     "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "punctuation.definition.string.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.end"
                 }
             },
             "contentName": "meta.embedded.block.master-styles.class",
             "patterns": [
                 {
-                    "match": "(@|(?:[^\\s\":@]+)):?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "include": "#highlight-key-animation"
+                },
+                {
+                    "match": "(~|@)([^\\s\":@]+):?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -31,10 +45,35 @@
                             "name": "support.constant.property-value.css"
                         },
                         "3": {
-                            "name": "constant.character"
+                            "name": "constant.character.escape"
                         },
                         "4": {
-                            "name": "comment.line.double"
+                            "name": "constant.character.escape"
+                        }
+                    }
+                },
+                {
+                    "match": "([^\\s\":@]+)::?((?:\\'@\\')|(?:@?[^\\s\":@]+))?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        },
+                        "4": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                },
+                {
+                    "match": "([^\\s:])",
+                    "captures": {
+                        "1": {
+                            "name": "string"
                         }
                     }
                 }
@@ -53,13 +92,33 @@
                     "name": "support.constant.property-value.css"
                 },
                 "4": {
-                    "name": "constant.character"
+                    "name": "constant.character.escape"
                 },
                 "5": {
-                    "name": "comment.line.double"
+                    "name": "constant.character.escape"
                 }
             }
+        },
+        "highlight-key-animation": {
+            "patterns": [
+                {
+                    "match": "(@(delay|direction|fill\\-mode|iteration\\-count|name|play\\-state|timing\\-function|easing))::?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        },
+                        "4": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
         }
-       
     }
 }
