@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { workspace, ExtensionContext } from 'vscode';
+import { workspace, ExtensionContext, Disposable, CompletionItemKind, CompletionItem, TextDocument, Position, Range, languages } from 'vscode';
 
 import {
     LanguageClient,
@@ -11,29 +11,17 @@ import {
 
 let client: LanguageClient;
 
+
+let masterStylesKeys = ['bg', 'bg-image', 'bg-position'];
+const completionTriggerChars = ['"', " ", "\n", "b"];
+
+const disposables: Disposable[] = [];
+
 export function activate(context: ExtensionContext) {
 
-    const test = vscode.languages.registerCompletionItemProvider(
-        'html',
-        {
-            provideCompletionItems(document: vscode.TextDocument, position: vscode.Position) {
+    disposables.push(registerCompletionProvider('html', /class="([^"]*)/m));
+    context.subscriptions.push(...disposables);
 
-                const linePrefix = document.lineAt(position).text.substr(0, position.character);
-                if (!linePrefix.endsWith('example:')) {
-                    return undefined;
-                }
-
-                return [
-                    new vscode.CompletionItem('black', vscode.CompletionItemKind.Method),
-                    new vscode.CompletionItem('white', vscode.CompletionItemKind.Method),
-                    new vscode.CompletionItem('green', vscode.CompletionItemKind.Method),
-                ];
-            }
-        },
-        ':'
-    );
-
-    context.subscriptions.push(test);
 
     // The server is implemented in node
     const serverModule = context.asAbsolutePath(
@@ -77,8 +65,58 @@ export function activate(context: ExtensionContext) {
 }
 
 export function deactivate(): Thenable<void> | undefined {
+    unregisterProviders(disposables);
+
     if (!client) {
         return undefined;
     }
     return client.stop();
+}
+
+const registerCompletionProvider = (
+    languageSelector: string,
+    classMatchRegex: RegExp,
+    classPrefix = "",
+    splitChar = " "
+) => languages.registerCompletionItemProvider(languageSelector, {
+    provideCompletionItems(document: TextDocument, position: Position): CompletionItem[] {
+        const start: Position = new Position(position.line, 0);
+        const range: Range = new Range(start, position);
+        const text: string = document.getText(range);
+
+        // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
+        const rawClasses: RegExpMatchArray | null = text.match(classMatchRegex);
+        if (!rawClasses || rawClasses.length === 1) {
+            return [];
+        }
+
+        // Will store the classes found on the class attribute
+        const classesOnAttribute = rawClasses[1].split(splitChar);
+
+        // Creates a collection of CompletionItem based on the classes already cached
+        const completionItems = masterStylesKeys.map((masterStylesKey) => {
+            const completionItem = new CompletionItem(masterStylesKey, CompletionItemKind.Variable);
+
+            completionItem.filterText = masterStylesKey;
+            completionItem.insertText = masterStylesKey;
+
+            return completionItem;
+        });
+
+        // Removes from the collection the classes already specified on the class attribute
+        for (const classOnAttribute of classesOnAttribute) {
+            for (let j = 0; j < completionItems.length; j++) {
+                if (completionItems[j].insertText === classOnAttribute) {
+                    completionItems.splice(j, 1);
+                }
+            }
+        }
+
+        return completionItems;
+    },
+}, ...completionTriggerChars);
+
+function unregisterProviders(disposables: Disposable[]) {
+    disposables.forEach(disposable => disposable.dispose());
+    disposables.length = 0;
 }
