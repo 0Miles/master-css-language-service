@@ -48,9 +48,13 @@ connection.onInitialize((params: InitializeParams) => {
     const result: InitializeResult = {
         capabilities: {
             textDocumentSync: TextDocumentSyncKind.Incremental,
+            
             // Tell the client that this server supports code completion.
             completionProvider: {
-                resolveProvider: true
+                resolveProvider: true,
+                workDoneProgress: false,
+                triggerCharacters: [':'],
+                allCommitCharacters: ['.'],
             }
         }
     };
@@ -74,6 +78,7 @@ connection.onInitialized(() => {
             connection.console.log('Workspace folder change event received.');
         });
     }
+
 });
 
 // The example settings
@@ -138,41 +143,41 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     let classMatch: RegExpExecArray | null;
 
     const diagnostics: Diagnostic[] = [];
-    while (classMatch = classPattern.exec(text)) {
+    // while (classMatch = classPattern.exec(text)) {
 
-        // check problems
+    //     // check problems
 
-        // if (classMatch[0].match(/\b[A-Z]+\b/)) {
-        //     const diagnostic: Diagnostic = {
-        //         severity: DiagnosticSeverity.Warning,
-        //         range: {
-        //             start: textDocument.positionAt(classMatch.index),
-        //             end: textDocument.positionAt(classMatch.index + classMatch[0].length)
-        //         },
-        //         message: `${classMatch[0]} is all uppercase.`,
-        //         source: 'ex'
-        //     };
-        //     if (hasDiagnosticRelatedInformationCapability) {
-        //         diagnostic.relatedInformation = [
-        //             {
-        //                 location: {
-        //                     uri: textDocument.uri,
-        //                     range: Object.assign({}, diagnostic.range)
-        //                 },
-        //                 message: 'Spelling matters'
-        //             },
-        //             {
-        //                 location: {
-        //                     uri: textDocument.uri,
-        //                     range: Object.assign({}, diagnostic.range)
-        //                 },
-        //                 message: 'Particularly for names'
-        //             }
-        //         ];
-        //     }
-        //     diagnostics.push(diagnostic);
-        // }
-    }
+    //     // if (classMatch[0].match(/\b[A-Z]+\b/)) {
+    //     //     const diagnostic: Diagnostic = {
+    //     //         severity: DiagnosticSeverity.Warning,
+    //     //         range: {
+    //     //             start: textDocument.positionAt(classMatch.index),
+    //     //             end: textDocument.positionAt(classMatch.index + classMatch[0].length)
+    //     //         },
+    //     //         message: `${classMatch[0]} is all uppercase.`,
+    //     //         source: 'ex'
+    //     //     };
+    //     //     if (hasDiagnosticRelatedInformationCapability) {
+    //     //         diagnostic.relatedInformation = [
+    //     //             {
+    //     //                 location: {
+    //     //                     uri: textDocument.uri,
+    //     //                     range: Object.assign({}, diagnostic.range)
+    //     //                 },
+    //     //                 message: 'Spelling matters'
+    //     //             },
+    //     //             {
+    //     //                 location: {
+    //     //                     uri: textDocument.uri,
+    //     //                     range: Object.assign({}, diagnostic.range)
+    //     //                 },
+    //     //                 message: 'Particularly for names'
+    //     //             }
+    //     //         ];
+    //     //     }
+    //     //     diagnostics.push(diagnostic);
+    //     // }
+    // }
 
     // Send the computed diagnostics to VSCode.
     connection.sendDiagnostics({ uri: textDocument.uri, diagnostics });
@@ -184,25 +189,70 @@ connection.onDidChangeWatchedFiles(_change => {
 });
 
 // This handler provides the initial list of the completion items.
+let masterStylesKeys = ['bg', 'bg-image', 'bg-position','backdrop-filter','backdrop'];
+let masterStylesvalues = ['url(\'\')','center','cover'];
+let masterStylesselsets = ['hover', 'link', 'scope'];
+
+
+function getReturnItem(label:string[],kind:CompletionItemKind): CompletionItem[]{
+	let masterStyleCompletionItem:CompletionItem[]=[];
+	label.forEach(x => {
+		masterStyleCompletionItem.push({
+			label: x,
+			kind: kind,
+		})
+	});
+	return masterStyleCompletionItem;
+}
+
 connection.onCompletion(
-    (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-        // The pass parameter contains the position of the text document in
-        // which code complete got requested. For the example we ignore this
-        // info and always provide the same completion items.
-        return [
-            {
-                label: 'TypeScript',
-                kind: CompletionItemKind.Text,
-                data: 1
-            },
-            {
-                label: 'JavaScript',
-                kind: CompletionItemKind.Text,
-                data: 2
-            }
-        ];
-    }
+	(_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+		// The pass parameter contains the position of the text document in
+		// which code complete got requested. For the example we ignore this
+		// info and always provide the same completion items.
+		const documentUri = _textDocumentPosition.textDocument.uri;
+		const position = _textDocumentPosition.position;
+
+		let document = documents.get(documentUri);
+		let line = document?.getText({
+			start: { line: position.line, character: 0 },
+			end: { line: position.line, character: position.character +1},
+		  })
+		  let text:string=line==null?'':line;
+
+		  const classPattern = /(?:(?<=class=(?:")(?:[^"]|\s)*)(?:[^"\s])+(?=>\s|\b))|(?:(?<=class=[^"])[^\s]*)/g;
+		  let classMatch: RegExpExecArray | null;
+		   let lastKey='';
+
+        if(classPattern.exec(text)===null){
+            connection.window.showInformationMessage("Getkey: null");
+              return []
+          }
+
+		  while ((classMatch = classPattern.exec(text)) !== null) {
+			lastKey=classMatch[0];
+		  }
+
+		  let masterStyleCompletionItem:CompletionItem[]=[];
+          connection.window.showInformationMessage("Getkey: "+lastKey);
+          let haveValue=lastKey.split(':').length;
+          lastKey=lastKey.split(':')[0];
+
+          if(!masterStylesKeys.includes(lastKey)){
+		  masterStyleCompletionItem=masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys,CompletionItemKind.Text));
+          }
+
+		 if(masterStylesKeys.includes(lastKey)&&haveValue<=1){
+			masterStyleCompletionItem=masterStyleCompletionItem.concat(getReturnItem(masterStylesvalues,CompletionItemKind.Text))
+		 } 
+         if(masterStylesKeys.includes(lastKey)){
+			masterStyleCompletionItem=masterStyleCompletionItem.concat(getReturnItem(masterStylesselsets,CompletionItemKind.Text))
+		 } 
+
+		return masterStyleCompletionItem
+	}
 );
+
 
 // This handler resolves additional information for the item selected in
 // the completion list.

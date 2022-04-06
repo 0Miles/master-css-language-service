@@ -19,8 +19,8 @@ const disposables: Disposable[] = [];
 
 export function activate(context: ExtensionContext) {
 
-    disposables.push(registerCompletionProvider('html', /class="([^"]*)/m));
-    context.subscriptions.push(...disposables);
+    // disposables.push(registerCompletionProvider('html', /class="([^"]*)/m));
+    // context.subscriptions.push(...disposables);
 
 
     // The server is implemented in node
@@ -73,48 +73,48 @@ export function deactivate(): Thenable<void> | undefined {
     return client.stop();
 }
 
-const registerCompletionProvider = (
-    languageSelector: string,
-    classMatchRegex: RegExp,
-    classPrefix = "",
-    splitChar = " "
-) => languages.registerCompletionItemProvider(languageSelector, {
-    provideCompletionItems(document: TextDocument, position: Position): CompletionItem[] {
-        const start: Position = new Position(position.line, 0);
-        const range: Range = new Range(start, position);
-        const text: string = document.getText(range);
+// const registerCompletionProvider = (
+//     languageSelector: string,
+//     classMatchRegex: RegExp,
+//     classPrefix = "",
+//     splitChar = " "
+// ) => languages.registerCompletionItemProvider(languageSelector, {
+//     provideCompletionItems(document: TextDocument, position: Position): CompletionItem[] {
+//         const start: Position = new Position(position.line, 0);
+//         const range: Range = new Range(start, position);
+//         const text: string = document.getText(range);
 
-        // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
-        const rawClasses: RegExpMatchArray | null = text.match(classMatchRegex);
-        if (!rawClasses || rawClasses.length === 1) {
-            return [];
-        }
+//         // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
+//         const rawClasses: RegExpMatchArray | null = text.match(classMatchRegex);
+//         if (!rawClasses || rawClasses.length === 1) {
+//             return [];
+//         }
 
-        // Will store the classes found on the class attribute
-        const classesOnAttribute = rawClasses[1].split(splitChar);
+//         // Will store the classes found on the class attribute
+//         const classesOnAttribute = rawClasses[1].split(splitChar);
 
-        // Creates a collection of CompletionItem based on the classes already cached
-        const completionItems = masterStylesKeys.map((masterStylesKey) => {
-            const completionItem = new CompletionItem(masterStylesKey, CompletionItemKind.Variable);
+//         // Creates a collection of CompletionItem based on the classes already cached
+//         const completionItems = masterStylesKeys.map((masterStylesKey) => {
+//             const completionItem = new CompletionItem(masterStylesKey, CompletionItemKind.Variable);
 
-            completionItem.filterText = masterStylesKey;
-            completionItem.insertText = masterStylesKey;
+//             completionItem.filterText = masterStylesKey;
+//             completionItem.insertText = masterStylesKey;
 
-            return completionItem;
-        });
+//             return completionItem;
+//         });
 
-        // Removes from the collection the classes already specified on the class attribute
-        for (const classOnAttribute of classesOnAttribute) {
-            for (let j = 0; j < completionItems.length; j++) {
-                if (completionItems[j].insertText === classOnAttribute) {
-                    completionItems.splice(j, 1);
-                }
-            }
-        }
+//         // Removes from the collection the classes already specified on the class attribute
+//         for (const classOnAttribute of classesOnAttribute) {
+//             for (let j = 0; j < completionItems.length; j++) {
+//                 if (completionItems[j].insertText === classOnAttribute) {
+//                     completionItems.splice(j, 1);
+//                 }
+//             }
+//         }
 
-        return completionItems;
-    },
-}, ...completionTriggerChars);
+//         return completionItems;
+//     },
+// }, ...completionTriggerChars);
 
 function unregisterProviders(disposables: Disposable[]) {
     disposables.forEach(disposable => disposable.dispose());
