@@ -36,6 +36,10 @@
                     "include": "#highlight-key-animation"
                 },
                 {
+                    "include": "#highlight-key-transform"
+                },
+
+                {
                     "match": "(~|@)([^\\s\":@]+):?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
                     "captures": {
                         "1": {
@@ -119,6 +123,28 @@
                     }
                 }
             ]
+        },
+        "highlight-key-transform": {
+            "patterns": [
+                {
+                    "match": "~(delay|duration|property|easing)::?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        },
+                        "4": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
         }
+    
     }
 }
