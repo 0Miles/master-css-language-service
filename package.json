@@ -22,7 +22,7 @@
         "grammars": [
             {
                 "scopeName": "master-styles",
-                "path": "./syntaxes/master-styles.syntax.json",
+                "path": "./syntaxes/master-styles.tmLanguage.json",
                 "injectTo": [
                     "source.css",
                     "source.php",
