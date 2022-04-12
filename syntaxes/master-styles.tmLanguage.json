@@ -7,13 +7,16 @@
             "include": "#highlight-class"
         },
         {
+            "include": "#highlight-tsx-class"
+        },
+        {
             "include": "#highlight-single-class"
         }
     ],
     "repository": {
         "highlight-class": {
-            "begin": "(className|class)(\\=)(\")",
-            "end": "(\")",
+            "begin": "(?:\\s*)?(className|class)(\\=)(\")",
+            "end": "\"",
             "captures": {
                 "1": {
                     "name": "entity.other.attribute-name"
@@ -33,14 +36,208 @@
             "contentName": "meta.embedded.block.master-styles.class",
             "patterns": [
                 {
-                    "include": "#highlight-key-animation"
+                    "include": "#highlight-styles-keyvalue-media"
                 },
                 {
-                    "include": "#highlight-key-transform"
+                    "include": "#highlight-styles-keyvalue-selector"
                 },
-
                 {
-                    "match": "(~|@)([^\\s\":@]+):?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "include": "#highlight-styles-keyvalue"
+                },
+                {
+                    "include": "#highlight-styles-full"
+                },
+                {
+                    "include": "#highlight-styles-key-value-media"
+                },
+                {
+                    "include": "#highlight-styles-key-value-selector"
+                },
+                {
+                    "include": "#highlight-styles-key-selector-media"
+                },
+                {
+                    "include": "#highlight-styles-key-value"
+                },
+                {
+                    "include": "#highlight-styles-key-selector"
+                },
+                {
+                    "include": "#highlight-styles-key-media"
+                },
+                {
+                    "include": "#highlight-class-string"
+                }
+            ]
+        },
+        "highlight-tsx-class": {
+            "begin": "(?:\\s*)?(className|class)(\\=)(\\s?\\{)",
+            "end": "(\\})",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "keyword.operator.assignment.tsx"
+                },
+                "3": {
+                    "name": "punctuation.section.embedded.begin.tsx"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.section.embedded.end.tsx"
+                }
+            },
+            "contentName": "meta.embedded.block.master-styles.class",
+            "patterns": [
+                {
+                    "begin": "\\s?(\\w*)(`)",
+                    "end": "`",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.string.template.begin.tsx"
+                        }
+                    },
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.string.template.end.tsx"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#highlight-styles-keyvalue-media"
+                        },
+                        {
+                            "include": "#highlight-styles-keyvalue-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-keyvalue"
+                        },
+                        {
+                            "include": "#highlight-styles-full"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value-media"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-key-selector-media"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value"
+                        },
+                        {
+                            "include": "#highlight-styles-key-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-key-media"
+                        },
+                        {
+                            "include": "#highlight-class-string"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "include": "#highlight-styles-keyvalue-media"
+                        },
+                        {
+                            "include": "#highlight-styles-keyvalue-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-keyvalue"
+                        },
+                        {
+                            "include": "#highlight-styles-full"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value-media"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-key-selector-media"
+                        },
+                        {
+                            "include": "#highlight-styles-key-value"
+                        },
+                        {
+                            "include": "#highlight-styles-key-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-key-media"
+                        },
+                        {
+                            "include": "#highlight-class-string"
+                        }
+                    ]
+                }
+            ]
+        },
+        "highlight-single-class": {
+            "begin": "(?:\\s*)?(className|class)(\\=)",
+            "end": "\\s",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.string.end"
+                }
+            },
+            "contentName": "meta.embedded.block.master-styles.class",
+            "patterns": [
+                {
+                    "include": "#highlight-styles-keyvalue-media"
+                },
+                {
+                    "include": "#highlight-styles-keyvalue-selector"
+                },
+                {
+                    "include": "#highlight-styles-keyvalue"
+                },
+                {
+                    "include": "#highlight-styles-full"
+                },
+                {
+                    "include": "#highlight-styles-key-value-media"
+                },
+                {
+                    "include": "#highlight-styles-key-value-selector"
+                },
+                {
+                    "include": "#highlight-styles-key-selector-media"
+                },
+                {
+                    "include": "#highlight-styles-key-value"
+                },
+                {
+                    "include": "#highlight-styles-key-selector"
+                },
+                {
+                    "include": "#highlight-styles-key-media"
+                },
+                {
+                    "include": "#highlight-class-string"
+                }
+            ]
+        },
+        "highlight-styles-full": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+):([^\\s\"`:@]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`:@]+)(@[^\\s\"`:@]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -55,9 +252,13 @@
                             "name": "constant.character.escape"
                         }
                     }
-                },
+                }
+            ]
+        },
+        "highlight-styles-key-value-media": {
+            "patterns": [
                 {
-                    "match": "([^\\s\":@]+)::?((?:\\'@\\')|(?:@?[^\\s\":@]+))?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+                    "match": "([^\\s\"`:]+):(?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)([^\\s\"`:@]+)(@[^\\s\"`:@]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -67,14 +268,156 @@
                         },
                         "3": {
                             "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-key-value-selector": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+):(?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)([^\\s\"`:@]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-key-selector-media": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)(@[^\\s\"`:@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "constant.character.escape"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-key-value": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+):([^\\s\"`@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-key-selector": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-key-media": {
+            "patterns": [
+                {
+                    "match": "([^\\s\"`:]+)(@[^\\s\"`:@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-keyvalue-selector": {
+            "patterns": [
+                {
+                    "match": "(?:(?:(@|~)([^\\s\"`@]+))|(?:~[^\\s\"`@]+)|(static|fixed|sticky|hidden|hide|block|table|contents|inline|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table))((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "support.constant.property-value.css"
                         },
                         "4": {
                             "name": "constant.character.escape"
                         }
                     }
-                },
+                }
+            ]
+        },
+        "highlight-styles-keyvalue-media": {
+            "patterns": [
                 {
-                    "match": "([^\\s:])",
+                    "match": "(?:(?:(@|~)([^\\s\"`@]+))|(?:~[^\\s\"`@]+)|(static|fixed|sticky|hidden|hide|block|table|contents|inline|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table))(@[^\\s\"`:@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "4": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-keyvalue": {
+            "patterns": [
+                {
+                    "match": "(?:(@|~)([^\\s\"`@]+))|(?:~[^\\s\"`@]+)|(static|fixed|sticky|hidden|hide|block|table|contents|inline|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "3": {
+                            "name": "support.constant.property-value.css"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-class-string": {
+            "patterns": [
+                {
+                    "match": "([^\\s])",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
@@ -82,69 +425,6 @@
                     }
                 }
             ]
-        },
-        "highlight-single-class": {
-            "match": "(className|class)=(@|(?:[^\\s\":@]+)):?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
-            "captures": {
-                "1": {
-                    "name": "entity.other.attribute-name"
-                },
-                "2": {
-                    "name": "support.type.property-name.css"
-                },
-                "3": {
-                    "name": "support.constant.property-value.css"
-                },
-                "4": {
-                    "name": "constant.character.escape"
-                },
-                "5": {
-                    "name": "constant.character.escape"
-                }
-            }
-        },
-        "highlight-key-animation": {
-            "patterns": [
-                {
-                    "match": "(@(delay|direction|fill\\-mode|iteration\\-count|name|play\\-state|timing\\-function|easing))::?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
-                    "captures": {
-                        "1": {
-                            "name": "support.type.property-name.css"
-                        },
-                        "2": {
-                            "name": "support.constant.property-value.css"
-                        },
-                        "3": {
-                            "name": "constant.character.escape"
-                        },
-                        "4": {
-                            "name": "constant.character.escape"
-                        }
-                    }
-                }
-            ]
-        },
-        "highlight-key-transform": {
-            "patterns": [
-                {
-                    "match": "~(delay|duration|property|easing)::?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
-                    "captures": {
-                        "1": {
-                            "name": "support.type.property-name.css"
-                        },
-                        "2": {
-                            "name": "support.constant.property-value.css"
-                        },
-                        "3": {
-                            "name": "constant.character.escape"
-                        },
-                        "4": {
-                            "name": "constant.character.escape"
-                        }
-                    }
-                }
-            ]
         }
-    
     }
 }
