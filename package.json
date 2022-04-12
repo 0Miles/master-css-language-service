@@ -28,6 +28,7 @@
                 "injectTo": [
                     "source.php",
                     "text.html.php",
+                    "text.html",
                     "source.js.jsx",
                     "source.tsx"
                 ],
