@@ -16,7 +16,7 @@
     "repository": {
         "highlight-class": {
             "begin": "(?:\\s*)?(className|class)(\\=)(\")",
-            "end": "\"",
+            "end": "(\")",
             "captures": {
                 "1": {
                     "name": "entity.other.attribute-name"
@@ -25,12 +25,12 @@
                     "name": "punctuation.separator.key-value"
                 },
                 "3": {
-                    "name": "punctuation.definition.string.begin"
+                    "name": "string.quoted.double.html"
                 }
             },
             "endCaptures": {
                 "1": {
-                    "name": "punctuation.definition.string.end"
+                    "name": "string.quoted.double.html"
                 }
             },
             "contentName": "meta.embedded.block.master-styles.class",
@@ -97,11 +97,14 @@
                     "captures": {
                         "1": {
                             "name": "punctuation.definition.string.template.begin.tsx"
+                        },
+                        "2": {
+                            "name": "string.quoted.double.html"
                         }
                     },
                     "endCaptures": {
                         "1": {
-                            "name": "punctuation.definition.string.template.end.tsx"
+                            "name": "string.quoted.double.html"
                         }
                     },
                     "patterns": [
@@ -143,6 +146,16 @@
                 {
                     "begin": "\"",
                     "end": "\"",
+                    "captures": {
+                        "1": {
+                            "name": "string.quoted.double.html"
+                        }
+                    },
+                    "endCaptures": {
+                        "1": {
+                            "name": "string.quoted.double.html"
+                        }
+                    },
                     "patterns": [
                         {
                             "include": "#highlight-styles-keyvalue-media"
@@ -237,18 +250,21 @@
         "highlight-styles-full": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):([^\\s\"`:@]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`:@]+)(@[^\\s\"`:@]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)[^\\s\"`:@']+))((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`:@']+)(@[^\\s\"`:@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
                         },
                         "2": {
-                            "name": "support.constant.property-value.css"
+                            "name": "string.quoted.double.html"
                         },
                         "3": {
-                            "name": "constant.character.escape"
+                            "name": "support.constant.property-value.css"
                         },
                         "4": {
+                            "name": "constant.character.escape"
+                        },
+                        "5": {
                             "name": "constant.character.escape"
                         }
                     }
@@ -258,15 +274,18 @@
         "highlight-styles-key-value-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)([^\\s\"`:@]+)(@[^\\s\"`:@]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)[^\\s\"`:@']+))(@[^\\s\"`:@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
                         },
                         "2": {
-                            "name": "support.constant.property-value.css"
+                            "name": "string.quoted.double.html"
                         },
                         "3": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "4": {
                             "name": "constant.character.escape"
                         }
                     }
@@ -276,15 +295,18 @@
         "highlight-styles-key-value-selector": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)([^\\s\"`:@]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)[^\\s\"`:@']+))((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
                         },
                         "2": {
-                            "name": "support.constant.property-value.css"
+                            "name": "string.quoted.double.html"
                         },
                         "3": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "4": {
                             "name": "constant.character.escape"
                         }
                     }
@@ -294,7 +316,7 @@
         "highlight-styles-key-selector-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)(@[^\\s\"`:@]+)",
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@']+)(@[^\\s\"`:@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -312,12 +334,15 @@
         "highlight-styles-key-value": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):([^\\s\"`@]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default)[^\\s\"`:@']+))",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
                         },
                         "2": {
+                            "name": "string.quoted.double.html"
+                        },
+                        "3": {
                             "name": "support.constant.property-value.css"
                         }
                     }
@@ -327,7 +352,7 @@
         "highlight-styles-key-selector": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@]+)",
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|\\.|[|]|_|\\+)[^\\s\"`@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -342,7 +367,7 @@
         "highlight-styles-key-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)(@[^\\s\"`:@]+)",
+                    "match": "([^\\s\"`:]+)(@[^\\s\"`:@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -378,7 +403,7 @@
         "highlight-styles-keyvalue-media": {
             "patterns": [
                 {
-                    "match": "(?:(?:(@|~)([^\\s\"`@]+))|(?:~[^\\s\"`@]+)|(static|fixed|sticky|hidden|hide|block|table|contents|inline|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table))(@[^\\s\"`:@]+)",
+                    "match": "(?:(?:(@|~)([^\\s\"`@]+))|(?:~[^\\s\"`@]+)|(static|fixed|sticky|hidden|hide|block|table|contents|inline|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table))(@[^\\s\"`:@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
