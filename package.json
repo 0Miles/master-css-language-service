@@ -26,15 +26,10 @@
                 "scopeName": "master-styles",
                 "path": "./syntaxes/master-styles.tmLanguage.json",
                 "injectTo": [
-                    "source.css",
                     "source.php",
                     "text.html.php",
-                    "source.js",
                     "source.js.jsx",
-                    "source.ts",
-                    "source.tsx",
-                    "source",
-                    "text"
+                    "source.tsx"
                 ],
                 "embeddedLanguages": {
                     "meta.embedded.block.html": "html"
