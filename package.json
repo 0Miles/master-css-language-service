@@ -1,12 +1,14 @@
 {
-    "name": "@master/styles-language-service",
+    "name": "master-styles-language-service",
     "displayName": "Master Styles Language Service",
     "version": "0.0.1",
     "author": "Aoyue Design LLC.",
     "funding": "https://docs.master.co/styles/donate",
     "homepage": "https://styles.master.co",
-    "private": true,
+    "private": false,
     "license": "MIT",
+    "publisher": "masterco",
+    "icon": "images/icon.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/master-co/styles-language-service.git"
@@ -37,6 +39,7 @@
         ]
     },
     "scripts": {
+        "vscode:publish": "vsce publish",
         "vscode:prepublish": "npm run build",
         "build": "tsc -b",
         "watch": "tsc -b -w",
