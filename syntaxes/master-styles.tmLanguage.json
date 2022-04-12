@@ -12,7 +12,7 @@
     ],
     "repository": {
         "highlight-class": {
-            "begin": "(class)(\\=)(\")",
+            "begin": "(className|class)(\\=)(\")",
             "end": "(\")",
             "captures": {
                 "1": {
@@ -84,7 +84,7 @@
             ]
         },
         "highlight-single-class": {
-            "match": "(class)=(@|(?:[^\\s\":@]+)):?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
+            "match": "(className|class)=(@|(?:[^\\s\":@]+)):?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?:?:?(@?[^\\s\":@]+)?",
             "captures": {
                 "1": {
                     "name": "entity.other.attribute-name"
