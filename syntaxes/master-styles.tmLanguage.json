@@ -51,12 +51,6 @@
                     "include": "#highlight-styles-key-value"
                 },
                 {
-                    "include": "#highlight-styles-key-selector"
-                },
-                {
-                    "include": "#highlight-styles-key-media"
-                },
-                {
                     "include": "#highlight-styles-keyvalue-media"
                 },
                 {
@@ -64,6 +58,15 @@
                 },
                 {
                     "include": "#highlight-styles-keyvalue"
+                },
+                {
+                    "include": "#highlight-styles-function-media"
+                },
+                {
+                    "include": "#highlight-styles-function-selector"
+                },
+                {
+                    "include": "#highlight-styles-function"
                 },
                 {
                     "include": "#highlight-class-string"
@@ -124,12 +127,6 @@
                             "include": "#highlight-styles-key-value"
                         },
                         {
-                            "include": "#highlight-styles-key-selector"
-                        },
-                        {
-                            "include": "#highlight-styles-key-media"
-                        },
-                        {
                             "include": "#highlight-styles-keyvalue-media"
                         },
                         {
@@ -137,6 +134,15 @@
                         },
                         {
                             "include": "#highlight-styles-keyvalue"
+                        },
+                        {
+                            "include": "#highlight-styles-function-media"
+                        },
+                        {
+                            "include": "#highlight-styles-function-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-function"
                         },
                         {
                             "include": "#highlight-class-string"
@@ -173,12 +179,6 @@
                             "include": "#highlight-styles-key-value"
                         },
                         {
-                            "include": "#highlight-styles-key-selector"
-                        },
-                        {
-                            "include": "#highlight-styles-key-media"
-                        },
-                        {
                             "include": "#highlight-styles-keyvalue-media"
                         },
                         {
@@ -186,6 +186,15 @@
                         },
                         {
                             "include": "#highlight-styles-keyvalue"
+                        },
+                        {
+                            "include": "#highlight-styles-function-media"
+                        },
+                        {
+                            "include": "#highlight-styles-function-selector"
+                        },
+                        {
+                            "include": "#highlight-styles-function"
                         },
                         {
                             "include": "#highlight-class-string"
@@ -237,10 +246,13 @@
                     "include": "#highlight-styles-key-value"
                 },
                 {
-                    "include": "#highlight-styles-key-selector"
+                    "include": "#highlight-styles-function-media"
                 },
                 {
-                    "include": "#highlight-styles-key-media"
+                    "include": "#highlight-styles-function-selector"
+                },
+                {
+                    "include": "#highlight-styles-function"
                 },
                 {
                     "include": "#highlight-class-string"
@@ -250,7 +262,7 @@
         "highlight-styles-full": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.|[|]|_|\\+|\\[)[^\\s\"`@']+)(@[^\\s\"`:@'_]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@']+)(@[^\\s\"`:@'_]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -277,7 +289,7 @@
         "highlight-styles-key-value-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(!)?(@[^\\s\"`@']+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?(@[^\\s\"`']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -301,7 +313,7 @@
         "highlight-styles-key-value-selector": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.|[|]|_|\\+|\\[)[^\\s\"`@]+)",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -325,7 +337,7 @@
         "highlight-styles-key-selector-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)((?::|::|>|<|(?<![;/\\(\\,])\\.|[|]|_|\\+|\\[)[^\\s\"`@']+)(@[^\\s\"`@']+)",
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@']+)(@[^\\s\"`']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -343,7 +355,7 @@
         "highlight-styles-key-value": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(!)?",
+                    "match": "([^\\s\"`:]+):(?:('[^'\\s]*')|((?!lang\\(|any\\-link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked)[^\\s\"`:@'_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -364,7 +376,7 @@
         "highlight-styles-key-selector": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)((?::|::|>|<|(?<![;/\\(\\,])\\.|[|]|_|\\+|\\[)[^\\s\"`@']+)",
+                    "match": "([^\\s\"`:]+)((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -379,7 +391,7 @@
         "highlight-styles-key-media": {
             "patterns": [
                 {
-                    "match": "([^\\s\"`:]+)(@[^\\s\"`@']+)",
+                    "match": "([^\\s\"`:]+)(@[^\\s\"`']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -394,7 +406,7 @@
         "highlight-styles-keyvalue-selector": {
             "patterns": [
                 {
-                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.|[|]|_|\\+|\\[)[^\\s\"`@]+)",
+                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@]+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -418,7 +430,7 @@
         "highlight-styles-keyvalue-media": {
             "patterns": [
                 {
-                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?(@[^\\s\"`@']+)",
+                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?(@[^\\s\"`']+)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -442,7 +454,7 @@
         "highlight-styles-keyvalue": {
             "patterns": [
                 {
-                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|^(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?",
+                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?(?=\\b)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -454,6 +466,57 @@
                             "name": "support.constant.property-value.css"
                         },
                         "4": {
+                            "name": "keyword.other.important.css"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-function-selector": {
+            "patterns": [
+                {
+                    "match": "([^\\s]*\\([^\\s]*\\))(!)?((?::|::|>|<|(?<![;/\\(\\,])\\.(?!\\d)|[|]|_|\\+|\\[)[^\\s\"`@]+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "2": {
+                            "name": "keyword.other.important.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-function-media": {
+            "patterns": [
+                {
+                    "match": "([^\\s]*\\([^\\s]*\\))(!)?(@[^\\s\"`']+)",
+                    "captures": {
+                        "1": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "2": {
+                            "name": "keyword.other.important.css"
+                        },
+                        "3": {
+                            "name": "constant.character.escape"
+                        }
+                    }
+                }
+            ]
+        },
+        "highlight-styles-function": {
+            "patterns": [
+                {
+                    "match": "([^\\s]*\\([^\\s]*\\))(!)?",
+                    "captures": {
+                        "1": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "2": {
                             "name": "keyword.other.important.css"
                         }
                     }
