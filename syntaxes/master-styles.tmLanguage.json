@@ -442,7 +442,7 @@
         "highlight-styles-keyvalue": {
             "patterns": [
                 {
-                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?",
+                    "match": "(?:(?:(@|~)([^\\s\"`@!]+))|^(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round))(!)?",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
