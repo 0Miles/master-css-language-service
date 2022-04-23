@@ -197,7 +197,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s\\:;,]+)\\(",
+                    "match": "([^\\s\\:;,@]+)\\(",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
