@@ -148,7 +148,7 @@
                     }
                 },
                 {
-                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|flex|square)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -307,15 +307,18 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}|>|<|_|\\@|\\+|~)(lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)(\\()",
+                    "match": "(?:(\\:{1,2}|<|_|\\@)|(\\+(?!\\d)|>|~))(lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)(\\()",
                     "captures": {
                         "1": {
-                            "name": ""
+                            "name": "keyword.operator.combinator.css"
                         },
                         "2": {
-                            "name": "entity.other.attribute-name.pseudo-class.css"
+                            "name": ""
                         },
                         "3": {
+                            "name": "entity.other.attribute-name.pseudo-class.css"
+                        },
+                        "4": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
                         }
                     }
