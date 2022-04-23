@@ -310,13 +310,13 @@
                     "match": "(\\:{1,2}|>|<|_|\\@|\\+|~)(lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)(\\()",
                     "captures": {
                         "1": {
-                            "name": "keyword.operator.combinator.css"
+                            "name": ""
                         },
                         "2": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
                         },
                         "3": {
-                            "name": "meta.selector.css"
+                            "name": "punctuation.section.function.begin.bracket.round.css"
                         }
                     }
                 },
@@ -324,26 +324,29 @@
                     "match": "(?<=(?:\\:{1,2}|>|<|_|\\@|\\+|~)(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s\\(]*)(\\))",
                     "captures": {
                         "1": {
-                            "name": "meta.selector.css"
+                            "name": "punctuation.section.function.end.bracket.round.css"
                         }
                     }
                 },
                 {
-                    "match": "(\\:{1,2}|>|<|_|\\@|\\+|~|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s\"`@:><.\\[\\]_\\+\\(\\)]*))",
+                    "match": "(?:(\\:{1,2}|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s\"`@:><.\\[\\]_\\+\\(\\)]*))",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.combinator.css"
                         },
                         "2": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
+                            "name": ""
                         },
                         "3": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                            "name": "punctuation.definition.entity.begin.bracket.square.css"
                         },
                         "4": {
-                            "name": "entity.other.attribute-name.pseudo-class.css"
+                            "name": "punctuation.definition.entity.end.bracket.square.css"
                         },
                         "5": {
+                            "name": "entity.other.attribute-name.pseudo-class.css"
+                        },
+                        "6": {
                             "name": "entity.name.tag.css"
                         }
                     }
