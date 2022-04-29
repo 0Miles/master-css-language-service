@@ -374,7 +374,7 @@
                     "match": "([^\\s])",
                     "captures": {
                         "1": {
-                            "name": "string.quoted.double.html"
+                            
                         }
                     }
                 }

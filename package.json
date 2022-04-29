@@ -18,7 +18,12 @@
         "vscode": "^1.63.0"
     },
     "activationEvents": [
-        "onLanguage:html"
+        "onLanguage:html",
+        "onLanguage:php",
+        "onLanguage:javascriptreact",
+        "onLanguage:typescriptreact",
+        "onLanguage:vue",
+        "onLanguage:svelte"
     ],
     "main": "./client/out/extension",
     "contributes": {
@@ -31,11 +36,12 @@
                     "text.html.php",
                     "text.html",
                     "source.js.jsx",
-                    "source.tsx"
+                    "source.tsx",
+                    "source.svelte"
                 ],
                 "embeddedLanguages": {
                     "meta.embedded.block.html": "html"
-                }
+                }				
             }
         ]
     },
