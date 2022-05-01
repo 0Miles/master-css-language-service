@@ -29,19 +29,24 @@
     "contributes": {
         "grammars": [
             {
-                "scopeName": "master-styles",
+                "scopeName": "source.master-styles",
                 "path": "./syntaxes/master-styles.tmLanguage.json",
                 "injectTo": [
                     "source.php",
                     "text.html.php",
                     "text.html",
                     "source.js.jsx",
+                    "source.ts.tsx",
+                    "source.jsx",
                     "source.tsx",
                     "source.svelte"
                 ],
                 "embeddedLanguages": {
-                    "meta.embedded.block.html": "html"
-                }				
+                    "meta.embedded.block.master-styles.class": "html"
+                },
+                "tokenTypes": {
+                    "meta.var string.quoted": "other"
+                }
             }
         ]
     },
