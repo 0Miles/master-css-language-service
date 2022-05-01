@@ -40,13 +40,7 @@
                     "source.jsx",
                     "source.tsx",
                     "source.svelte"
-                ],
-                "embeddedLanguages": {
-                    "meta.embedded.block.master-styles.class": "html"
-                },
-                "tokenTypes": {
-                    "meta.var string.quoted": "other"
-                }
+                ]
             }
         ]
     },

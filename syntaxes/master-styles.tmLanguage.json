@@ -98,15 +98,15 @@
                     "name": "entity.other.attribute-name"
                 },
                 "2": {
-                    "name": "keyword.operator.assignment.tsx"
+                    "name": "keyword.operator.assignment"
                 },
                 "3": {
-                    "name": "punctuation.section.embedded.begin.tsx"
+                    "name": "punctuation.section.embedded.begin"
                 }
             },
             "endCaptures": {
                 "1": {
-                    "name": "punctuation.section.embedded.end.tsx"
+                    "name": "punctuation.section.embedded.end"
                 }
             },
             "contentName": "meta.embedded.block.master-styles.class",
@@ -164,6 +164,9 @@
                 },
                 {
                     "include": "#react-class-quoted-single-string"
+                },
+                {
+                    "include": "source.ts"
                 }
             ]
         },
@@ -172,7 +175,7 @@
             "end": "`",
             "captures": {
                 "1": {
-                    "name": "punctuation.definition.string.template.begin.tsx"
+                    "name": "punctuation.definition.string.template.begin"
                 },
                 "2": {
                     "name": "string.quoted.double"
@@ -728,7 +731,11 @@
         "class-string": {
             "patterns": [
                 {
-                    "match": "(\\S)"
+                    "match": "(\\S)",
+                    "captures": {
+                        "1": {
+                        }
+                    }
                 }
             ]
         }
