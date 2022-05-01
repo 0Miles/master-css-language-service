@@ -230,7 +230,7 @@ let masterStylesColors: { key: string; color: string; }[] = [
     { key: 'red', color: 'ed1c24' }];
 
 
-
+    
 function getReturnItem(label: string[], kind: CompletionItemKind): CompletionItem[] {
     let masterStyleCompletionItem: CompletionItem[] = [];
     label.forEach(x => {
@@ -337,20 +337,21 @@ function doCompletion(instance: string, triggerKey: string, startWithSpace: bool
     }
 
 
-    if (masterStylesKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value&select
+    if (masterStylesKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesValues, CompletionItemKind.Property));
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterStylesColors));
         }
     }
-    if (masterStylesKeys.includes(key) && !masterStylesSelsets.includes(first) && haveValue <= 3 && !(haveValue == 3 && triggerKey === ':')) { //show select
+    connection.window.showInformationMessage("haveValue: " + haveValue );
+    if (masterStylesKeys.includes(key) && !masterStylesSelsets.includes(first) &&( (haveValue == 2 && triggerKey === ':') || (haveValue == 3 && triggerKey !== ':'))) { //show select
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSelsets, CompletionItemKind.Property));
     }
 
 
     return masterStyleCompletionItem;
 }
-
+ 
 connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
         const documentUri = _textDocumentPosition.textDocument.uri;
