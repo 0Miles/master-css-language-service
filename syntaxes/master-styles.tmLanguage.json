@@ -270,22 +270,16 @@
             ]
         },
         "highlight-style-extend-classes": {
-            "begin": "\\.(extend)(\\()\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(,)\\s*({)",
-            "end": "(})",
+            "begin": "\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*(\\{)",
+            "end": "(\\})",
             "captures": {
                 "1": {
-                    "name": "entity.name.function"
-                },
-                "2": {
-                    "name": "meta.brace.round"
-                },
-                "3": {
                     "name": "string.quoted"
                 },
-                "4": {
+                "2": {
                     "name": "punctuation.separator.comma"
                 },
-                "5": {
+                "3": {
                     "name": "punctuation.definition.block"
                 }
             },
@@ -310,13 +304,16 @@
             ]
         },
         "style-extend-classes-template-string": {
-            "begin": "\\s?(:)\\s*(`)",
-            "end": "`",
+            "begin": "((?!'|\"|`)\\S*(?!'|\"|`)\\s*)?(:)\\s*(`)",
+            "end": "(`)",
             "captures": {
                 "1": {
-                    "name": "punctuation.separator.key-value"
+                    "name": "meta.object-literal.key"
                 },
                 "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
                     "name": "string.template punctuation.definition.string.template.begin"
                 }
             },
@@ -344,13 +341,16 @@
             ]
         },
         "style-extend-classes-quoted-double-string": {
-            "begin": "\\s?(:)\\s*(\")",
+            "begin": "((?!'|\"|`)\\S*(?!'|\"|`)\\s*)?(:)\\s*(\")",
             "end": "(\")",
             "captures": {
                 "1": {
-                    "name": "punctuation.separator.key-value"
+                    "name": "meta.object-literal.key"
                 },
                 "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
                     "name": "string.quoted.double punctuation.definition.string.begin"
                 }
             },
@@ -378,13 +378,16 @@
             ]
         },
         "style-extend-classes-quoted-single-string": {
-            "begin": "\\s?(:)\\s*(')",
+            "begin": "((?!'|\"|`)\\S*(?!'|\"|`)\\s*)?(:)\\s*(')",
             "end": "(')",
             "captures": {
                 "1": {
-                    "name": "punctuation.separator.key-value"
+                    "name": "meta.object-literal.key"
                 },
                 "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
                     "name": "string.quoted.single punctuation.definition.string.begin"
                 }
             },
@@ -422,7 +425,7 @@
                     }
                 },
                 {
-                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|flex|square)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -482,7 +485,7 @@
                     }
                 },
                 {
-                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round)",
+                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -653,7 +656,7 @@
                     }
                 },
                 {
-                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|flex|square)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -713,7 +716,7 @@
                     }
                 },
                 {
-                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round)",
+                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
