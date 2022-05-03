@@ -39,6 +39,8 @@
                     "source.ts.tsx",
                     "source.jsx",
                     "source.tsx",
+                    "source.ts",
+                    "source.js",
                     "source.svelte"
                 ]
             }
