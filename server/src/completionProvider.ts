@@ -142,6 +142,7 @@ export function GetCompletionItem(instance: string,triggerKey: string, startWith
         masterStylesKeys = masterStylesKeys.concat(x.values);
         masterStylesSemanticKeys = masterStylesSemanticKeys.concat(x.values);
     })
+    masterStylesKeys = [...new Set(masterStylesKeys)];
 
     masterStylesKeyValues.forEach(x => {
         if (x.key.includes(key)) {
@@ -157,7 +158,7 @@ export function GetCompletionItem(instance: string,triggerKey: string, startWith
     masterStylesValues = [...new Set(masterStylesValues)];
 
     
-    masterStyleCompletionItem.push({label:'b_test '+isMedia+' '+isElements+' haveValue '+haveValue+' triggerKey '+triggerKey});
+
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property));

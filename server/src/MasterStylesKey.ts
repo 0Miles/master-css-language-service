@@ -94,15 +94,15 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     },
     {
         key: ['break-after', 'break-before'],
-        type: 'break',
+        type: 'other',
         colorful: false,
-        values: ['avoid-column', 'column', 'left', 'page', 'recto', 'right', 'recto', 'verso']
+        values: ['avoid-column', 'column', 'left', 'page', 'recto', 'right', 'recto', 'verso', 'auto', 'avoid', 'avoid-column', 'avoid-page', 'revert']
     },
     {
         key: ['break-inside'],
-        type: 'break',
+        type: 'other',
         colorful: false,
-        values: []
+        values: ['auto', 'avoid', 'avoid-column', 'avoid-page', 'revert']
     },
     {
         key: ['clear'],
@@ -210,9 +210,9 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     },
     {
         key: ['grid-auto-columns', 'grid-auto-cols'],
-        type: 'grid-auto',
+        type: 'other',
         colorful: false,
-        values: []
+        values: ['auto', 'min-content', 'max-content', 'minmax(,)']
     },
     {
         key: ['grid-auto-flow'],
@@ -222,9 +222,9 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     },
     {
         key: ['grid-auto-rows'],
-        type: 'grid-auto',
+        type: 'other',
         colorful: false,
-        values: []
+        values: ['auto', 'min-content', 'max-content', 'minmax(,)']
     },
     {
         key: ['grid-column', 'grid-col'],
@@ -264,52 +264,52 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     },
     {
         key: ['grid-template-columns', 'grid-template-cols'],
-        type: 'grid-template',
+        type: 'other',
         colorful: false,
-        values: []
+        values: ['none', 'max', 'max-content', 'min', 'min-content', 'repeat(,)', 'fit-content()', 'minmax()']
     },
     {
         key: ['grid-template-rows'],
-        type: 'grid-template',
+        type: 'other',
         colorful: false,
-        values: []
+        values: ['none', 'max', 'max-content', 'min', 'min-content', 'repeat(,)', 'fit-content()', 'minmax()']
     },
     //GRID AND FLEXBOX
     {
         key: ['align-content'],
-        type: 'align',
+        type: 'other',
         colorful: false,
-        values: ['space-around', 'space-between', 'space-evenly']
+        values: ['space-around', 'space-between', 'space-evenly', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['align-items'],
-        type: 'align',
+        type: 'other',
         colorful: false,
-        values: ['self-start', 'self-end']
+        values: ['self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['align-self'],
-        type: 'align',
+        type: 'other',
         colorful: false,
-        values: ['auto', 'self-start', 'self-end']
+        values: ['auto', 'self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['justify-content'],
-        type: 'justify',
+        type: 'other',
         colorful: false,
-        values: ['space-around', 'space-between', 'space-evenly']
+        values: ['space-around', 'space-between', 'space-evenly', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['justify-items'],
-        type: 'justify',
+        type: 'other',
         colorful: false,
-        values: ['self-start', 'self-end']
+        values: ['self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['justify-self'],
-        type: 'justify',
+        type: 'other',
         colorful: false,
-        values: ['auto', 'self-start', 'self-end']
+        values: ['auto', 'self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['order', 'o'],
@@ -319,21 +319,21 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     },
     {
         key: ['place-content-content'],
-        type: 'place-content',
+        type: 'other',
         colorful: false,
-        values: ['space-around', 'space-between', 'space-evenly']
+        values: ['space-around', 'space-between', 'space-evenly', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['place-content-items'],
-        type: 'place-content',
+        type: 'other',
         colorful: false,
-        values: ['self-start', 'self-end']
+        values: ['self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
         key: ['place-content-self'],
-        type: 'place-content',
+        type: 'other',
         colorful: false,
-        values: ['auto', 'self-start', 'self-end']
+        values: ['auto', 'self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     //TABLES
     {
@@ -708,37 +708,489 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
         colorful: false,
         values: ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity']
     },
+    //BORDER
+    {
+        key: ['border', 'border-top', 'border-bottom', 'border-left', 'border-right', 'b', 'bt', 'bb', 'bl', 'br', 'bx', 'by'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['border-color','border', 'border-top-color', 'border-bottom-color', 'border-left-color', 'border-right-color', 'b', 'bt', 'bb', 'bl', 'br', 'bx', 'by'],
+        type: 'other',
+        colorful: true,
+        values: []
+    },
+    {
+        key: ['border-radius', 'r', 'rt', 'rb', 'rl', 'rr', 'border-top-left-radius', 'rlt', 'rtl', 'border-top-right-radius', 'rrt', 'rtr'
+            , 'border-bottom-left-radius', 'rlb', 'rbl', 'border-bottom-right-radius', 'rbr', 'rrb'
+        ],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['border-style', 'border', 'b', 'border-top-style', 'border-top', 'bt', 'border-bottom-style', 'border-bottom', 'bb', 'border-left-style', 'border-left', 'bl', 'border-right-style', 'border-right', 'br', 'bx', 'by'],
+        type: 'other',
+        colorful: false,
+        values: ['none', 'hidden', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset']
+    },
+    {
+        key: ['border-width', 'border', 'b', 'border-top-width', 'border-top', 'bt', 'border-bottom-width', 'border-bottom', 'bb', 'border-left-width', 'border-left', 'bl', 'border-right-width', 'border-right', 'br', 'bx', 'by'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+
+    //OUTLINE
+    {
+        key: ['outline'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['outline-color', 'outline'],
+        type: 'color',
+        colorful: true,
+        values: []
+    },
+    {
+        key: ['outline-offset'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['outline-style', 'outline'],
+        type: 'other',
+        colorful: false,
+        values: ['none', 'dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset']
+    },
+    {
+        key: ['outline-width', 'outline'],
+        type: 'other',
+        colorful: false,
+        values: ['medium', 'thick', 'thin']
+    },
+    //SHAPE
+    {
+        key: ['shape-image-threshold'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['shape-margin', 'shape'],
+        type: 'other',
+        colorful: false,
+        values: ['max()', 'min()', 'calc()', 'clamp()']
+    },
+    {
+        key: ['shape-outside'],
+        type: 'other',
+        colorful: false,
+        values: ['none']
+    },
+    {
+        key: ['shape-outside', 'shape'],
+        type: 'other',
+        colorful: false,
+        values: ['margin', 'content', 'border', 'padding', 'inset()', 'circle()', 'ellipse()', 'polygon()', 'url()', 'linear-gradient()']
+    },
+    {
+        key: ['	clip-path', 'clip'],
+        type: 'other',
+        colorful: false,
+        values: ['none', 'margin', 'border', 'padding', 'content', 'fill', 'stroke', 'view', 'inset()', 'circle()', 'ellipse()', 'polygon()', 'path()', 'url()']
+    },
+    //SIZING
+    {
+        key: ['aspect-ratio', 'ratio'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['box-sizing', 'box'],
+        type: 'other',
+        colorful: false,
+        values: ['content-box', 'content', 'border-box', 'border']
+    },
+    {
+        key: ['width', 'w'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    {
+        key: ['min-width', 'min-w'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    {
+        key: ['max-width', 'max-w'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    {
+        key: ['height', 'h'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    {
+        key: ['min-height', 'min-h'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    {
+        key: ['max-height', 'max-h'],
+        type: 'other',
+        colorful: false,
+        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+    },
+    //TYPOGRAPHY
+    {
+        key: ['letter-spacing', 'ls'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['margin-top', 'mt', 'margin-bottom', 'mb', 'margin-left', 'ml', 'margin-right', 'mr', 'margin', 'm', 'mx', 'my'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['padding-top', 'pt', 'padding-bottom', 'pb', 'padding-left', 'pl', 'padding-right', 'pr', 'padding', 'p', 'px', 'py'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['word-spacing'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    //TRANSITION
+    {
+        key: ['transition'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['transition-delay', '~delay'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['transition-duration', '~duration'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['transition-property', '~property'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['transition-timing-function', '~easing'],
+        type: 'other',
+        colorful: false,
+        values: ['ease', 'ease-in', 'ease-out', 'linear', 'step-start', 'step-end', 'steps(,)', 'cubic-bezier(,,,)', 'frames()']
+    },
+    //TRANSFORM
+    {
+        key: ['transform'],
+        type: 'other',
+        colorful: false,
+        values: ['translate()', 'translate3d()', 'translateX()', 'translateY()', 'translateZ()', 'scale()', 'scale3d()', 'scaleX()', 'scaleY()', 'scaleZ()', 'skew()', 'skewX()', 'skewY()', 'rotate()', 'rotate3d()', 'rotateX()', 'rotateY()', 'rotateZ()', 'perspective()', 'matrix()', 'matrix3d()']
+    },
+    {
+        key: ['transform-box', 'transform'],
+        type: 'other',
+        colorful: false,
+        values: ['content', 'fill', 'stroke', 'view', 'border', 'content-box', 'fill-box', 'stroke-box', 'view-box', 'border-box']
+    },
+    {
+        key: ['transform-origin', 'transform'],
+        type: 'other',
+        colorful: false,
+        values: ['top', 'bottom', 'right', 'left', 'center']
+    },
+    {
+        key: ['transform-style', 'transform'],
+        type: 'other',
+        colorful: false,
+        values: ['flat', 'preserve-3d']
+    },
+    //ANIMATION
+    {
+        key: ['animation'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['animation-delay', '@delay'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['animation-direction', '@direction'],
+        type: 'other',
+        colorful: false,
+        values: ['normal', 'reverse', 'alternate', 'alternate-reverse']
+    },
+    {
+        key: ['animation-duration', '@duration'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['animation-fill-mode', '@fill-mode'],
+        type: 'other',
+        colorful: false,
+        values: ['none', 'forwards', 'backwards', 'both']
+    },
+    {
+        key: ['animation-iteration-count', '@iteration-count'],
+        type: 'other',
+        colorful: false,
+        values: ['infinite']
+    },
+    {
+        key: ['animation-name', '@name'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['animation-play-state', '@play-state'],
+        type: 'other',
+        colorful: false,
+        values: ['running', 'paused']
+    },
+    {
+        key: ['animation-timing-function', '@easing'],
+        type: 'other',
+        colorful: false,
+        values: ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear', 'step-start', 'step-end', 'steps(,)', 'cubic-bezier(,,,)', 'frames()']
+    },
+    //SVG
+    {
+        key: ['fill'],
+        type: 'reserved',
+        colorful: true,
+        values: []
+    },
+    {
+        key: ['stroke'],
+        type: 'reserved',
+        colorful: true,
+        values: []
+    },
+    {
+        key: ['stroke-width'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    //VISIBILITY
+    {
+        key: ['opacity'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['visibility'],
+        type: 'other',
+        colorful: false,
+        values: ['visible', 'invisible','collapse']
+    },
+    //BACKGROUND
+
+    {
+        key: ['backdrop-filter','bd'],
+        type: 'other',
+        colorful: false,
+        values: ['none','url(svg)','blur()','brightness()','contrast()','grayscale()','hue-rotate(degree)','invert()','sepia()','saturate()','opacity()','drop-shadow()']
+    },
+    {
+        key: ['background-blend-mode'],
+        type: 'other',
+        colorful: false,
+        values: ['normal','multiply','screen','overlay','darken','lighten','color-dodge','color-burn','hard-light','soft-light','difference','exclusion','hue','saturation','color','luminosity']
+    },
+    {
+        key: ['box-shadow','shadow'],
+        type: 'other',
+        colorful: false,
+        values: ['inset']
+    },
+    {
+        key: ['filter'],
+        type: 'other',
+        colorful: false,
+        values: ['none','url()','blur()','brightness()','contrast()','drop-shadow()','grayscale()','hue-rotate(degree)','invert()','opacity()','saturate()','sepia()']
+    },
+    {
+        key: ['mask-image'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['mix-blend-mode','blend'],
+        type: 'other',
+        colorful: false,
+        values: ['normal','multiply','screen','overlay','darken','lighten','color-dodge','color-burn','hard-light','soft-light','difference','exclusion','hue','saturation','color','luminosity']
+    },
+    {
+        key: ['text-shadow'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    //SCROLL
+    {
+        key: ['overscroll-behavior','overscroll-behavior-x','overscroll-behavior-y'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','none','contain']
+    },
+    {
+        key: ['scroll-behavior'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','smooth']
+    },
+    {
+        key: ['scroll-margin','m','scroll-margin','scroll-margin-top','mt','scroll-margin-bottom','mb','scroll-margin-left','ml','scroll-margin-right','mr','scroll-mx','scroll-my'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['scroll-padding','p','scroll-padding','scroll-padding-top','pt','scroll-padding-bottom','pb','scroll-padding-left','pl','scroll-padding-right','pr','scroll-px','scroll-py'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    {
+        key: ['scroll-snap-align','scroll-snap'],
+        type: 'other',
+        colorful: false,
+        values: ['center','end','start','none']
+    },
+    {
+        key: ['scroll-snap-stop','scroll-snap'],
+        type: 'other',
+        colorful: false,
+        values: ['always','normal']
+    },
+    {
+        key: ['scroll-snap-type'],
+        type: 'other',
+        colorful: false,
+        values: ['none']
+    },
+    {
+        key: ['scroll-snap-type','scroll-snap'],
+        type: 'other',
+        colorful: false,
+        values: ['x','y','both','block','inline','x;mandatory','y;proximity','both;mandatory']
+    },
+    //INTERACTIVITY
+
+    {
+        key: ['pointer-events'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','none','visiblePainted','visibleFill','visibleStroke','visible','painted','fill','stroke','all','bounding-box']
+    },
+    {
+        key: ['resize'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','none','both','horizontal','vertical','block','inline']
+    },
+    {
+        key: ['touch-action'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','none','pan-x','pan-left','pan-right','pan-y','pan-up','pan-down','pinch-zoom','manipulation']
+    },
+    {
+        key: ['user-drag'],
+        type: 'other',
+        colorful: false,
+        values: ['auto','none','element']
+    },
+    {
+        key: ['user-select'],
+        type: 'other',
+        colorful: false,
+        values: ['all','auto','none','text']
+    },
+    //OPTIMIZATION
+    {
+        key: ['contain'],
+        type: 'other',
+        colorful: false,
+        values: ['none','strict','content','size','layout','style','paint']
+    },
+    {
+        key: ['font','f'],
+        type: 'other',
+        colorful: false,
+        values: ['antialiased','subpixel-antialiased']
+    },
+    {
+        key: ['text-rendering'],
+        type: 'other',
+        colorful: false,
+        values: ['auto']
+    },
+    {
+        key: ['text-rendering','t'],
+        type: 'other',
+        colorful: false,
+        values: ['optimizeSpeed','optimizeLegibility','geometricPrecision']
+    },
+    {
+        key: ['will-change'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    },
+    //VARIABLE
+    {
+        key: ['$'],
+        type: 'reserved',
+        colorful: false,
+        values: []
+    }
 ]
 
 export const masterStylesType = [
     {
         type: 'color',
         values: ['#', 'rgb()', 'hsl()']
-    },
-    {
-        type: 'break',
-        values: ['auto', 'avoid', 'avoid-column', 'avoid-page', 'revert']
-    },
-    {
-        type: 'grid-auto',
-        values: ['auto', 'min-content', 'max-content', 'minmax(,)']
-    },
-    {
-        type: 'grid-template',
-        values: ['none', 'max', 'max-content', 'min', 'min-content', 'repeat(,)', 'fit-content()', 'minmax()']
-    },
-    {
-        type: 'align',
-        values: ['normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
-    },
-    {
-        type: 'justify',
-        values: ['normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
-    },
-    {
-        type: 'place-content',
-        values: ['normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
-    },
+    }
 ]
 
 export const masterStylesSemantic = [
@@ -761,5 +1213,25 @@ export const masterStylesSemantic = [
     {
         key: 'word-break',
         values: ['break-word']
+    },
+    {
+        key: 'border-radius',
+        values: ['round', 'rounded']
+    },
+    {
+        key: 'aspect-ratio',
+        values: ['square', 'video']
+    },
+    {
+        key: 'transform',
+        values: ['translate()', 'translate3d()', 'translateX()', 'translateY()', 'translateZ()', 'scale()', 'scale3d()', 'scaleX()', 'scaleY()', 'scaleZ()', 'skew()', 'skewX()', 'skewY()', 'rotate()', 'rotate3d()', 'rotateX()', 'rotateY()', 'rotateZ()', 'perspective()', 'matrix()', 'matrix3d()']
+    },
+    {
+        key: 'visibility',
+        values: ['visible', 'invisible','collapse']
+    },
+    {
+        key: 'filter',
+        values: ['blur()','brightness()','contrast()','drop-shadow()','grayscale()','hue-rotate(degree)','invert()','opacity()','saturate()','sepia()']
     }
 ]
