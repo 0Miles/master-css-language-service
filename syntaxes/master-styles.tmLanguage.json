@@ -485,7 +485,7 @@
                     }
                 },
                 {
-                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -716,7 +716,7 @@
                     }
                 },
                 {
-                    "match": "(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
