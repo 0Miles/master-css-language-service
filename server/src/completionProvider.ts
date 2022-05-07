@@ -51,10 +51,11 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     if (tsxclassName != -1) {
         let quotedSingle = textSub.split('\'').length - 1;
         let quotedDouble = textSub.split('\"').length - 1;
+        let quotedTemplate = textSub.split('\`').length - 1;
         if (InCurlyBrackets(textSub) == false) {
             return  {isInstance:false,lastKey:'',triggerKey:'',isStart:false};
         }
-        else if ((quotedSingle > 0 || quotedDouble > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0)) {
+        else if ((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0)) {
             classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
         }
         else {
