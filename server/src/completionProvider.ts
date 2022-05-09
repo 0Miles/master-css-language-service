@@ -48,7 +48,11 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
     textSub = textSub == null ? '' : textSub;
 
-    if (tsxclassName != -1) {
+    if((lineText.lastIndexOf('className') ?? -1)>0||(lineText.lastIndexOf('class') ?? -1)>0)
+    {
+
+    }
+    else if (tsxclassName != -1) {
         let quotedSingle = textSub.split('\'').length - 1;
         let quotedDouble = textSub.split('\"').length - 1;
         let quotedTemplate = textSub.split('\`').length - 1;
@@ -162,7 +166,7 @@ export function GetCompletionItem(instance: string,triggerKey: string, startWith
 
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property,':'));
         return masterStyleCompletionItem;
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
@@ -170,7 +174,7 @@ export function GetCompletionItem(instance: string,triggerKey: string, startWith
     }
 
     if (!masterStylesKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property,':'));
         return masterStyleCompletionItem;
     }
 
@@ -203,14 +207,33 @@ export function GetCompletionItem(instance: string,triggerKey: string, startWith
 }
 
 
-function getReturnItem(label: string[], kind: CompletionItemKind): CompletionItem[] {
+function getReturnItem(label: string[], kind: CompletionItemKind,insertText=''): CompletionItem[] {
     let masterStyleCompletionItem: CompletionItem[] = [];
-    label.forEach(x => {
-        masterStyleCompletionItem.push({
-            label: x,
-            kind: kind,
-        })
-    });
+    if(insertText===':')
+    {
+        label.forEach(x => {
+            masterStyleCompletionItem.push({
+                label: x,
+                kind: kind,
+                insertText:x+insertText,
+                insertTextMode:2,
+                command:{
+                    title: 'triggerSuggest',
+                    command: 'editor.action.triggerSuggest'
+                }
+            })
+        });
+    }
+    else{
+        label.forEach(x => {
+            masterStyleCompletionItem.push({
+                label: x,
+                kind: kind,
+                insertText:x,
+                insertTextMode:2,
+            })
+        });
+    }
     return masterStyleCompletionItem;
 }
 
