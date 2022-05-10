@@ -143,7 +143,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     });
 
     masterStylesSemantic.forEach(x => {
-        masterStylesKeys = masterStylesKeys.concat(x.values);
+        //masterStylesKeys = masterStylesKeys.concat(x.values);
         masterStylesSemanticKeys = masterStylesSemanticKeys.concat(x.values);
     })
     masterStylesKeys = [...new Set(masterStylesKeys)];
@@ -166,6 +166,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property, ':'));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSemanticKeys, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
@@ -174,6 +175,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (!masterStylesKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property, ':'));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSemanticKeys, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
 
@@ -216,7 +218,7 @@ function getReturnItem(label: string[], kind: CompletionItemKind, insertText = '
             masterStyleCompletionItem.push({
                 label: x,
                 kind: kind,
-                insertText: masterStylesSemantic.find(s => s.values.includes(x)) ? x : x + insertText,
+                insertText: x + insertText,
                 insertTextMode: 2,
                 command: {
                     title: 'triggerSuggest',
