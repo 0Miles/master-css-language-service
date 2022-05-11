@@ -123,9 +123,9 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let isMedia = !(mediaPattern.exec(instance) === null && triggerKey !== '@');
     let isElements = !(elementsPattern.exec(instance) === null && triggerKey !== '::');
 
-    let masterStylesKeys: string[] = [];
-    let masterStylesSemanticKeys: string[] = [];
-    let masterStylesValues: string[] = [];
+    let masterStylesKeys: Array<string | CompletionItem> = [];
+    let masterStylesSemanticKeys: Array<string | CompletionItem> = [];
+    let masterStylesValues: Array<string | CompletionItem> = [];
     masterStylesKeys = masterStylesKeys.concat(masterStylesOtherKeys);
 
     Styles.forEach(x => {
@@ -198,7 +198,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     }
     else if (masterStylesKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesValues, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesValues, CompletionItemKind.Enum));
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterStylesColors));
         }
@@ -206,39 +206,45 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (masterStylesKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterStylesKeyValues.find(x => x.values.includes(key))) { //show select
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSelectors, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSelectors, CompletionItemKind.Function));
     }
     return masterStyleCompletionItem;
 }
 
 
-function getReturnItem(label: string[], kind: CompletionItemKind, insertText = ''): CompletionItem[] {
+function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionItemKind, insertText = ''): CompletionItem[] {
     let masterStyleCompletionItem: CompletionItem[] = [];
-    if (insertText === ':') {
-        label
-            .forEach(x => {
+
+    items.forEach(x => {
+        if (typeof x === 'string') {
             masterStyleCompletionItem.push({
                 label: x,
                 kind: kind,
                 insertText: x + insertText,
                 insertTextMode: 2,
-                command: {
-                    title: 'triggerSuggest',
-                    command: 'editor.action.triggerSuggest'
-                }
-            })
-        });
-    }
-    else {
-        label.forEach(x => {
+                command: insertText === ':'
+                    ? {
+                        title: 'triggerSuggest',
+                        command: 'editor.action.triggerSuggest'
+                    }
+                    : undefined
+            });
+        } else {
             masterStyleCompletionItem.push({
-                label: x,
-                kind: kind,
-                insertText: x,
+                insertText: x.label + insertText,
                 insertTextMode: 2,
-            })
-        });
-    }
+                command: insertText === ':'
+                    ? {
+                        title: 'triggerSuggest',
+                        command: 'editor.action.triggerSuggest'
+                    }
+                    : undefined
+                ,
+                ...x
+            });
+        }
+    });
+
     return masterStyleCompletionItem;
 }
 
