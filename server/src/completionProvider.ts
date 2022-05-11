@@ -7,7 +7,8 @@ import {
     masterStylesOtherKeys,
     masterStylesColors,
     masterStylesType,
-    masterStylesSemantic
+    masterStylesSemantic,
+    masterStylesCommonValues
 } from './constant'
 
 import {
@@ -67,7 +68,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
     }
 
-    if (classPattern.exec(textSub) === null) {
+    if (textSub.match(classPattern)===null) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
     }
     else {
@@ -199,6 +200,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
     else if (masterStylesKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesValues, CompletionItemKind.Enum));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesCommonValues, CompletionItemKind.Enum));
+
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterStylesColors));
         }
@@ -251,20 +254,20 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
 function getColorsItem(colors: { key: string; color: string; }[]): CompletionItem[] {
     let masterStyleCompletionItem: CompletionItem[] = [];
     colors.forEach(x => {
-        for (let i = 1; i <= 99; i++) {
+        for (let i = 1; i <= 49; i++) {
             let r = parseInt(x.color.substring(0, 2), 16);
-            let rx = i < 50 ? 255 - r : r;
-            r += Math.round(rx * (50 - i) / 50);
+            let rx = i < 25 ? 255 - r : r;
+            r += Math.round(rx * (25 - i) / 25);
 
             let g = Math.round(parseInt(x.color.substring(2, 4), 16));
-            let gx = i < 50 ? 255 - g : g;
-            g += Math.round(gx * (50 - i) / 50);
+            let gx = i < 25 ? 255 - g : g;
+            g += Math.round(gx * (25 - i) / 25);
             let b = Math.round(parseInt(x.color.substring(4, 6), 16));
-            let bx = i < 50 ? 255 - b : b;
-            b += Math.round(bx * (50 - i) / 50);
+            let bx = i < 25 ? 255 - b : b;
+            b += Math.round(bx * (25 - i) / 25);
 
             masterStyleCompletionItem.push({
-                label: x.key + (i === 50 ? '' : '-' + i.toString()),
+                label: x.key + (i === 25 ? '' : '-' + (i*2).toString()),
                 documentation: '#' + r.toString(16).padStart(2, "0") + g.toString(16).padStart(2, "0") + b.toString(16).padStart(2, "0"),
                 kind: CompletionItemKind.Color
             })

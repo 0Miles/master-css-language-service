@@ -41,6 +41,9 @@ export const masterStylesOtherKeys = ['cols', 'obj', 'ovf', 'border-left-color',
     'left', 'right', 'top', 'bottom', 'center', 'middle', 'blur', 'brightness', 'contrast', 'drop-shadow', 'grayscale', 'hue-rotate', 'invert', 'opacity',
     'saturate', 'sepia'
 ];
+
+export const masterStylesCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
+
 export const masterStylesColors = [
     // {key:'black',color: '000000'},
     // {key:'white',color: 'ffffff'},
