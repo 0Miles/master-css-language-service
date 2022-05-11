@@ -45,26 +45,26 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let lastClass = text?.lastIndexOf('class') ?? -1;
     let lastclassName = text?.lastIndexOf('className') ?? -1;
     let tsxclassName = text?.lastIndexOf('className={') ?? -1;
+    let tsxclassNameMode=tsxclassName> (lastClass > lastclassName ? lastClass : lastclassName);
+
     let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
     textSub = textSub == null ? '' : textSub;
 
-    if ((lineText.lastIndexOf('className') ?? -1) > 0 || (lineText.lastIndexOf('class') ?? -1) > 0) {
 
-    }
-    else if (tsxclassName != -1) {
-        let quotedSingle = textSub.split('\'').length - 1;
-        let quotedDouble = textSub.split('\"').length - 1;
-        let quotedTemplate = textSub.split('\`').length - 1;
+    if (tsxclassNameMode) {
+        textSub = text?.substring(tsxclassName)== null ? '' : textSub;
         if (InCurlyBrackets(textSub) == false) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
         }
-        else if ((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0)) {
-            classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
-        }
-        else {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
-        }
+        classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
+    }
 
+    let quotedSingle = textSub.split('\'').length - 1;
+    let quotedDouble = textSub.split('\"').length - 1;
+    let quotedTemplate = textSub.split('\`').length - 1;
+    
+    if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
     }
 
     if (classPattern.exec(textSub) === null) {
@@ -110,6 +110,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let masterStyleCompletionItem: CompletionItem[] = [];
     let haveValue = instance.split(':').length;
     let key = instance.split(':')[0];
+    key=key.trim();
+    //console.log(instance+"key "+key);
     let first = instance.split(':')[1];
 
     const mediaPattern = /[^\\s"]+@+([^\\s:"@]+)/g;
