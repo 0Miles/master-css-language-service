@@ -36,7 +36,14 @@ export function activate(context: ExtensionContext) {
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
         // Register the server for html documents
-        documentSelector: [{ scheme: 'file', language: 'html' },{ scheme: 'file', language: 'php' },{ scheme: 'file', language: 'javascriptreact' },{ scheme: 'file', language: 'typescriptreact' },{ scheme: 'file', language: 'vue' },{ scheme: 'file', language: 'svelte' }],
+        documentSelector: [
+            { scheme: 'file', language: 'html' },
+            { scheme: 'file', language: 'php' },
+            { scheme: 'file', language: 'javascriptreact' },
+            { scheme: 'file', language: 'typescriptreact' },
+            { scheme: 'file', language: 'vue' },
+            { scheme: 'file', language: 'svelte' }
+        ],
         synchronize: {
             // Notify the server about file changes to '.clientrc files contained in the workspace
             fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
