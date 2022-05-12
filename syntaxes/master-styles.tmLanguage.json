@@ -425,7 +425,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:\"]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:\"]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -440,7 +440,7 @@
         "master-styles-value": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s:]+:)(var)(\\()(\\-\\-\\S*)(\\))",
+                    "match": "(?<=[^\\s:]+:)(var)(\\()(\\-\\-[^\\s\"]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -457,7 +457,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s:]+:)(\\$)(\\()(\\S*)(\\))",
+                    "match": "(?<=[^\\s:]+:)(\\$)(\\()([^\\s\"]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -474,7 +474,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s\\:;,@]+)\\(",
+                    "match": "([^\\s\\:;,@\"]+)\\(",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -485,7 +485,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -656,7 +656,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:']+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s:]+:[^\\s]*)([^\\s:']+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -671,7 +671,7 @@
         "master-styles-value-quoted-single": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s:]+:)(var)(\\()(\\-\\-\\S*)(\\))",
+                    "match": "(?<=[^\\s:]+:)(var)(\\()(\\-\\-[^\\s']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -688,7 +688,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s:]+:)(\\$)(\\()(\\S*)(\\))",
+                    "match": "(?<=[^\\s:]+:)(\\$)(\\()([^\\s']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -705,7 +705,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s\\:;,@]+)\\(",
+                    "match": "([^\\s\\:;,@']+)\\(",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -716,7 +716,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
