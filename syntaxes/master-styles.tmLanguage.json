@@ -840,7 +840,7 @@
                     }
                 },
                 {
-                    "match": "(?:(\\:{1,2}|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s'`@:><.\\[\\]_\\+\\(\\)]*))",
+                    "match": "(?:(\\:{1,2}(?!\\d)|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s'`@:><.\\[\\]_\\+\\(\\)]*))",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.combinator.css"
