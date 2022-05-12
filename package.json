@@ -2,7 +2,7 @@
     "name": "master-styles-language-service",
     "description": "Master Styles language service and code highlight for Visual Studio Code",
     "displayName": "Master Styles Language Service",
-    "version": "0.0.31",
+    "version": "0.0.32",
     "author": "Aoyue Design LLC.",
     "funding": "https://docs.master.co/styles/donate",
     "homepage": "https://styles.master.co",
