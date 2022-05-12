@@ -112,7 +112,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let haveValue = instance.split(':').length;
     let key = instance.split(':')[0];
     key=key.trim();
-    //console.log(instance+"key "+key);
     let first = instance.split(':')[1];
 
     const mediaPattern = /[^\\s"]+@+([^\\s:"@]+)/g;
@@ -129,42 +128,45 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let masterStylesValues: Array<string | CompletionItem> = [];
     masterStylesKeys = masterStylesKeys.concat(masterStylesOtherKeys);
 
-    Styles.forEach(x => {
-        const match = x.matches?.toString().match(/(?:\^([\w\-\@\~\\]+)?(?:\(([a-z]*)\|?.*\))?\??:)/);
-        if (x.key) {
-            masterStylesKeys.push(x.key);
-            if (x.key === key) {
-                isColorful = x.colorful;
-            }
-        }
-        if (match?.[1] !== null && !masterStylesKeys.includes(match?.[1] ?? '')) {
-            masterStylesKeys.push(match?.[1]?.replace('\\', '') ?? '');
-        } else if (match?.[2] !== null && !masterStylesKeys.includes(match?.[2] ?? '')) {
-            masterStylesKeys.push(match?.[2]?.replace('\\', '') ?? '');
-        }
+    // Styles.forEach(x => {
+    //     const match = x.matches?.toString().match(/(?:\^([\w\-\@\~\\]+)?(?:\(([a-z]*)\|?.*\))?\??:)/);
+    //     if (x.key) {
+    //         masterStylesKeys.push(x.key);
+    //         if (x.key === key) {
+    //             isColorful = x.colorful;
+    //         }
+    //     }
 
-    });
+    //     if (match?.[1] !== null && !masterStylesKeys.includes(match?.[1] ?? '')) {
+    //         masterStylesKeys.push(match?.[1]?.replace('\\', '') ?? '');
+    //     } else if (match?.[2] !== null && !masterStylesKeys.includes(match?.[2] ?? '')) {
+    //         masterStylesKeys.push(match?.[2]?.replace('\\', '') ?? '');
+    //     }
+
+    // });
 
     masterStylesSemantic.forEach(x => {
         //masterStylesKeys = masterStylesKeys.concat(x.values);
         masterStylesSemanticKeys = masterStylesSemanticKeys.concat(x.values);
     })
-    masterStylesKeys = [...new Set(masterStylesKeys)];
+
+
 
     masterStylesKeyValues.forEach(x => {
+        masterStylesKeys = masterStylesKeys.concat(x.key);
         if (x.key.includes(key)) {
-            masterStylesValues = masterStylesValues.concat(x.values);
-            if (!(x.type == 'other' || x.type == 'reserved')) {
+            masterStylesValues = masterStylesValues.concat(x.values.filter(y => !masterStylesValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y ==='string' ? y : y.label))));
+            if (x.colorful) {
+                isColorful=true;
                 masterStylesType.map(y => {
-                    y.type == x.type;
-                    masterStylesValues = masterStylesValues.concat(y.values);
+                    y.type == 'color';
+                    masterStylesValues = masterStylesValues.concat(y.values.filter(z => !masterStylesValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z ==='string' ? z : z.label))));
                 })
             }
         }
     })
-    masterStylesValues = [...new Set(masterStylesValues)];
 
-
+    masterStylesKeys = [...new Set(masterStylesKeys)];
 
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
