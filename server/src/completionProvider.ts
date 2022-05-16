@@ -68,6 +68,11 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
     }
 
+    if(textSub.length>1000){ //too long string substring
+        textSub=textSub.substring(textSub.length-1000);
+        classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
+    }
+
     if (textSub.match(classPattern)===null) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
     }
