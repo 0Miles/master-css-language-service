@@ -42,7 +42,8 @@ export function activate(context: ExtensionContext) {
             { scheme: 'file', language: 'javascriptreact' },
             { scheme: 'file', language: 'typescriptreact' },
             { scheme: 'file', language: 'vue' },
-            { scheme: 'file', language: 'svelte' }
+            { scheme: 'file', language: 'svelte' },
+            { scheme: 'file', language: 'rust' }
         ],
         synchronize: {
             // Notify the server about file changes to '.clientrc files contained in the workspace

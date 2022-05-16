@@ -23,7 +23,8 @@
         "onLanguage:javascriptreact",
         "onLanguage:typescriptreact",
         "onLanguage:vue",
-        "onLanguage:svelte"
+        "onLanguage:svelte",
+        "onLanguage:rust"
     ],
     "main": "./client/out/extension",
     "contributes": {
@@ -41,6 +42,7 @@
                     "source.tsx",
                     "source.ts",
                     "source.js",
+                    "source.rust",
                     "source.svelte"
                 ]
             }
