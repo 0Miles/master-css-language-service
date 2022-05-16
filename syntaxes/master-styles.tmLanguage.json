@@ -414,6 +414,38 @@
                 }
             ]
         },
+        "master-styles-group": {
+            "begin": "(\\{)",
+            "end": "(\\})",
+            "captures": {
+                "1": {
+                    "name": "punctuation.section.embedded.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.section.embedded.end"
+                }
+            },
+            "contentName": "meta.embedded.block.master-styles.class",
+            "patterns": [
+                {
+                    "include": "#react-class-function"
+                },
+                {
+                    "include": "#react-class-template-string"
+                },
+                {
+                    "include": "#react-class-quoted-double-string"
+                },
+                {
+                    "include": "#react-class-quoted-single-string"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
         "master-styles-key": {
             "patterns": [
                 {
@@ -493,7 +525,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s\"]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s\"\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
                             "name": "constant.numeric.css"
@@ -507,7 +539,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s\"\\:]*)([^\\s\"`:@'_!\\[;,\\(\\)]+)",
+                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s\"\\:]*)([^\\s\"`:@'_!\\[;,\\(\\)\\.]+(?:\\.\\d+))",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -555,7 +587,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s:]+:)(?:('[^'\\s]*')|([^\\s\"`:@'_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?",
+                    "match": "(?<=[^\\s:]+:)(?:('[^'\\s]*')|([^\\s\"`:@'_!\\[\\.]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
@@ -724,7 +756,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s']*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
                             "name": "constant.numeric.css"
@@ -738,7 +770,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s'\\:]*)([^\\s'`:@\"_!\\[;,\\(\\)]+)",
+                    "match": "(?<=(?:(?:[^\\s:]+:)|@|~|(?:[^\\s\\:;,]+\\())[^\\s'\\:]*)([^\\s'`:@\"_!\\[;,\\(\\)\\.]+(?:\\.\\d+))",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -786,7 +818,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s:]+:)(?:(\"[^\"\\s]*\")|([^\\s'`:@\"_!\\[]+))(?:(?<![;/\\(\\,])\\.(?!\\d))?(!)?",
+                    "match": "(?<=[^\\s:]+:)(?:(\"[^\"\\s]*\")|([^\\s'`:@\"_!\\[\\.]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
