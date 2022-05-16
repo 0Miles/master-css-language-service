@@ -15,11 +15,7 @@ import {
     TextDocuments,
     CompletionItem,
     CompletionItemKind,
-    TextDocumentPositionParams,
-    TextDocumentSyncKind,
-    ColorInformation
-} from 'vscode-languageserver/node';
-import { Styles } from '@master/styles'
+    TextDocumentPositionParams} from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
