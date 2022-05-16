@@ -1,6 +1,6 @@
 import { CompletionItem, CompletionItemKind } from 'vscode-languageserver';
 
-interface MasterStylesKey {
+interface MasterCssKey {
     key: string[];
     colorful: boolean,
     values: Array<string | CompletionItem>;
@@ -10,7 +10,7 @@ enum MasterStyleKeyType {
     'color', 'other', 'reserved'
 }
 
-export const masterStylesSelectors = [
+export const masterCssSelectors = [
     { label: 'lang()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',
     'out-of-range', 'required', 'optional', 'root', 'empty',
@@ -32,14 +32,14 @@ export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first
     { label: 'slotted()', kind: CompletionItemKind.Function }, 'scrollbar', 'scrollbar-button', 'scrollbar-thumb', 'scrollbar-track', 'scrollbar-track-piece', 'scrollbar-corner', 'resizer',
     'search-cancel-button', 'search-results-button'
 ];
-export const masterStylesMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
+export const masterCssMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
     { label: 'media()', kind: CompletionItemKind.Function }];
-export const masterStylesBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
-export const masterStylesOtherKeys = ['ext','gap','ont','ovf','quotes','bottom','center','left','middle','top','right'];
+export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
+export const masterCssOtherKeys = ['ext','gap','ont','ovf','quotes','bottom','center','left','middle','top','right'];
 
-export const masterStylesCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
+export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
 
-export const masterStylesColors = [
+export const masterCssColors = [
     // {key:'black',color: '000000'},
     // {key:'white',color: 'ffffff'},
     { key: 'fade', color: '71798e' },
@@ -64,7 +64,7 @@ export const masterStylesColors = [
     { key: 'red', color: 'ed1c24' }
 ];
 
-export const masterStylesKeyValues: MasterStylesKey[] = [
+export const masterCssKeyValues: MasterCssKey[] = [
 
     {
         key: ['color'],
@@ -1145,7 +1145,7 @@ export const masterStylesKeyValues: MasterStylesKey[] = [
     }
 ]
 
-export const masterStylesType = [
+export const masterCssType = [
     {
         type: 'color',
         values: ['#',
@@ -1154,7 +1154,7 @@ export const masterStylesType = [
     }
 ]
 
-export const masterStylesSemantic = [
+export const masterCssSemantic = [
     {
         key: 'display',
         values: ['hide', 'hidden', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table']

@@ -1,5 +1,5 @@
 {
-    "name": "@master/styles-language-service-client",
+    "name": "@master/css-language-service-client",
     "description": "VSCode part of a language server",
     "author": "Aoyue Design LLC.",
     "version": "1.0.0",

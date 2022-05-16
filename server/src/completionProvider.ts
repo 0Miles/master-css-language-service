@@ -1,14 +1,14 @@
 import {
-    masterStylesKeyValues,
-    masterStylesSelectors,
+    masterCssKeyValues,
+    masterCssSelectors,
     masterStyleElements,
-    masterStylesMedia,
-    masterStylesBreakpoints,
-    masterStylesOtherKeys,
-    masterStylesColors,
-    masterStylesType,
-    masterStylesSemantic,
-    masterStylesCommonValues
+    masterCssMedia,
+    masterCssBreakpoints,
+    masterCssOtherKeys,
+    masterCssColors,
+    masterCssType,
+    masterCssSemantic,
+    masterCssCommonValues
 } from './constant'
 
 import {
@@ -124,95 +124,95 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let isMedia = !(mediaPattern.exec(instance) === null && triggerKey !== '@');
     let isElements = !(elementsPattern.exec(instance) === null && triggerKey !== '::');
 
-    let masterStylesKeys: Array<string | CompletionItem> = [];
-    let masterStylesSemanticKeys: Array<string | CompletionItem> = [];
-    let masterStylesValues: Array<string | CompletionItem> = [];
-    masterStylesKeys = masterStylesKeys.concat(masterStylesOtherKeys);
+    let masterCssKeys: Array<string | CompletionItem> = [];
+    let masterCssSemanticKeys: Array<string | CompletionItem> = [];
+    let masterCssValues: Array<string | CompletionItem> = [];
+    masterCssKeys = masterCssKeys.concat(masterCssOtherKeys);
 
     // Styles.forEach(x => {
     //     const match = x.matches?.toString().match(/(?:\^([\w\-\@\~\\]+)?(?:\(([a-z]*)\|?.*\))?\??:)/);
     //     if (x.key) {
-    //         masterStylesKeys.push(x.key);
+    //         masterCssKeys.push(x.key);
     //         if (x.key === key) {
     //             isColorful = x.colorful;
     //         }
     //     }
 
-    //     if (match?.[1] !== null && !masterStylesKeys.includes(match?.[1] ?? '')) {
-    //         masterStylesKeys.push(match?.[1]?.replace('\\', '') ?? '');
-    //     } else if (match?.[2] !== null && !masterStylesKeys.includes(match?.[2] ?? '')) {
-    //         masterStylesKeys.push(match?.[2]?.replace('\\', '') ?? '');
+    //     if (match?.[1] !== null && !masterCssKeys.includes(match?.[1] ?? '')) {
+    //         masterCssKeys.push(match?.[1]?.replace('\\', '') ?? '');
+    //     } else if (match?.[2] !== null && !masterCssKeys.includes(match?.[2] ?? '')) {
+    //         masterCssKeys.push(match?.[2]?.replace('\\', '') ?? '');
     //     }
 
     // });
 
-    masterStylesSemantic.forEach(x => {
-        //masterStylesKeys = masterStylesKeys.concat(x.values);
-        masterStylesSemanticKeys = masterStylesSemanticKeys.concat(x.values);
+    masterCssSemantic.forEach(x => {
+        //masterCssKeys = masterCssKeys.concat(x.values);
+        masterCssSemanticKeys = masterCssSemanticKeys.concat(x.values);
     })
 
 
 
-    masterStylesKeyValues.forEach(x => {
-        masterStylesKeys = masterStylesKeys.concat(x.key);
+    masterCssKeyValues.forEach(x => {
+        masterCssKeys = masterCssKeys.concat(x.key);
         if (x.key.includes(key)) {
-            masterStylesValues = masterStylesValues.concat(x.values.filter(y => !masterStylesValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y ==='string' ? y : y.label))));
+            masterCssValues = masterCssValues.concat(x.values.filter(y => !masterCssValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y ==='string' ? y : y.label))));
             if (x.colorful) {
                 isColorful=true;
-                masterStylesType.map(y => {
+                masterCssType.map(y => {
                     y.type == 'color';
-                    masterStylesValues = masterStylesValues.concat(y.values.filter(z => !masterStylesValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z ==='string' ? z : z.label))));
+                    masterCssValues = masterCssValues.concat(y.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z ==='string' ? z : z.label))));
                 })
             }
         }
     })
 
-    masterStylesKeys = [...new Set(masterStylesKeys)];
+    masterCssKeys = [...new Set(masterCssKeys)];
 
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSemanticKeys, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
         return []
     }
 
-    if (!masterStylesKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSemanticKeys, CompletionItemKind.Property));
+    if (!masterCssKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
 
-    if (masterStylesKeys.includes(key) && key !== null && isElements === true) { //show elements
+    if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStyleElements, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
 
-    if (masterStylesKeys.includes(key) && key !== null && isMedia === true) { //show media
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesMedia, CompletionItemKind.Property));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesBreakpoints, CompletionItemKind.Property));
+    if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssBreakpoints, CompletionItemKind.Property));
         return masterStyleCompletionItem;
     }
 
-    if (masterStylesSemanticKeys.includes(key)) {
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSelectors, CompletionItemKind.Property));
+    if (masterCssSemanticKeys.includes(key)) {
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
         return masterStyleCompletionItem;
 
     }
-    else if (masterStylesKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesValues, CompletionItemKind.Enum));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesCommonValues, CompletionItemKind.Enum));
+    else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, CompletionItemKind.Enum));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum));
 
         if (isColorful) {
-            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterStylesColors));
+            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCssColors));
         }
         return masterStyleCompletionItem;
     }
 
-    if (masterStylesKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterStylesKeyValues.find(x => x.values.includes(key))) { //show select
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStylesSelectors, CompletionItemKind.Function));
+    if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function));
     }
     return masterStyleCompletionItem;
 }

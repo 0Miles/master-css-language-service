@@ -1,18 +1,18 @@
 {
-    "name": "master-styles-language-service",
-    "description": "Master Styles language service and code highlight for Visual Studio Code",
-    "displayName": "Master Styles Language Service",
+    "name": "master-css-language-service",
+    "description": "Master CSS language service and code highlight for Visual Studio Code",
+    "displayName": "Master CSS Language Service",
     "version": "0.0.37",
     "author": "Aoyue Design LLC.",
-    "funding": "https://docs.master.co/styles/donate",
-    "homepage": "https://styles.master.co",
+    "funding": "https://docs.master.co/css/donate",
+    "homepage": "https://css.master.co",
     "private": false,
     "license": "MIT",
     "publisher": "masterco",
     "icon": "images/icon.png",
     "repository": {
         "type": "git",
-        "url": "https://github.com/master-co/styles-language-service.git"
+        "url": "https://github.com/master-co/css-language-service.git"
     },
     "engines": {
         "vscode": "^1.63.0"
@@ -30,8 +30,8 @@
     "contributes": {
         "grammars": [
             {
-                "scopeName": "source.master-styles",
-                "path": "./syntaxes/master-styles.tmLanguage.json",
+                "scopeName": "source.master-css",
+                "path": "./syntaxes/master-css.tmLanguage.json",
                 "injectTo": [
                     "source.php",
                     "text.html.php",

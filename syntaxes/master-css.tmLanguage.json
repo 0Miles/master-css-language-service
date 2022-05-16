@@ -1,6 +1,6 @@
 {
-    "name": "master-styles",
-    "scopeName": "source.master-styles",
+    "name": "master-css",
+    "scopeName": "source.master-css",
     "injectionSelector": "L:source, L:text",
     "patterns": [
         {
@@ -36,22 +36,22 @@
                     "name": "string.quoted.double.html"
                 }
             },
-            "contentName": "meta.embedded.block.master-styles.class",
+            "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
                 {
-                    "include": "#master-styles-group"
+                    "include": "#master-css-group"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-selector"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-styles-media"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -77,22 +77,22 @@
                     "name": "string.quoted.double.html"
                 }
             },
-            "contentName": "meta.embedded.block.master-styles.class",
+            "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
                 {
-                    "include": "#master-styles-group-quoted-single"
+                    "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-styles-key-quoted-single"
+                    "include": "#master-css-key-quoted-single"
                 },
                 {
-                    "include": "#master-styles-selector-quoted-single"
+                    "include": "#master-css-selector-quoted-single"
                 },
                 {
-                    "include": "#master-styles-value-quoted-single"
+                    "include": "#master-css-value-quoted-single"
                 },
                 {
-                    "include": "#master-styles-media-quoted-single"
+                    "include": "#master-css-media-quoted-single"
                 },
                 {
                     "include": "#class-string"
@@ -118,7 +118,7 @@
                     "name": "punctuation.section.embedded.end"
                 }
             },
-            "contentName": "meta.embedded.block.master-styles.class",
+            "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
                 {
                     "include": "#react-class-function"
@@ -197,19 +197,19 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group"
+                    "include": "#master-css-group"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-selector"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-styles-media"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -231,19 +231,19 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group"
+                    "include": "#master-css-group"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-selector"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-styles-media"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -265,19 +265,19 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group-quoted-single"
+                    "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-styles-key-quoted-single"
+                    "include": "#master-css-key-quoted-single"
                 },
                 {
-                    "include": "#master-styles-selector-quoted-single"
+                    "include": "#master-css-selector-quoted-single"
                 },
                 {
-                    "include": "#master-styles-value-quoted-single"
+                    "include": "#master-css-value-quoted-single"
                 },
                 {
-                    "include": "#master-styles-media-quoted-single"
+                    "include": "#master-css-media-quoted-single"
                 },
                 {
                     "include": "#class-string"
@@ -339,19 +339,19 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group"
+                    "include": "#master-css-group"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-selector"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-styles-media"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -379,19 +379,19 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group"
+                    "include": "#master-css-group"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-selector"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-styles-media"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -419,26 +419,26 @@
             },
             "patterns": [
                 {
-                    "include": "#master-styles-group-quoted-single"
+                    "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-styles-key-quoted-single"
+                    "include": "#master-css-key-quoted-single"
                 },
                 {
-                    "include": "#master-styles-selector-quoted-single"
+                    "include": "#master-css-selector-quoted-single"
                 },
                 {
-                    "include": "#master-styles-value-quoted-single"
+                    "include": "#master-css-value-quoted-single"
                 },
                 {
-                    "include": "#master-styles-media-quoted-single"
+                    "include": "#master-css-media-quoted-single"
                 },
                 {
                     "include": "#class-string"
                 }
             ]
         },
-        "master-styles-group": {
+        "master-css-group": {
             "begin": "(\\{)",
             "end": "(\\}|\")",
             "captures": {
@@ -451,23 +451,23 @@
                     "name": "punctuation.section.property-list.end"
                 }
             },
-            "contentName": "master-styles.class.group",
+            "contentName": "master-css.class.group",
             "patterns": [
                 {
-                    "include": "#master-styles-group-split-sign"
+                    "include": "#master-css-group-split-sign"
                 },
                 {
-                    "include": "#master-styles-key"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-styles-value"
+                    "include": "#master-css-value"
                 },
                 {
                     "include": "#class-string"
                 }
             ]
         },
-        "master-styles-group-quoted-single": {
+        "master-css-group-quoted-single": {
             "begin": "(\\{)",
             "end": "(\\}|')",
             "captures": {
@@ -480,36 +480,36 @@
                     "name": "punctuation.section.property-list.end"
                 }
             },
-            "contentName": "master-styles.class.group",
+            "contentName": "master-css.class.group",
             "patterns": [
                 {
-                    "include": "#master-styles-group-split-sign"
+                    "include": "#master-css-group-split-sign"
                 },
                 {
-                    "include": "#master-styles-key-quoted-single"
+                    "include": "#master-css-key-quoted-single"
                 },
                 {
-                    "include": "#master-styles-value-quoted-single"
+                    "include": "#master-css-value-quoted-single"
                 },
                 {
                     "include": "#class-string"
                 }
             ]
         },
-        "master-styles-group-split-sign": {
+        "master-css-group-split-sign": {
             "patterns": [
                 {
                     "begin": "(\\|)",
                     "end": "\\b",
                     "captures": {
                         "1": {
-                            "name": "master-styles.class.split"
+                            "name": "master-css.class.split"
                         }
                     }
                 }
             ]
         },
-        "master-styles-key": {
+        "master-css-key": {
             "patterns": [
                 {
                     "match": "(?<![^\\s\\|\"`]+)(@|~)",
@@ -532,7 +532,7 @@
                 }
             ]
         },
-        "master-styles-value": {
+        "master-css-value": {
             "patterns": [
                 {
                     "match": "(?<=[^\\s\\|:]+:)(var)(\\()(\\-\\-[^\\s\\|\"]*)(\\))",
@@ -665,7 +665,7 @@
                 }
             ]
         },
-        "master-styles-selector": {
+        "master-css-selector": {
             "patterns": [
                 {
                     "match": "(?<![;/\\,])(\\.)(?!\\d)([^\\s\\|\"`@:><.\\[\\]_\\+\\(\\)]*)",
@@ -728,7 +728,7 @@
                 }
             ]
         },
-        "master-styles-media": {
+        "master-css-media": {
             "patterns": [
                 {
                     "match": "(?<=[^\\s\\|:]+:(?:(?:[^\\s\\|@]*)|(?:'[^\\s\\|]*'[^\\s\\|@]*)))(@[^\\s\\|\"`']+)",
@@ -740,7 +740,7 @@
                 }
             ]
         },
-        "master-styles-key-quoted-single": {
+        "master-css-key-quoted-single": {
             "patterns": [
                 {
                     "match": "(?<![^\\s\\|'`]+)(@|~)",
@@ -763,7 +763,7 @@
                 }
             ]
         },
-        "master-styles-value-quoted-single": {
+        "master-css-value-quoted-single": {
             "patterns": [
                 {
                     "match": "(?<=[^\\s\\|:]+:)(var)(\\()(\\-\\-[^\\s\\|']*)(\\))",
@@ -896,7 +896,7 @@
                 }
             ]
         },
-        "master-styles-selector-quoted-single": {
+        "master-css-selector-quoted-single": {
             "patterns": [
                 {
                     "match": "(?<![;/\\,])(\\.)(?!\\d)([^\\s\\|'`@:><.\\[\\]_\\+\\(\\)]*)",
@@ -959,7 +959,7 @@
                 }
             ]
         },
-        "master-styles-media-quoted-single": {
+        "master-css-media-quoted-single": {
             "patterns": [
                 {
                     "match": "(?<=[^\\s\\|:]+:(?:(?:[^\\s\\|@]*)|(?:\"[^\\s\\|]*\"[^\\s\\|@]*)))(@[^\\s\\|'`\"]+)",
