@@ -453,14 +453,15 @@
             },
             "contentName": "master-css.class.group",
             "patterns": [
-                {
-                    "include": "#master-css-group-split-sign"
-                },
+                
                 {
                     "include": "#master-css-key"
                 },
                 {
                     "include": "#master-css-value"
+                },
+                {
+                    "include": "#master-css-group-split-sign"
                 },
                 {
                     "include": "#class-string"
@@ -483,13 +484,13 @@
             "contentName": "master-css.class.group",
             "patterns": [
                 {
-                    "include": "#master-css-group-split-sign"
-                },
-                {
                     "include": "#master-css-key-quoted-single"
                 },
                 {
                     "include": "#master-css-value-quoted-single"
+                },
+                {
+                    "include": "#master-css-group-split-sign"
                 },
                 {
                     "include": "#class-string"
@@ -650,7 +651,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(?:('[^\\s\\|']*')|([^\\s\\|\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
+                    "match": "(?<=[^\\s\\|:]+:)(?:('[^\\s']*')|([^\\s\\|\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
