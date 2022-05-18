@@ -60,7 +60,7 @@ export async function getDocumentColors( DocumentColor: DocumentColorParams,docu
                 };
                 colors.push(colorInformation);
             }
-            else if(colorMatch[0].split('-').length-1<0){
+            else if(colorMatch[0].split('-').length!=2){
                 continue;
             }
             
