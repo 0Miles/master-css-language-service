@@ -7,10 +7,14 @@ import {
     CompletionItem,
     TextDocumentPositionParams,
     TextDocumentSyncKind,
-    InitializeResult} from 'vscode-languageserver/node';
+    InitializeResult,
+    DocumentColorParams,
+    ColorInformation,
+    ColorPresentationParams} from 'vscode-languageserver/node';
 
-import { TextDocument } from 'vscode-languageserver-textdocument';
+import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import {GetLastInstance,GetCompletionItem } from './completionProvider'
+import {getDocumentColors } from './documentColorProvider'
 
 
 
@@ -48,7 +52,8 @@ connection.onInitialize((params: InitializeParams) => {
                 resolveProvider: true,
                 workDoneProgress: false,
                 triggerCharacters: [':', '@', '~']
-            }
+            },
+            colorProvider:{}
         }
     };
     if (hasWorkspaceFolderCapability) {
@@ -86,6 +91,20 @@ connection.onCompletionResolve(
         return item;
     }
 );
+
+
+connection.onDocumentColor( 
+    async (documentColor: DocumentColorParams): Promise<ColorInformation[]> => {
+        return await getDocumentColors(documentColor,documents);
+    }
+);
+
+connection.onColorPresentation((params: ColorPresentationParams) => {
+    return [];
+});
+
+
+
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
