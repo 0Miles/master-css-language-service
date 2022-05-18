@@ -15,11 +15,13 @@ import {
     TextDocuments,
     CompletionItem,
     CompletionItemKind,
-    TextDocumentPositionParams} from 'vscode-languageserver/node';
+    TextDocumentPositionParams
+} from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
+    let language=documentUri.substring(documentUri.lastIndexOf('.')+1);
     const position = textDocumentPosition.position;
 
     let classPattern = /(?:(?<=(?:class|className)=(?:'|")(?:[^"']|\s)*)(?:[^"\s])+(?=>\s|\b))|(?:(?<=(?:class|className)=[^"'])[^\s]*)/g;
@@ -42,16 +44,16 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let lastClass = text?.lastIndexOf('class') ?? -1;
     let lastclassName = text?.lastIndexOf('className') ?? -1;
     let tsxclassName = text?.lastIndexOf('className={') ?? -1;
-    let tsxclassNameMode=tsxclassName> (lastClass > lastclassName ? lastClass : lastclassName);
+    let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
 
     let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
     textSub = textSub == null ? '' : textSub;
 
 
     if (tsxclassNameMode) {
-        textSub = text?.substring(tsxclassName)== null ? '' : textSub;
+        textSub = text?.substring(tsxclassName) == null ? '' : textSub;
         if (InCurlyBrackets(textSub) == false) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
         }
         classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
     }
@@ -59,18 +61,18 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let quotedSingle = textSub.split('\'').length - 1;
     let quotedDouble = textSub.split('\"').length - 1;
     let quotedTemplate = textSub.split('\`').length - 1;
-    
+
     if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
     }
 
-    if(textSub.length>1000){ //too long string substring
-        textSub=textSub.substring(textSub.length-1000);
+    if (textSub.length > 1000) { //too long string substring
+        textSub = textSub.substring(textSub.length - 1000);
         classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
     }
 
-    if (textSub.match(classPattern)===null) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false };
+    if (textSub.match(classPattern) === null) {
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
     }
     else {
         while ((classMatch = classPattern.exec(textSub)) !== null) {
@@ -86,7 +88,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         isStart = false;
     }
 
-    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart };
+    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart,language:language };
 }
 function InCurlyBrackets(text: string): boolean {
     let curlybrackets = 0;
@@ -107,12 +109,12 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean) {
+export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean,language:string) {
 
     let masterStyleCompletionItem: CompletionItem[] = [];
     let haveValue = instance.split(':').length;
     let key = instance.split(':')[0];
-    key=key.trim();
+    key = key.trim();
     let first = instance.split(':')[1];
 
     const mediaPattern = /[^\\s"]+@+([^\\s:"@]+)/g;
@@ -156,12 +158,12 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     masterCssKeyValues.forEach(x => {
         masterCssKeys = masterCssKeys.concat(x.key);
         if (x.key.includes(key)) {
-            masterCssValues = masterCssValues.concat(x.values.filter(y => !masterCssValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y ==='string' ? y : y.label))));
+            masterCssValues = masterCssValues.concat(x.values.filter(y => !masterCssValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y === 'string' ? y : y.label))));
             if (x.colorful) {
-                isColorful=true;
+                isColorful = true;
                 masterCssType.map(y => {
                     y.type == 'color';
-                    masterCssValues = masterCssValues.concat(y.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z ==='string' ? z : z.label))));
+                    masterCssValues = masterCssValues.concat(y.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z === 'string' ? z : z.label))));
                 })
             }
         }
@@ -173,7 +175,12 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
-        return masterStyleCompletionItem;
+
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
+
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
         return []
@@ -182,23 +189,35 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (!masterCssKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
-        return masterStyleCompletionItem;
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStyleElements, CompletionItemKind.Property));
-        return masterStyleCompletionItem;
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssBreakpoints, CompletionItemKind.Property));
-        return masterStyleCompletionItem;
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
     }
 
     if (masterCssSemanticKeys.includes(key)) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
-        return masterStyleCompletionItem;
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
 
     }
     else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
@@ -208,13 +227,19 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCssColors));
         }
-        return masterStyleCompletionItem;
+        if(language=='tsx'||language=='vue'||language=='jsx'){
+            return  HaveDash(key,masterStyleCompletionItem);
+        }
+        return  masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function));
     }
-    return masterStyleCompletionItem;
+    if(language=='tsx'||language=='vue'||language=='jsx'){
+        return  HaveDash(key,masterStyleCompletionItem);
+    }
+    return  masterStyleCompletionItem;
 }
 
 
@@ -270,10 +295,10 @@ function getColorsItem(colors: { key: string; color: string; }[]): CompletionIte
             b += Math.round(bx * (25 - i) / 25);
 
             masterStyleCompletionItem.push({
-                label: x.key + (i === 25 ? '' : '-' + (i*2).toString()),
+                label: x.key + (i === 25 ? '' : '-' + (i * 2).toString()),
                 documentation: '#' + r.toString(16).padStart(2, "0") + g.toString(16).padStart(2, "0") + b.toString(16).padStart(2, "0"),
                 kind: CompletionItemKind.Color,
-                sortText: `${x.key}-${(i*2).toString().padStart(2, '0')}`
+                sortText: `${x.key}-${(i * 2).toString().padStart(2, '0')}`
             })
         }
     });
@@ -289,5 +314,28 @@ function getColorsItem(colors: { key: string; color: string; }[]): CompletionIte
     })
 
     return masterStyleCompletionItem;
+}
+
+function HaveDash(str: string, itemList: CompletionItem[]): CompletionItem[] {
+    let completionItem: CompletionItem[] = [];
+    if (str.split('-').length - 1 <= 0) {
+        return itemList;
+    }
+    else {
+        let start = str.split('-')[0]+'-';
+        itemList.map(x => {
+            if (x.label.includes(start)) {
+                completionItem.push({
+                    label:x.label,
+                    kind:x.kind,
+                    insertText:x.insertText?.substring(start.length),
+                    insertTextMode:x.insertTextMode,
+                    command:x.command
+                }
+                );
+            }
+        });
+        return completionItem;
+    }
 }
 

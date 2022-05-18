@@ -80,7 +80,7 @@ connection.onCompletion(
 
         if(lastInstance.isInstance ==true)
         {
-            return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart);
+            return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart,lastInstance.language);
         }
         return [];
     }
