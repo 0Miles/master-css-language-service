@@ -521,7 +521,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -581,7 +581,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|\\d)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -752,7 +752,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:']+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:']+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -812,7 +812,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)",
+                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|\\d)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
