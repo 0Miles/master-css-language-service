@@ -500,7 +500,7 @@
         "master-css-group-split-sign": {
             "patterns": [
                 {
-                    "begin": "(\\|)",
+                    "begin": "(;)",
                     "end": "\\b",
                     "captures": {
                         "1": {
@@ -513,7 +513,7 @@
         "master-css-key": {
             "patterns": [
                 {
-                    "match": "(?<![^\\s\\|\"`]+)(@|~)",
+                    "match": "(?<![^\\s;\"`]+)(@|~)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -521,7 +521,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s\\|:]+:[^\\s\\|]*)([^\\s\\|:\"]+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"]+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -536,7 +536,7 @@
         "master-css-value": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(var)(\\()(\\-\\-[^\\s\\|\"]*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;\"]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -553,7 +553,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(\\$)(\\()([^\\s\\|\"]*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;\"]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -570,7 +570,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s\\|\\:;,@\"]+)(\\()",
+                    "match": "([^\\s;\\:\\|,@\"]+)(\\()",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -589,7 +589,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
                             "name": "constant.numeric.css"
@@ -603,7 +603,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]*)([^\\s\\|\"`:@'_!\\[;,\\(\\)\\.\\}\\+]+(?:\\.\\d+)?)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]*)([^\\s;\"`:@'_!\\[\\|,\\(\\)\\.\\}\\+]+(?:\\.\\d+)?)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -611,7 +611,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]+)(;)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\|)",
                     "captures": {
                         "1": {
                             "name": "punctuation.terminator.rule.css"
@@ -619,7 +619,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]+)(,)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(,)",
                     "captures": {
                         "1": {
                             "name": "punctuation.separator.list.comma.css"
@@ -627,7 +627,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]+)(!)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(!)",
                     "captures": {
                         "1": {
                             "name": "keyword.other.important.css"
@@ -635,7 +635,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]+)(\\()",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\()",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
@@ -643,7 +643,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|\"\\:]+)(\\))",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -651,7 +651,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(?:('[^\\s']*')|([^\\s\\|\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
+                    "match": "(?<=[^\\s;:]+:)(?:('[^\\s']*')|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
@@ -669,7 +669,7 @@
         "master-css-selector": {
             "patterns": [
                 {
-                    "match": "(?<![;/\\,])(\\.)(?!\\d)([^\\s\\|\"`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;\"`@:><.\\[\\]_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.class.css"
@@ -697,7 +697,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:\\:{1,2}|>|<|_|\\@|\\+|~)(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s\\|\\(]*)(\\))",
+                    "match": "(?<=(?:\\:{1,2}|>|<|_|\\@|\\+|~)(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s;\\(]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -705,7 +705,7 @@
                     }
                 },
                 {
-                    "match": "(?:(\\:{1,2}(?!\\d)|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s\\|\"`@:><.\\[\\]_\\+\\(\\)]*))",
+                    "match": "(?:(\\:{1,2}(?!\\d)|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s;\"`@:><.\\[\\]_\\+\\(\\)]*))",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.combinator.css"
@@ -732,7 +732,7 @@
         "master-css-media": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s\\|:]+:(?:(?:[^\\s\\|@]*)|(?:'[^\\s\\|]*'[^\\s\\|@]*)))(@[^\\s\\|\"`']+)",
+                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:'[^\\s;]*'[^\\s;@]*)))(@[^\\s;\"`']+)",
                     "captures": {
                         "1": {
                             "name": "constant.character.escape"
@@ -744,7 +744,7 @@
         "master-css-key-quoted-single": {
             "patterns": [
                 {
-                    "match": "(?<![^\\s\\|'`]+)(@|~)",
+                    "match": "(?<![^\\s;'`]+)(@|~)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -752,7 +752,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s\\|:]+:[^\\s\\|]*)([^\\s\\|:']+)(?<!\\([^\\)]*\\))(:)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:']+)(?<!\\([^\\)]*\\))(:)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -767,7 +767,7 @@
         "master-css-value-quoted-single": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(var)(\\()(\\-\\-[^\\s\\|']*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -784,7 +784,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(\\$)(\\()([^\\s\\|']*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -801,7 +801,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s\\|\\:;,@']+)(\\()",
+                    "match": "([^\\s;\\:\\|,@']+)(\\()",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -820,7 +820,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
                             "name": "constant.numeric.css"
@@ -834,7 +834,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]*)([^\\s\\|'`:@\"_!\\[;,\\(\\)\\.\\}\\+]+(?:\\.\\d+)?)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]*)([^\\s;'`:@\"_!\\[\\|,\\(\\)\\.\\}\\+]+(?:\\.\\d+)?)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -842,7 +842,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]+)(;)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\|)",
                     "captures": {
                         "1": {
                             "name": "punctuation.terminator.rule.css"
@@ -850,7 +850,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]+)(,)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(,)",
                     "captures": {
                         "1": {
                             "name": "punctuation.separator.list.comma.css"
@@ -858,7 +858,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]+)(!)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(!)",
                     "captures": {
                         "1": {
                             "name": "keyword.other.important.css"
@@ -866,7 +866,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]+)(\\()",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\()",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
@@ -874,7 +874,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s\\|:]+:)|@|~|(?:[^\\s\\|\\:;,]+\\())[^\\s\\|'\\:]+)(\\))",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -882,7 +882,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s\\|:]+:)(?:(\"[^\\s\\|\"]*\")|([^\\s\\|\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
+                    "match": "(?<=[^\\s;:]+:)(?:(\"[^\\s;\"]*\")|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
@@ -900,7 +900,7 @@
         "master-css-selector-quoted-single": {
             "patterns": [
                 {
-                    "match": "(?<![;/\\,])(\\.)(?!\\d)([^\\s\\|'`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;'`@:><.\\[\\]_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.class.css"
@@ -928,7 +928,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:\\:{1,2}|>|<|_|\\@|\\+|~)(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s\\|\\(]*)(\\))",
+                    "match": "(?<=(?:\\:{1,2}|>|<|_|\\@|\\+|~)(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s;\\(]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -936,7 +936,7 @@
                     }
                 },
                 {
-                    "match": "(?:(\\:{1,2}(?!\\d)|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s\\|'`@:><.\\[\\]_\\+\\(\\)]*))",
+                    "match": "(?:(\\:{1,2}(?!\\d)|<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))(?:(any\\-link|visited|target|scope|hover|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left)|([^\\s;'`@:><.\\[\\]_\\+\\(\\)]*))",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.combinator.css"
@@ -963,7 +963,7 @@
         "master-css-media-quoted-single": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s\\|:]+:(?:(?:[^\\s\\|@]*)|(?:\"[^\\s\\|]*\"[^\\s\\|@]*)))(@[^\\s\\|'`\"]+)",
+                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:\"[^\\s;]*\"[^\\s;@]*)))(@[^\\s;'`\"]+)",
                     "captures": {
                         "1": {
                             "name": "constant.character.escape"
