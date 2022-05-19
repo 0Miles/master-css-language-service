@@ -614,7 +614,7 @@
                     "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\|)",
                     "captures": {
                         "1": {
-                            "name": "punctuation.terminator.rule.css"
+                            "name": "comment.block"
                         }
                     }
                 },
@@ -845,7 +845,7 @@
                     "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\|)",
                     "captures": {
                         "1": {
-                            "name": "punctuation.terminator.rule.css"
+                            "name": "comment.block"
                         }
                     }
                 },
