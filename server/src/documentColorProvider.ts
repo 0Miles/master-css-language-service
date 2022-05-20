@@ -26,7 +26,7 @@ export async function getDocumentColors( DocumentColor: DocumentColorParams,docu
     if(typeof document==undefined){
         return [];
     }
-    const classPattern = /(?:(?<=class=(?:"|')(?:[^"']|\s)*)(?:[^"'\s])+(?=>\s|\b))|(?:(?<=class=)[^\s]*)/g;
+    const classPattern = /class="([^"]*)"|class='([^']*)'/g;
     let classMatch: RegExpExecArray | null;
 
     while ((classMatch = classPattern.exec(text)) !== null) {
