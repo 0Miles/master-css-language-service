@@ -24,7 +24,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let language=documentUri.substring(documentUri.lastIndexOf('.')+1);
     const position = textDocumentPosition.position;
 
-    let classPattern = /(?:(?<=(?:class|className)=(?:'|")(?:[^"']|\s)*)(?:[^"\s])+(?=>\s|\b))|(?:(?<=(?:class|className)=[^"'])[^\s]*)/g;
+    let classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
     let classMatch: RegExpExecArray | null;
     let lastKey = '';
 
@@ -55,7 +55,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         if (InCurlyBrackets(textSub) == false) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
         }
-        classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
+
     }
 
     let quotedSingle = textSub.split('\'').length - 1;
