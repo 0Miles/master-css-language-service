@@ -2,8 +2,7 @@
 
 A Visual Studio Code extension for [Master CSS](https://github.com/master-co/css). Provides code-completion and syntax highlighting.
 
-![image](https://user-images.githubusercontent.com/424290/163530745-65366f1d-bdc1-4eb6-b276-e4f454eb2d9d.png)
-
+![image](https://raw.githubusercontent.com/master-co/css-language-service/alpha/images/cover.jpg)
 
 # Community
 - [Github Discussions](https://github.com/master-co/css/discussions)
