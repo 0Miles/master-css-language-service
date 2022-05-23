@@ -267,32 +267,32 @@ export const masterCssKeyValues: MasterCssKey[] = [
     },
     //GRID AND FLEXBOX
     {
-        key: ['align-content'],
+        key: ['align-content','ac'],
         colorful: false,
         values: ['space-around', 'space-between', 'space-evenly', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['align-items'],
+        key: ['align-items','ai'],
         colorful: false,
         values: ['self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['align-self'],
+        key: ['align-self','as'],
         colorful: false,
         values: ['auto', 'self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-content'],
+        key: ['justify-content','jc'],
         colorful: false,
         values: ['space-around', 'space-between', 'space-evenly', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-items'],
+        key: ['justify-items','ji'],
         colorful: false,
         values: ['self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-self'],
+        key: ['justify-self','js'],
         colorful: false,
         values: ['auto', 'self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
@@ -1008,7 +1008,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity']
     },
     {
-        key: ['box-shadow', 'shadow'],
+        key: ['box-shadow', 'shadow','s'],
         colorful: true,
         values: ['inset']
     },
