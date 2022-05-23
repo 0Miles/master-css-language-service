@@ -35,7 +35,7 @@ export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first
 export const masterCssMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
     { label: 'media()', kind: CompletionItemKind.Function }];
 export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
-export const masterCssOtherKeys = ['ext','gap','ont','ovf','quotes','bottom','center','left','middle','top','right'];
+export const masterCssOtherKeys = ['ext','gap','ont','ovf','quotes','bottom','center','left','middle','top','right','px','py','pt','pb','pl','pr','mx','my','mt','mb','ml','mr'];
 
 export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
 
@@ -1055,12 +1055,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['auto', 'smooth']
     },
     {
-        key: ['scroll-margin', 'scroll-m', 'scroll-margin', 'scroll-margin-top', 'mt', 'scroll-margin-bottom', 'mb', 'scroll-margin-left', 'ml', 'scroll-margin-right', 'mr', 'scroll-mx', 'scroll-my'],
+        key: ['scroll-margin', 'scroll-m', 'scroll-margin-top', 'scroll-mt', 'scroll-margin-bottom', 'scroll-mb', 'scroll-margin-left', 'scroll-ml', 'scroll-margin-right', 'scroll-mr', 'scroll-mx', 'scroll-my'],
         colorful: false,
         values: []
     },
     {
-        key: ['scroll-padding', 'scroll-p', 'scroll-padding', 'scroll-padding-top', 'pt', 'scroll-padding-bottom', 'pb', 'scroll-padding-left', 'pl', 'scroll-padding-right', 'pr', 'scroll-px', 'scroll-py'],
+        key: ['scroll-padding', 'scroll-p', 'scroll-padding', 'scroll-padding-top', 'scroll-pt', 'scroll-padding-bottom', 'scroll-pb', 'scroll-padding-left', 'scroll-pl', 'scroll-padding-right', 'scroll-pr', 'scroll-px', 'scroll-py'],
         colorful: false,
         values: []
     },
