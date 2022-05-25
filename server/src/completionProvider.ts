@@ -21,7 +21,7 @@ import { TextDocument } from 'vscode-languageserver-textdocument';
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
-    let language=documentUri.substring(documentUri.lastIndexOf('.')+1);
+    let language = documentUri.substring(documentUri.lastIndexOf('.') + 1);
     const position = textDocumentPosition.position;
 
     let classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
@@ -44,26 +44,57 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let lastClass = text?.lastIndexOf('class') ?? -1;
     let lastclassName = text?.lastIndexOf('className') ?? -1;
     let tsxclassName = text?.lastIndexOf('className={') ?? -1;
-    let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
 
+    if (lastClass + lastclassName + tsxclassName == -1) {
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    }
+
+    let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
     let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
     textSub = textSub == null ? '' : textSub;
+
+
+    let classQuoted = '', classIndexAddOne = '', classIndexAddTwo = '';
 
 
     if (tsxclassNameMode) {
         textSub = text?.substring(tsxclassName) == null ? '' : textSub;
         if (InCurlyBrackets(textSub) == false) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
         }
-
+    }
+    else {
+        if (lastClass > lastclassName) {
+            classIndexAddOne = textSub.substring(5).trimStart().charAt(0);
+            classIndexAddTwo = textSub.substring(5).trimStart().substring(1).charAt(0);
+        }
+        else if (lastClass <= lastclassName) {
+            classIndexAddOne = textSub.substring(9).trimStart().charAt(0);
+            classIndexAddTwo = textSub.substring(9).trimStart().substring(1).charAt(0);
+        }
+        classQuoted = classIndexAddOne + classIndexAddTwo;
+        if (classQuoted != '=\'' && classQuoted != '=\`' && classQuoted != '=\"') {
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+        }
     }
 
     let quotedSingle = textSub.split('\'').length - 1;
     let quotedDouble = textSub.split('\"').length - 1;
     let quotedTemplate = textSub.split('\`').length - 1;
+    if (!tsxclassNameMode) {
+        if (classQuoted == '=\''&&quotedSingle>=2) {
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+        }
+        else if (classQuoted == '=\`'&&quotedDouble>=2) {
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+        }
+        else if (classQuoted == '=\"'&&quotedTemplate>=2) {
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+        }
+    }
 
     if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
 
     if (textSub.length > 1000) { //too long string substring
@@ -72,7 +103,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     }
 
     if (textSub.match(classPattern) === null) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false,language:language };
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
     else {
         while ((classMatch = classPattern.exec(textSub)) !== null) {
@@ -88,7 +119,7 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         isStart = false;
     }
 
-    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart,language:language };
+    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language };
 }
 function InCurlyBrackets(text: string): boolean {
     let curlybrackets = 0;
@@ -109,7 +140,7 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean,language:string) {
+export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string) {
 
     let masterStyleCompletionItem: CompletionItem[] = [];
     let haveValue = instance.split(':').length;
@@ -176,10 +207,10 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
 
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
 
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
@@ -189,35 +220,35 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (!masterCssKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStyleElements, CompletionItemKind.Property));
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssBreakpoints, CompletionItemKind.Property));
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
     }
 
     if (masterCssSemanticKeys.includes(key)) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
 
     }
     else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
@@ -227,19 +258,19 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCssColors));
         }
-        if(language=='tsx'||language=='vue'||language=='jsx'){
-            return  HaveDash(key,masterStyleCompletionItem);
+        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+            return HaveDash(key, masterStyleCompletionItem);
         }
-        return  masterStyleCompletionItem;
+        return masterStyleCompletionItem;
     }
 
     if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function));
     }
-    if(language=='tsx'||language=='vue'||language=='jsx'){
-        return  HaveDash(key,masterStyleCompletionItem);
+    if (language == 'tsx' || language == 'vue' || language == 'jsx') {
+        return HaveDash(key, masterStyleCompletionItem);
     }
-    return  masterStyleCompletionItem;
+    return masterStyleCompletionItem;
 }
 
 
@@ -322,15 +353,15 @@ function HaveDash(str: string, itemList: CompletionItem[]): CompletionItem[] {
         return itemList;
     }
     else {
-        let start = str.split('-')[0]+'-';
+        let start = str.split('-')[0] + '-';
         itemList.map(x => {
             if (x.label.includes(start)) {
                 completionItem.push({
-                    label:x.label,
-                    kind:x.kind,
-                    insertText:x.insertText?.substring(start.length),
-                    insertTextMode:x.insertTextMode,
-                    command:x.command
+                    label: x.label,
+                    kind: x.kind,
+                    insertText: x.insertText?.substring(start.length),
+                    insertTextMode: x.insertTextMode,
+                    command: x.command
                 }
                 );
             }
