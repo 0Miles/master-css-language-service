@@ -43,7 +43,6 @@ export async function getDocumentColors(DocumentColor: DocumentColorParams, docu
             if (colorMatch[0].split('/').length == 2) {
                 colorAlpha = Number('0' + colorMatch[0].split('/')[1]);
             }
-            console.log(classMatch[0].split('/').length+"  "+colorMatch[0]+"   a"+colorAlpha);
 
 
             if (colorMatch[0].split('-').length == 1)//:black  black/.5
