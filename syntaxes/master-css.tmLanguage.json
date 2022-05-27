@@ -580,7 +580,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
+                    "match": "(?<![\\-])\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -706,21 +706,24 @@
                     }
                 },
                 {
-                    "match": "(?:(<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;\"`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;\"`@:><.\\[\\],_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
-                            "name": "keyword.operator.combinator.css"
+                            "name": "comment.block"
                         },
                         "2": {
-                            "name": ""
+                            "name": "keyword.operator.combinator.css"
                         },
                         "3": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
+                            "name": ""
                         },
                         "4": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                            "name": "punctuation.definition.entity.begin.bracket.square.css"
                         },
                         "5": {
+                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                        },
+                        "6": {
                             "name": "entity.name.tag.css"
                         }
                     }
@@ -810,7 +813,7 @@
                     }
                 },
                 {
-                    "match": "\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
+                    "match": "(?<![\\-])\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -936,21 +939,24 @@
                     }
                 },
                 {
-                    "match": "(?:(<|_|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'`@:><.\\[\\],_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
-                            "name": "keyword.operator.combinator.css"
+                            "name": "comment.block"
                         },
                         "2": {
-                            "name": ""
+                            "name": "keyword.operator.combinator.css"
                         },
                         "3": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
+                            "name": ""
                         },
                         "4": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                            "name": "punctuation.definition.entity.begin.bracket.square.css"
                         },
                         "5": {
+                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                        },
+                        "6": {
                             "name": "entity.name.tag.css"
                         }
                     }
