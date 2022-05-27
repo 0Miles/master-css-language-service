@@ -31,7 +31,7 @@ export async function getDocumentColors(DocumentColor: DocumentColorParams, docu
 
     while ((classMatch = classPattern.exec(text)) !== null) {
 
-        const colorPattern = /(?<=[:;])(?:\w*(?:-[\d]{1,2})?(?:\/.?[\d])?\b)/g;
+        const colorPattern = /(?<=[:|])(?:\w*(?:-[\d]{1,2})?(?:\/.?[\d])?\b)/g;
         let colorMatch: RegExpExecArray | null;
         let colorName: string;
         let colorNumber: number;
