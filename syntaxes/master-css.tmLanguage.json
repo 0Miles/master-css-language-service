@@ -520,7 +520,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
+                    "match": "(?!break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -580,7 +580,7 @@
                     }
                 },
                 {
-                    "match": "(?<![\\-])\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
+                    "match": "(?<![\\-])\\b(break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
