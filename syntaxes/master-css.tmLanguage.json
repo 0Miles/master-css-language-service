@@ -83,16 +83,16 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-css-key-quoted-single"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-css-selector-quoted-single"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-css-value-quoted-single"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-css-media-quoted-single"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -268,16 +268,16 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-css-key-quoted-single"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-css-selector-quoted-single"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-css-value-quoted-single"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-css-media-quoted-single"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -422,16 +422,16 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
-                    "include": "#master-css-key-quoted-single"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-css-selector-quoted-single"
+                    "include": "#master-css-selector"
                 },
                 {
-                    "include": "#master-css-value-quoted-single"
+                    "include": "#master-css-value"
                 },
                 {
-                    "include": "#master-css-media-quoted-single"
+                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -483,10 +483,10 @@
             "contentName": "master-css.class.group",
             "patterns": [
                 {
-                    "include": "#master-css-key-quoted-single"
+                    "include": "#master-css-key"
                 },
                 {
-                    "include": "#master-css-value-quoted-single"
+                    "include": "#master-css-value"
                 },
                 {
                     "include": "#master-css-group-split-sign"
@@ -512,7 +512,7 @@
         "master-css-key": {
             "patterns": [
                 {
-                    "match": "(?<![^\\s;\"`<_\\@\\+>~\\[]+)(@|~)",
+                    "match": "(?<![^\\s;\"'`<_\\@\\+>~\\[]+)(@|~)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -520,7 +520,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"]+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
+                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -535,7 +535,7 @@
         "master-css-value": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;\"]*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;\"']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -552,7 +552,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;\"]*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;\"']*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -569,7 +569,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s;\\:\\|,@\"]+)(\\()",
+                    "match": "([^\\s;\\:\\|,@\"']+)(\\()",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -588,7 +588,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
                             "name": "constant.numeric.css"
@@ -602,7 +602,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]*)([^\\s;\"`:@'_!\\[\\|,\\(\\)\\.\\}\\+>~<]+(?:\\.\\d+)?)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]*)([^\\s;\"`:@'_!\\[\\|,\\(\\)\\.\\}\\+>~<]+(?:\\.\\d+)?)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -610,7 +610,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\|)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\|)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
@@ -618,7 +618,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(,)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(,)",
                     "captures": {
                         "1": {
                             "name": "punctuation.separator.list.comma.css"
@@ -626,7 +626,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(!)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(!)",
                     "captures": {
                         "1": {
                             "name": "keyword.other.important.css"
@@ -634,7 +634,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\()",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\()",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
@@ -642,7 +642,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"\\:]+)(\\))",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -650,7 +650,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s;:]+:)(?:('[^\\s']*')|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
+                    "match": "(?<=[^\\s;:]+:)(?:((?:'[^\\s']*')|(?:\"[^\\s\"]*\"))|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
                     "captures": {
                         "1": {
                             "name": "string.quoted.double.html"
@@ -668,7 +668,7 @@
         "master-css-selector": {
             "patterns": [
                 {
-                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;\"`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;'\"`@:><.\\[\\]_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.class.css"
@@ -698,7 +698,7 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}(?:any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left))",
+                    "match": "(\\:{1,2}(?:any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last))",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
@@ -706,7 +706,7 @@
                     }
                 },
                 {
-                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;\"`@:><.\\[\\],_\\+\\(\\)]*)",
+                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'\"`@:><.\\[\\],_\\+\\(\\)]*)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
@@ -733,240 +733,7 @@
         "master-css-media": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:'[^\\s;]*'[^\\s;@]*)))(@[^\\s;\"`']+)",
-                    "captures": {
-                        "1": {
-                            "name": "constant.character.escape"
-                        }
-                    }
-                }
-            ]
-        },
-        "master-css-key-quoted-single": {
-            "patterns": [
-                {
-                    "match": "(?<![^\\s;'`<_\\@\\+>~\\[]+)(@|~)",
-                    "captures": {
-                        "1": {
-                            "name": "support.type.property-name.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?!break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:']+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
-                    "captures": {
-                        "1": {
-                            "name": "support.type.property-name.css"
-                        },
-                        "2": {
-                            "name": "punctuation.separator.key-value.css"
-                        }
-                    }
-                }
-            ]
-        },
-        "master-css-value-quoted-single": {
-            "patterns": [
-                {
-                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;']*)(\\))",
-                    "captures": {
-                        "1": {
-                            "name": "support.function.misc.css"
-                        },
-                        "2": {
-                            "name": "punctuation.section.function.begin.bracket.round.css"
-                        },
-                        "3": {
-                            "name": "variable.argument.css"
-                        },
-                        "4": {
-                            "name": "punctuation.section.function.end.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;']*)(\\))",
-                    "captures": {
-                        "1": {
-                            "name": "support.function.misc.css"
-                        },
-                        "2": {
-                            "name": "punctuation.section.function.begin.bracket.round.css"
-                        },
-                        "3": {
-                            "name": "variable.argument.css"
-                        },
-                        "4": {
-                            "name": "punctuation.section.function.end.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "([^\\s;\\:\\|,@']+)(\\()",
-                    "captures": {
-                        "1": {
-                            "name": "support.function.misc.css"
-                        },
-                        "2": {
-                            "name": "punctuation.section.function.begin.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<![\\-])\\b(break\\-word|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
-                    "captures": {
-                        "1": {
-                            "name": "support.constant.property-value.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
-                    "captures": {
-                        "1": {
-                            "name": "constant.numeric.css"
-                        },
-                        "2": {
-                            "name": "constant.numeric.css"
-                        },
-                        "3": {
-                            "name": "keyword.other.unit"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]*)([^\\s;'`:@\"_!\\[\\|,\\(\\)\\.\\}\\+>~<]+(?:\\.\\d+)?)",
-                    "captures": {
-                        "1": {
-                            "name": "support.constant.property-value.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\|)",
-                    "captures": {
-                        "1": {
-                            "name": "comment.block"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(,)",
-                    "captures": {
-                        "1": {
-                            "name": "punctuation.separator.list.comma.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(!)",
-                    "captures": {
-                        "1": {
-                            "name": "keyword.other.important.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\()",
-                    "captures": {
-                        "1": {
-                            "name": "punctuation.section.function.begin.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;'\\:]+)(\\))",
-                    "captures": {
-                        "1": {
-                            "name": "punctuation.section.function.end.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=[^\\s;:]+:)(?:(\"[^\\s;\"]*\")|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
-                    "captures": {
-                        "1": {
-                            "name": "string.quoted.double.html"
-                        },
-                        "2": {
-                            "name": "support.constant.property-value.css"
-                        },
-                        "3": {
-                            "name": "keyword.other.important.css"
-                        }
-                    }
-                }
-            ]
-        },
-        "master-css-selector-quoted-single": {
-            "patterns": [
-                {
-                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;'`@:><.\\[\\]_\\+\\(\\)]*)",
-                    "captures": {
-                        "1": {
-                            "name": "entity.other.attribute-name.class.css"
-                        },
-                        "2": {
-                            "name": "entity.other.attribute-name.class.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(\\:{1,2}(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where))(\\()",
-                    "captures": {
-                        "1": {
-                            "name": "entity.other.attribute-name.pseudo-class.css"
-                        },
-                        "2": {
-                            "name": "punctuation.section.function.begin.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=\\:{1,2}(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s;\\(]*)(\\))",
-                    "captures": {
-                        "1": {
-                            "name": "punctuation.section.function.end.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(\\:{1,2}(?:any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|left))",
-                    "captures": {
-                        "1": {
-                            "name": "entity.other.attribute-name.pseudo-class.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'`@:><.\\[\\],_\\+\\(\\)]*)",
-                    "captures": {
-                        "1": {
-                            "name": "comment.block"
-                        },
-                        "2": {
-                            "name": "keyword.operator.combinator.css"
-                        },
-                        "3": {
-                            "name": ""
-                        },
-                        "4": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
-                        },
-                        "5": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
-                        },
-                        "6": {
-                            "name": "entity.name.tag.css"
-                        }
-                    }
-                }
-            ]
-        },
-        "master-css-media-quoted-single": {
-            "patterns": [
-                {
-                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:\"[^\\s;]*\"[^\\s;@]*)))(@[^\\s;'`\"]+)",
+                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:'[^\\s;']*'[^\\s;@]*)|(?:\"[^\\s;\"]*\"[^\\s;@]*)))(@[^\\s;\"`']+)",
                     "captures": {
                         "1": {
                             "name": "constant.character.escape"
