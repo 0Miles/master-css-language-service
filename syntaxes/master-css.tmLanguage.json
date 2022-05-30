@@ -520,7 +520,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last|lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)",
+                    "match": "(?!break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|maker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -679,7 +679,7 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where))(\\()",
+                    "match": "(\\:{1,2}(?:nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted))(\\()",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
@@ -690,7 +690,7 @@
                     }
                 },
                 {
-                    "match": "(?<=\\:{1,2}(?:lang|nth\\-child|nth\\-last\\-child|nth\\-of\\-type|nth\\-last\\-of\\-type|host\\-context|host|is|not|where)\\([^\\s;\\(]*)(\\))",
+                    "match": "(?<=\\:{1,2}(?:nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted)\\([^\\s;\\(]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
@@ -698,7 +698,7 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}(?:any\\-link|visited|target|scope|hover|before|after|active|focus\\-visible|focus\\-within|focus|autofill|enabled|disabled|read\\-only|read\\-write|placeholder\\-showen|default|checked|indeterminate|valid|invalid|in\\-range|out\\-of\\-range|required|optional|root|empty|first\\-letter|first\\-child|first\\-of\\-type|last\\-child|last\\-of\\-type|only\\-child|only\\-of\\-type|defined|first|fullscreen|scrollbar\\-thumb|scrollbar\\-corner|scrollbar|odd|even|last))",
+                    "match": "(\\:{1,2}(?:out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|maker|placeholder|selection|scrollbar|resizer))",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
