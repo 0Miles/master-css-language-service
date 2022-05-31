@@ -357,7 +357,26 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['font-family', 'font', 'f'],
         colorful: false,
-        values: ['serif', 'mono', 'sans']
+        values: [
+            "'Courier New', Courier, monospace",
+            "'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif",
+            "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif",
+            "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif",
+            "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            "'Times New Roman', Times, serif",
+            "'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif",
+            "Arial, Helvetica, sans-serif",
+            "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif",
+            "Georgia, 'Times New Roman', Times, serif",
+            "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+            "Verdana, Geneva, Tahoma, sans-serif",
+            'cursive',
+            'fantasy',
+            'monospace',
+            'sans-serif',
+            'serif',
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
+        ]
     },
     {
         key: ['font-size', 'font', 'f'],
