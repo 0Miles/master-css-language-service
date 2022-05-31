@@ -520,7 +520,7 @@
                     }
                 },
                 {
-                    "match": "(?!break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|maker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted)",
+                    "match": "(?!break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel)(?<![^\\s;:]+:[^\\s;]*)([^\\s;:\"']+)(?<!\\([^\\)]*\\))(:)(?!\\:|out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|maker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -580,7 +580,7 @@
                     }
                 },
                 {
-                    "match": "(?<![\\-])\\b(break\\-word|italic|oblique|static|fixed|sticky|rel|abs|hidden|hide|invisible|visible|full|capitalize|lowercase|uppercase|block|table|contents|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|inline|rounded|round|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|square)",
+                    "match": "(?<![\\-])\\b(break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
