@@ -147,6 +147,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let key = instance.split(':')[0];
     key = key.trim();
     let first = instance.split(':')[1];
+    let instanceLength = instance.split(':|@').length;
+    let last=instance.split(':|@')[instanceLength-1];
 
     const mediaPattern = /[^\\s"]+@+([^\\s:"@]+)/g;
     const elementsPattern = /[^\\s"]+::+([^\\s:"@]+)/g;
@@ -228,8 +230,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStyleElements, CompletionItemKind.Property));
-        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
-            return HaveDash(key, masterStyleCompletionItem);
+        if ((language == 'tsx' || language == 'vue' || language == 'jsx')&& triggerKey !== "@" && triggerKey !== ":") {
+            return HaveDash(last, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
     }
@@ -237,16 +239,16 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssBreakpoints, CompletionItemKind.Property));
-        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
-            return HaveDash(key, masterStyleCompletionItem);
+        if ((language == 'tsx' || language == 'vue' || language == 'jsx')&& triggerKey !== "@" && triggerKey !== ":") {
+            return HaveDash('@'+last, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
     }
 
     if (masterCssSemanticKeys.includes(key)) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
-        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
-            return HaveDash(key, masterStyleCompletionItem);
+        if ((language == 'tsx' || language == 'vue' || language == 'jsx')&& triggerKey !== "@" && triggerKey !== ":") {
+            return HaveDash(last, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
 
@@ -258,8 +260,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCssColors));
         }
-        if (language == 'tsx' || language == 'vue' || language == 'jsx') {
-            return HaveDash(key, masterStyleCompletionItem);
+        if ((language == 'tsx' || language == 'vue' || language == 'jsx')&& triggerKey !== "@" && triggerKey !== ":") {
+            return HaveDash(last, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
     }
@@ -267,8 +269,9 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function));
     }
-    if (language == 'tsx' || language == 'vue' || language == 'jsx') {
-        return HaveDash(key, masterStyleCompletionItem);
+
+    if ((language == 'tsx' || language == 'vue' || language == 'jsx')&& triggerKey !== "@" && triggerKey !== ":") {
+        return HaveDash(last, masterStyleCompletionItem);
     }
     return masterStyleCompletionItem;
 }
