@@ -778,7 +778,9 @@
                 {
                     "match": "(\\S)",
                     "captures": {
-                        "1": {}
+                        "1": {
+                            "name": "meta.import string.quoted"
+                        }
                     }
                 }
             ]
