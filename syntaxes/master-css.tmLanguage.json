@@ -679,12 +679,29 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}(?:nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|where|part|slotted))(\\()",
+                    "match": "(\\:{1,2})(slotted|part)(\\()",
+                    "captures": {
+                        "1": {
+                            "name": "entity.other.attribute-name.pseudo-element.css"
+                        },
+                        "2": {
+                            "name": "entity.other.attribute-name.pseudo-element.css"
+                        },
+                        "3": {
+                            "name": "punctuation.section.function.begin.bracket.round.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(\\:)(nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|host\\-context|nth\\-child|where|lang|host|not|is)(\\()",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
                         },
                         "2": {
+                            "name": "entity.other.attribute-name.pseudo-class.css"
+                        },
+                        "3": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
                         }
                     }
@@ -698,10 +715,24 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2}(?:out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|maker|placeholder|selection|scrollbar|resizer))",
+                    "match": "(\\:)(out\\-of\\-range|only\\-of\\-type|last\\-of\\-type|first\\-of\\-type|placeholder\\-showen|focus\\-visible|focus\\-within|first\\-letter|first\\-child|last\\-child|only\\-child|read\\-write|read\\-only|any\\-link|in\\-range|indeterminate|fullscreen|autofill|disabled|required|optional|visited|enabled|default|checked|invalid|defined|target|active|hover|scope|focus|valid|empty|first|link|root|even|last|odd)",
                     "captures": {
                         "1": {
+                            "name": "entity.other.attribute-name.pseudo-class.css punctuation.definition.entity.css"
+                        },
+                        "2": {
                             "name": "entity.other.attribute-name.pseudo-class.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(\\:{1,2})(file\\-selector-button|search\\-cancel\\-button|search\\-results\\-button|scrollbar\\-track\\-piece|scrollbar\\-button|scrollbar\\-track|scrollbar\\-thumb|scrollbar\\-corner|first\\-letter|first\\-line|placeholder|scrollbar|selection|backdrop|resizer|before|after|maker|cue)",
+                    "captures": {
+                        "1": {
+                            "name": "entity.other.attribute-name.pseudo-element.css punctuation.definition.entity.css"
+                        },
+                        "2": {
+                            "name": "entity.other.attribute-name.pseudo-element.css"
                         }
                     }
                 },
