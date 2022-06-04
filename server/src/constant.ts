@@ -17,6 +17,7 @@ export const masterCssSelectors = [
     { label: 'nth-child()', kind: CompletionItemKind.Function },
     { label: 'nth-last-child()', kind: CompletionItemKind.Function }, 'first-child', 'last-child', 'only-child',
     { label: 'nth-of-type()', kind: CompletionItemKind.Function },
+    { label: 'nth()', kind: CompletionItemKind.Function },
 
     { label: 'nth-last-of-type()', kind: CompletionItemKind.Function }, 'first-of-type', 'last-of-type', 'only-of-type', 'defined', 'first', 'fullscreen',
     { label: 'host()', kind: CompletionItemKind.Function },
@@ -24,7 +25,8 @@ export const masterCssSelectors = [
     { label: 'is()', kind: CompletionItemKind.Function }, 'left',
     { label: 'not()', kind: CompletionItemKind.Function },
     'right',
-    { label: 'where()', kind: CompletionItemKind.Function }
+    { label: 'where()', kind: CompletionItemKind.Function },
+    'odd', 'even', 'first', 'last'
 ];
 export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first-letter', 'first-line', 'file-selector-button', 'marker',
     { label: 'part()', kind: CompletionItemKind.Function }, 'placeholder'
