@@ -39,6 +39,9 @@
             "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
                 {
+                    "include":"#master-css-value-string-quoted-single"
+                },
+                {
                     "include": "#master-css-group"
                 },
                 {
@@ -79,6 +82,9 @@
             },
             "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
                 {
                     "include": "#master-css-group-quoted-single"
                 },
@@ -197,6 +203,12 @@
             },
             "patterns": [
                 {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
                     "include": "#master-css-group"
                 },
                 {
@@ -231,6 +243,9 @@
             },
             "patterns": [
                 {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
                     "include": "#master-css-group"
                 },
                 {
@@ -264,6 +279,9 @@
                 }
             },
             "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
                 {
                     "include": "#master-css-group-quoted-single"
                 },
@@ -379,6 +397,9 @@
             },
             "patterns": [
                 {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
                     "include": "#master-css-group"
                 },
                 {
@@ -419,6 +440,9 @@
             },
             "patterns": [
                 {
+                    "include": "#master-css-value-string"
+                },
+                {
                     "include": "#master-css-group-quoted-single"
                 },
                 {
@@ -454,6 +478,9 @@
             "contentName": "master-css.class.group",
             "patterns": [
                 {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -482,6 +509,9 @@
             },
             "contentName": "master-css.class.group",
             "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
                 {
                     "include": "#master-css-key"
                 },
@@ -588,10 +618,10 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\/]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
                     "captures": {
                         "1": {
-                            "name": "constant.numeric.css"
+                            "name": "keyword.operator.css"
                         },
                         "2": {
                             "name": "constant.numeric.css"
@@ -602,7 +632,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]*)([^\\s;\"`:@'_!\\[\\|,\\(\\)\\.\\}\\+>~<]+(?:\\.\\d+)?)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)([^\\s;\"'`:@_!\\[\\|,\\(\\)\\.\\}\\+>~</]+)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -610,7 +640,23 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\|)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(/)",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.operator.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(\\.\\d+)",
+                    "captures": {
+                        "1": {
+                            "name": "constant.numeric.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(\\|)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
@@ -618,7 +664,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(,)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(,)",
                     "captures": {
                         "1": {
                             "name": "punctuation.separator.list.comma.css"
@@ -626,7 +672,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(!)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(!)",
                     "captures": {
                         "1": {
                             "name": "keyword.other.important.css"
@@ -634,7 +680,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\()",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(\\()",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.begin.bracket.round.css"
@@ -642,24 +688,10 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\"'\\:]+)(\\))",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "punctuation.section.function.end.bracket.round.css"
-                        }
-                    }
-                },
-                {
-                    "match": "(?<=[^\\s;:]+:)(?:((?:'[^\\s']*')|(?:\"[^\\s\"]*\"))|([^\\s;\"`:@'_!\\[\\.\\+]+))(?:\\.\\d)?(!)?",
-                    "captures": {
-                        "1": {
-                            "name": "string.quoted.double.html"
-                        },
-                        "2": {
-                            "name": "support.constant.property-value.css"
-                        },
-                        "3": {
-                            "name": "keyword.other.important.css"
                         }
                     }
                 }
@@ -770,6 +802,44 @@
                             "name": "constant.character.escape"
                         }
                     }
+                }
+            ]
+        },
+        "master-css-value-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-value-string-quoted-single": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
                 }
             ]
         },
