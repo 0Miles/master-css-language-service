@@ -793,7 +793,7 @@
         "master-css-media": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s]+)(@[^\\s;\"`'\\(]+)(?:(\\()([^\\s:\\)]+)(:)(\\d+)?(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?([^\\s\\)]+)?(\\)))?",
+                    "match": "(?<=[^\\s\"'`]+)(@[^\\s;\"`'\\(]+)(?:(\\()([^\\s:\\)]+)(:)(\\d+)?(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?([^\\s\\)]+)?(\\)))?",
                     "captures": {
                         "1": {
                             "name": "constant.character.escape"
