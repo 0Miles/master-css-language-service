@@ -769,7 +769,21 @@
                     }
                 },
                 {
-                    "match": "(?:(_)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'\"`@:><.\\[\\],_\\+\\(\\){]*)",
+                    "match": "(\\[)([^\\s\\]]+)(\\])",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.entity.begin.bracket.square.css"
+                        },
+                        "2": {
+                            "name": "entity.other.attribute-name.css"
+                        },
+                        "3": {
+                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(?:(_)|(\\+(?!\\d)|>|~))([^\\s;'\"`@:><.\\[\\],_\\+\\(\\){]*)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
@@ -778,12 +792,6 @@
                             "name": ""
                         },
                         "3": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
-                        },
-                        "4": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
-                        },
-                        "5": {
                             "name": "entity.name.tag.css"
                         }
                     }
