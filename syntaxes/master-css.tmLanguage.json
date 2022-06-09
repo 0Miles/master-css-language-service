@@ -45,6 +45,9 @@
                     "include": "#master-css-group"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -52,9 +55,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -89,6 +89,9 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -96,9 +99,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -212,6 +212,9 @@
                     "include": "#master-css-group"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -219,9 +222,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -249,6 +249,9 @@
                     "include": "#master-css-group"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -256,9 +259,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -286,6 +286,9 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -293,9 +296,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -360,6 +360,9 @@
                     "include": "#master-css-group"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -367,9 +370,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -403,6 +403,9 @@
                     "include": "#master-css-group"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -410,9 +413,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -446,6 +446,9 @@
                     "include": "#master-css-group-quoted-single"
                 },
                 {
+                    "include": "#master-css-media"
+                },
+                {
                     "include": "#master-css-key"
                 },
                 {
@@ -453,9 +456,6 @@
                 },
                 {
                     "include": "#master-css-value"
-                },
-                {
-                    "include": "#master-css-media"
                 },
                 {
                     "include": "#class-string"
@@ -769,24 +769,21 @@
                     }
                 },
                 {
-                    "match": "(?:(_)|(<|\\@)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'\"`@:><.\\[\\],_\\+\\(\\){]*)",
+                    "match": "(?:(_)|(\\+(?!\\d)|>|~)|(\\[)|(\\]))([^\\s;'\"`@:><.\\[\\],_\\+\\(\\){]*)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
                         },
                         "2": {
-                            "name": "keyword.operator.combinator.css"
-                        },
-                        "3": {
                             "name": ""
                         },
-                        "4": {
+                        "3": {
                             "name": "punctuation.definition.entity.begin.bracket.square.css"
                         },
-                        "5": {
+                        "4": {
                             "name": "punctuation.definition.entity.end.bracket.square.css"
                         },
-                        "6": {
+                        "5": {
                             "name": "entity.name.tag.css"
                         }
                     }
@@ -796,10 +793,31 @@
         "master-css-media": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s;:]+:(?:(?:[^\\s;@]*)|(?:'[^\\s;']*'[^\\s;@]*)|(?:\"[^\\s;\"]*\"[^\\s;@]*)))(@[^\\s;\"`']+)",
+                    "match": "(?<=[^\\s]+)(@[^\\s;\"`'\\(]+)(?:(\\()([^\\s:\\)]+)(:)(\\d+)?(\\%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?([^\\s\\)]+)?(\\)))?",
                     "captures": {
                         "1": {
                             "name": "constant.character.escape"
+                        },
+                        "2": {
+                            "name": "punctuation.definition.parameters.begin.bracket.round.css"
+                        },
+                        "3": {
+                            "name": "support.type.property-name.media.css"
+                        },
+                        "4": {
+                            "name": "punctuation.separator.key-value.css"
+                        },
+                        "5": {
+                            "name": "constant.numeric.css"
+                        },
+                        "6": {
+                            "name": "keyword.other.unit.px.css"
+                        },
+                        "7": {
+                            "name": "support.constant.property-value.css"
+                        },
+                        "8": {
+                            "name": "punctuation.definition.parameters.end.bracket.round.css"
                         }
                     }
                 }
