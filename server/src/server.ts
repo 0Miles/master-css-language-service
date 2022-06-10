@@ -14,6 +14,7 @@ import {
 
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import {GetLastInstance,GetCompletionItem } from './completionProvider'
+import {GetHoverInstance,doHover } from './hoverProvider'
 import {getDocumentColors } from './documentColorProvider'
 
 
@@ -53,7 +54,8 @@ connection.onInitialize((params: InitializeParams) => {
                 workDoneProgress: false,
                 triggerCharacters: [':', '@', '~']
             },
-            colorProvider:{}
+            colorProvider:{},
+            hoverProvider:true
         }
     };
     if (hasWorkspaceFolderCapability) {
@@ -103,7 +105,24 @@ connection.onColorPresentation((params: ColorPresentationParams) => {
     return [];
 });
 
+connection.onHover(textDocumentPosition => {
+    let HoverInstance=GetHoverInstance(textDocumentPosition,documents);
+    if(HoverInstance.instance){
+        console.log(HoverInstance.instance);
 
+    return doHover(HoverInstance.instance,HoverInstance.range)
+    }
+    // let document = documents.get(textDocumentPosition.textDocument.uri);
+    // const position = textDocumentPosition.position;
+    // let line = document?.getText({
+    //     start: { line: position.line, character: 0 },
+    //     end: { line: position.line, character: position.character },
+    // })
+    // console.log(line+"12355");
+
+    return null;
+});
+// s
 
 
 // Make the text document manager listen on the connection
