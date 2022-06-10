@@ -141,7 +141,11 @@ function InCurlyBrackets(text: string): boolean {
 
 export function doHover(instance: string, range: Range): Hover {
     return {
-        contents: render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss,
+        contents:{
+            language: 'css',
+            value:  render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss
+            .replace('{','\{\r').replace('}','\r\}').replace('\r\}\}','\}\r\}'),
+        },
         range: range
     };
 }
