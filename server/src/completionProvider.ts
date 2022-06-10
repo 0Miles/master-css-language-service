@@ -85,10 +85,10 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         if (classQuoted == '=\''&&quotedSingle>=2) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
         }
-        else if (classQuoted == '=\`'&&quotedDouble>=2) {
+        else if (classQuoted == '=\"'&&quotedDouble>=2) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
         }
-        else if (classQuoted == '=\"'&&quotedTemplate>=2) {
+        else if (classQuoted == '=\`'&&quotedTemplate>=2) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
         }
     }
