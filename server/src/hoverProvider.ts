@@ -140,8 +140,11 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function doHover(instance: string, range: Range): Hover {
+export function doHover(instance: string, range: Range): Hover|null {
     let renderText = render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss;
+    if(renderText==null||renderText==''||renderText==' '){
+        return null;
+    }
 
     return {
         contents: {
