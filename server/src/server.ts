@@ -10,12 +10,16 @@ import {
     InitializeResult,
     DocumentColorParams,
     ColorInformation,
-    ColorPresentationParams} from 'vscode-languageserver/node';
+    ColorPresentationParams,
+    ColorPresentation,
+    Color,
+    TextEdit
+} from 'vscode-languageserver/node';
 
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
-import {GetLastInstance,GetCompletionItem } from './completionProvider'
-import {GetHoverInstance,doHover } from './hoverProvider'
-import {getDocumentColors } from './documentColorProvider'
+import { GetLastInstance, GetCompletionItem } from './completionProvider'
+import { GetHoverInstance, doHover } from './hoverProvider'
+import { GetDocumentColors, GetColorPresentation } from './documentColorProvider'
 
 
 
@@ -54,8 +58,8 @@ connection.onInitialize((params: InitializeParams) => {
                 workDoneProgress: false,
                 triggerCharacters: [':', '@', '~']
             },
-            colorProvider:{},
-            hoverProvider:true
+            colorProvider: {},
+            hoverProvider: true
         }
     };
     if (hasWorkspaceFolderCapability) {
@@ -78,11 +82,10 @@ connection.onInitialized(() => {
 connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
 
-        let lastInstance=GetLastInstance(_textDocumentPosition,documents);
+        let lastInstance = GetLastInstance(_textDocumentPosition, documents);
 
-        if(lastInstance.isInstance ==true)
-        {
-            return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart,lastInstance.language);
+        if (lastInstance.isInstance == true) {
+            return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language);
         }
         return [];
     }
@@ -95,20 +98,19 @@ connection.onCompletionResolve(
 );
 
 
-connection.onDocumentColor( 
+connection.onDocumentColor(
     async (documentColor: DocumentColorParams): Promise<ColorInformation[]> => {
-        return await getDocumentColors(documentColor,documents);
-    }
-);
+        return await GetDocumentColors(documentColor, documents);
+});
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
-    return [];
+    return GetColorPresentation(params);
 });
 
 connection.onHover(textDocumentPosition => {
-    let HoverInstance=GetHoverInstance(textDocumentPosition,documents);
-    if(HoverInstance.instance){
-        return doHover(HoverInstance.instance,HoverInstance.range)
+    let HoverInstance = GetHoverInstance(textDocumentPosition, documents);
+    if (HoverInstance.instance) {
+        return doHover(HoverInstance.instance, HoverInstance.range)
     }
     return null;
 });
