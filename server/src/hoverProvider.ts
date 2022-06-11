@@ -6,6 +6,7 @@ import {
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { render } from '@master/css/render';
 import { StyleSheet, Style } from '@master/css';
+import { css_beautify } from 'js-beautify';
 
 
 export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
@@ -21,7 +22,7 @@ export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParam
     let instanceRange =
     {
         start: { line: 0, character: 0 },
-        end: { line:0, character: 0 },
+        end: { line: 0, character: 0 },
     };
 
     let line = document?.getText({
@@ -112,11 +113,11 @@ export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParam
     }
 
 
-    instanceRange={
+    instanceRange = {
         start: { line: position.line, character: instanceStart + 1 },
         end: { line: position.line, character: instanceEnd },
     }
-    let instance = document?.getText(instanceRange)??'';
+    let instance = document?.getText(instanceRange) ?? '';
 
     return { isInstance: true, instance: instance, range: instanceRange, language: language };
 }
@@ -140,11 +141,15 @@ function InCurlyBrackets(text: string): boolean {
 }
 
 export function doHover(instance: string, range: Range): Hover {
+    let renderText = render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss;
+
     return {
-        contents:{
+        contents: {
             language: 'css',
-            value:  render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss
-            .replace('{','\{\r').replace('}','\r\}').replace('\r\}\}','\}\r\}'),
+            value: css_beautify(renderText, {
+                newline_between_rules: true,
+                end_with_newline: true
+            })
         },
         range: range
     };
