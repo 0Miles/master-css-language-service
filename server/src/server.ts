@@ -108,21 +108,11 @@ connection.onColorPresentation((params: ColorPresentationParams) => {
 connection.onHover(textDocumentPosition => {
     let HoverInstance=GetHoverInstance(textDocumentPosition,documents);
     if(HoverInstance.instance){
-        console.log(HoverInstance.instance);
-
-    return doHover(HoverInstance.instance,HoverInstance.range)
+        return doHover(HoverInstance.instance,HoverInstance.range)
     }
-    // let document = documents.get(textDocumentPosition.textDocument.uri);
-    // const position = textDocumentPosition.position;
-    // let line = document?.getText({
-    //     start: { line: position.line, character: 0 },
-    //     end: { line: position.line, character: position.character },
-    // })
-    // console.log(line+"12355");
-
     return null;
 });
-// s
+
 
 
 // Make the text document manager listen on the connection
