@@ -65,7 +65,7 @@
         "typescript": "^4.6.2"
     },
     "dependencies": {
-        "@master/css": "^1.31.1",
+        "@master/css": "^1.32.4",
         "@types/js-beautify": "^1.13.3",
         "js-beautify": "^1.14.3"
     }
