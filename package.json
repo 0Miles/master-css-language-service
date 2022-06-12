@@ -28,23 +28,61 @@
     ],
     "main": "./client/out/extension",
     "contributes": {
+        "languages": [
+            {
+                "id": "master-css",
+                "aliases": [
+                    "@master/css",
+                    "mastercss"
+                ],
+                "extensions": [
+                    ".mastercss"
+                ]
+            }
+        ],
         "grammars": [
             {
+                "language": "master-css",
                 "scopeName": "source.master-css",
-                "path": "./syntaxes/master-css.tmLanguage.json",
+                "path": "./syntaxes/master-css.tmLanguage.json"
+            },
+            {
+                "scopeName": "source.master-css.injection-html",
+                "path": "./syntaxes/master-css.injection-html.tmLanguage.json",
                 "injectTo": [
                     "source.php",
                     "text.html.php",
                     "text.html",
+                    "source.rust",
+                    "source.svelte"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.master-css.class": "master-css"
+                }
+            },
+            {
+                "scopeName": "source.master-css.injection-react",
+                "path": "./syntaxes/master-css.injection-react.tmLanguage.json",
+                "injectTo": [
                     "source.js.jsx",
                     "source.ts.tsx",
                     "source.jsx",
-                    "source.tsx",
-                    "source.ts",
+                    "source.tsx"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.master-css.class": "master-css"
+                }
+            },
+            {
+                "scopeName": "source.master-css.injection-js",
+                "path": "./syntaxes/master-css.injection-js.tmLanguage.json",
+                "injectTo": [
                     "source.js",
-                    "source.rust",
-                    "source.svelte"
-                ]
+                    "source.ts"
+                ],
+                "embeddedLanguages": {
+                    "meta.embedded.block.master-css.class": "master-css"
+                }
             }
         ]
     },
