@@ -46,7 +46,7 @@ export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParam
         return { isInstance: false, instance: '', range: instanceRange, language: language };
     }
 
-    let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
+    let tsxclassNameMode = tsxclassName >= (lastClass > lastclassName ? lastClass : lastclassName);
     let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
     textSub = textSub == null ? '' : textSub;
 
@@ -63,11 +63,11 @@ export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParam
     else {
         if (lastClass > lastclassName) {
             classIndexAddOne = textSub.substring(5).trimStart().charAt(0);
-            classIndexAddTwo = textSub.substring(5).trimStart().substring(1).charAt(0);
+            classIndexAddTwo = textSub.substring(5).trimStart().substring(1).trimStart().charAt(0);
         }
         else if (lastClass <= lastclassName) {
             classIndexAddOne = textSub.substring(9).trimStart().charAt(0);
-            classIndexAddTwo = textSub.substring(9).trimStart().substring(1).charAt(0);
+            classIndexAddTwo = textSub.substring(9).trimStart().substring(1).trimStart().charAt(0);
         }
         classQuoted = classIndexAddOne + classIndexAddTwo;
         if (classQuoted != '=\'' && classQuoted != '=\`' && classQuoted != '=\"') {
@@ -102,7 +102,7 @@ export function GetHoverInstance(textDocumentPosition: TextDocumentPositionParam
 
     if (tsxclassNameMode) {
         instanceStart = instanceStart > lineText.substring(0, position.character).lastIndexOf("{") ? instanceStart : lineText.substring(0, position.character).lastIndexOf("{");
-        instanceEnd = instanceEnd < lineText.indexOf("}", position.character) ? instanceEnd : lineText.indexOf("}", position.character);
+        instanceEnd = instanceEnd < lineText.indexOf("}", position.character) ? instanceEnd : (lineText.indexOf("}", position.character)==-1?instanceEnd:lineText.indexOf("}", position.character));
     }
     else {
         instanceStart = instanceStart > lineText.substring(0, position.character).lastIndexOf(classIndexAddTwo) ? instanceStart : lineText.substring(0, position.character).lastIndexOf(classIndexAddTwo);
@@ -140,9 +140,9 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function doHover(instance: string, range: Range): Hover|null {
+export function doHover(instance: string, range: Range): Hover | null {
     let renderText = render(`<p class="${instance}">`, { StyleSheet, Style }).stylesCss;
-    if(renderText==null||renderText==''||renderText==' '){
+    if (renderText == null || renderText == '' || renderText == ' ') {
         return null;
     }
 
