@@ -1246,5 +1246,9 @@ export const masterCssSemantic = [
             { label: 'opacity()', kind: CompletionItemKind.Function },
             { label: 'saturate()', kind: CompletionItemKind.Function },
             { label: 'sepia()', kind: CompletionItemKind.Function }]
-    }
+    },
+    {
+        key: 'text-transform',
+        values: ['capitalize', 'lowercase', 'uppercase']
+    },
 ]
