@@ -53,7 +53,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValuer( { red:Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4]==undefined?1: Number(colorMatch2[4]) })
+                    color:getColorValue( { red:Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4]==undefined?1: Number(colorMatch2[4]) })
                 };
                 colors.push(colorInformation);
             }
@@ -63,7 +63,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValuer(hslToRgb(Number(colorMatch2[1]),Number(colorMatch2[2]),Number(colorMatch2[3]), colorMatch2[4]==undefined?1: Number(colorMatch2[4])))
+                    color:getColorValue(hslToRgb(Number(colorMatch2[1]),Number(colorMatch2[2]),Number(colorMatch2[3]), colorMatch2[4]==undefined?1: Number(colorMatch2[4])))
                 };
                 colors.push(colorInformation);
             }
@@ -73,7 +73,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValuer(hexToRgb(colorMatch2[1]))
+                    color:getColorValue(hexToRgb(colorMatch2[1]))
                 };
                 colors.push(colorInformation);
             }
@@ -231,7 +231,7 @@ export function hexToRgb(hex: string): Color {
     const aRgbHex = hex.match(/.{1,2}/g);
     return { red:parseInt(aRgbHex?.[0]??'0', 16), green: parseInt(aRgbHex?.[1]??'0', 16), blue: parseInt(aRgbHex?.[2]??'0', 16), alpha:parseInt(aRgbHex?.[3]??'FF', 16) }
 }
-export function getColorValuer(color: Color): Color{
+export function getColorValue(color: Color): Color{
     return {red:color.red/255.0,green:color.green/255.0,blue:color.blue/255.0,alpha:color.alpha}
 }
 
