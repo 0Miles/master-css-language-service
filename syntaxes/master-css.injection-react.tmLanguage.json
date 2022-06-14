@@ -15,7 +15,7 @@
     ],
     "repository": {
         "highlight-class": {
-            "begin": "(?:\\s*)?(className|class)(\\=)(\")",
+            "begin": "(?:\\s*)?(className)(\\=)(\")",
             "end": "(\")",
             "captures": {
                 "1": {
@@ -47,7 +47,7 @@
             ]
         },
         "highlight-class-quoted-single": {
-            "begin": "(?:\\s*)?(className|class)(\\=)(')",
+            "begin": "(?:\\s*)?(className)(\\=)(')",
             "end": "(')",
             "captures": {
                 "1": {
@@ -79,7 +79,7 @@
             ]
         },
         "highlight-react-class": {
-            "begin": "(?:\\s*)?(className|class)(\\=)(\\s?\\{)",
+            "begin": "(?:\\s*)?(className)(\\=)(\\s?\\{)",
             "end": "(\\})",
             "captures": {
                 "1": {
