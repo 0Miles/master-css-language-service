@@ -1,7 +1,7 @@
 {
     "name": "master-css",
     "scopeName": "source.master-css.injection-html",
-    "injectionSelector": "L:source, L:text",
+    "injectionSelector": "L:source -comment, L:text",
     "patterns": [
         {
             "include": "#highlight-class"
