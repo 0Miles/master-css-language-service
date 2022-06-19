@@ -87,6 +87,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
             if (colorMatch[0].split('-').length == 1)//:black  black/.5
             {
                 colorName = colorMatch[0].split('/')[0];
+                colorName=colorName.endsWith('_')?colorName.replace('_',''):colorName;
                 if (colorName == 'black') {
                     const colorInformation: ColorInformation = {
                         range: {
