@@ -1,0 +1,293 @@
+{
+    "name": "master-css",
+    "scopeName": "source.master-css.injection-react",
+    "injectionSelector": "L:source -comment, L:text",
+    "patterns": [
+        {
+            "include": "#highlight-class"
+        },
+        {
+            "include": "#highlight-class-quoted-single"
+        },
+        {
+            "include": "#highlight-react-class"
+        }
+    ],
+    "repository": {
+        "highlight-class": {
+            "begin": "(?:\\s*)?(className)(\\=)(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "contentName": "meta.embedded.block.master-css.class",
+            "patterns": [
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "highlight-class-quoted-single": {
+            "begin": "(?:\\s*)?(className)(\\=)(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "contentName": "meta.embedded.block.master-css.class",
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "highlight-react-class": {
+            "begin": "(?:\\s*)?(className)(\\=)(\\s?\\{)",
+            "end": "(\\})",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "keyword.operator.assignment"
+                },
+                "3": {
+                    "name": "punctuation.section.embedded.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.section.embedded.end"
+                }
+            },
+            "contentName": "meta.embedded.block.master-css.class",
+            "patterns": [
+                {
+                    "include": "#react-class-function"
+                },
+                {
+                    "include": "#react-class-template-string"
+                },
+                {
+                    "include": "#react-class-quoted-double-string"
+                },
+                {
+                    "include": "#react-class-quoted-single-string"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "react-class-function": {
+            "begin": "\\s?(\\w*)(\\()",
+            "end": "(\\))",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                }
+            },
+            "endCaptures": {},
+            "patterns": [
+                {
+                    "include": "#react-class-function-quoted"
+                },
+                {
+                    "include": "#react-class-template-string"
+                },
+                {
+                    "include": "#react-class-quoted-double-string"
+                },
+                {
+                    "include": "#react-class-quoted-single-string"
+                }
+            ]
+        },
+        "react-class-function-quoted": {
+            "begin": "({)",
+            "end": "(})",
+            "patterns": [
+                {
+                    "include": "#react-class-template-string"
+                },
+                {
+                    "include": "#react-class-quoted-double-string"
+                },
+                {
+                    "include": "#react-class-quoted-single-string"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "react-class-template-string": {
+            "begin": "\\s?(\\w*)(`)",
+            "end": "`",
+            "captures": {
+                "1": {
+                    "name": "punctuation.definition.string.template.begin"
+                },
+                "2": {
+                    "name": "string.quoted.double"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "react-class-quoted-double-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "react-class-quoted-single-string": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.single"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.single"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-value-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-value-string-quoted-single": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "class-string": {
+            "patterns": [
+                {
+                    "match": "(\\S)",
+                    "captures": {
+                        "1": {
+                            "name": "meta.import string.quoted"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}
