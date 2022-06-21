@@ -32,7 +32,7 @@
             {
                 "id": "master-css",
                 "aliases": [
-                    "@master/css",
+                    "master-css",
                     "mastercss"
                 ],
                 "extensions": [
