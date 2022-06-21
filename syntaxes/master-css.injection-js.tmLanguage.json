@@ -5,9 +5,127 @@
     "patterns": [
         {
             "include": "#highlight-style-extend-classes"
+        },
+        {
+            "include": "#highlight-classList-classes"
         }
     ],
     "repository": {
+        "highlight-classList-classes": {
+            "begin": "(classList)(\\.)(add|remove|replace|replace|toggle)(\\()",
+            "end": "(\\))",
+            "captures": {
+                "1": {
+                    "name": "variable.other.object"
+                },
+                "2": {
+                    "name": "meta.function-call punctuation.accessor"
+                },
+                "3": {
+                    "name": "entity.name.function"
+                },
+                "4": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#classList-classes-template-string"
+                },
+                {
+                    "include": "#classList-classes-quoted-double-string"
+                },
+                {
+                    "include": "#classList-classes-quoted-single-string"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "classList-classes-template-string": {
+            "begin": "(`)",
+            "end": "(`)",
+            "captures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "classList-classes-quoted-single-string": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "classList-classes-quoted-double-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.template punctuation.definition.string.template.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
         "highlight-style-extend-classes": {
             "begin": "\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*(\\{)",
             "end": "(\\})",
