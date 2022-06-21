@@ -19,6 +19,8 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
+import {IsMasterCss,IsClassList } from './masterCss';
+
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
     let language = documentUri.substring(documentUri.lastIndexOf('.') + 1);
@@ -41,66 +43,87 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
         start: { line: 0, character: 0 },
         end: { line: position.line, character: position.character },
     });
-    let lastClass = text?.lastIndexOf('class') ?? -1;
-    let lastclassName = text?.lastIndexOf('className') ?? -1;
-    let tsxclassName = text?.lastIndexOf('className={') ?? -1;
 
-    if (lastClass + lastclassName + tsxclassName == -1) {
+
+    let textSub:string='';
+    let dataIsMasterCss = IsMasterCss(text ?? '');
+    let dataIsClassList=IsClassList(text??'');
+
+    if (!(language == 'tsx' || language == 'ts' || language == 'jsx'|| language == 'js')) {
+        dataIsClassList.isClassList=false;
+    }
+
+    if (dataIsMasterCss.isMasterCss == false&&dataIsClassList.isClassList==false) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
-
-    let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
-    let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
-    textSub = textSub == null ? '' : textSub;
-
-
-    let classQuoted = '', classIndexAddOne = '', classIndexAddTwo = '';
-
-
-    if (tsxclassNameMode) {
-        textSub = text?.substring(tsxclassName) == null ? '' : textSub;
-        if (InCurlyBrackets(textSub) == false) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-        }
+    else if(dataIsMasterCss.isMasterCss ==true){
+        textSub=dataIsMasterCss.text;
     }
-    else {
-        if (lastClass > lastclassName) {
-            classIndexAddOne = textSub.substring(5).trimStart().charAt(0);
-            classIndexAddTwo = textSub.substring(5).trimStart().substring(1).charAt(0);
-        }
-        else if (lastClass <= lastclassName) {
-            classIndexAddOne = textSub.substring(9).trimStart().charAt(0);
-            classIndexAddTwo = textSub.substring(9).trimStart().substring(1).charAt(0);
-        }
-        classQuoted = classIndexAddOne + classIndexAddTwo;
-        if (classQuoted != '=\'' && classQuoted != '=\`' && classQuoted != '=\"') {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-        }
+    else if(dataIsClassList.isClassList ==true)
+    {
+        textSub=dataIsClassList.text;
     }
 
-    let quotedSingle = textSub.split('\'').length - 1;
-    let quotedDouble = textSub.split('\"').length - 1;
-    let quotedTemplate = textSub.split('\`').length - 1;
-    if (!tsxclassNameMode) {
-        if (classQuoted == '=\'' && quotedSingle >= 2) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-        }
-        else if (classQuoted == '=\"' && quotedDouble >= 2) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-        }
-        else if (classQuoted == '=\`' && quotedTemplate >= 2) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-        }
-    }
+    // let lastClass = text?.lastIndexOf('class') ?? -1;
+    // let lastclassName = text?.lastIndexOf('className') ?? -1;
+    // let tsxclassName = text?.lastIndexOf('className={') ?? -1;
 
-    if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    }
+    // if (lastClass + lastclassName + tsxclassName == -1) {
+    //     return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    // }
 
-    if (textSub.length > 1000) { //too long string substring
-        textSub = textSub.substring(textSub.length - 1000);
-        classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
-    }
+    // let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
+    // let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
+    // textSub = textSub == null ? '' : textSub;
+
+
+    // let classQuoted = '', classIndexAddOne = '', classIndexAddTwo = '';
+
+
+    // if (tsxclassNameMode) {
+    //     textSub = text?.substring(tsxclassName) == null ? '' : textSub;
+    //     if (InCurlyBrackets(textSub) == false) {
+    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    //     }
+    // }
+    // else {
+    //     if (lastClass > lastclassName) {
+    //         classIndexAddOne = textSub.substring(5).trimStart().charAt(0);
+    //         classIndexAddTwo = textSub.substring(5).trimStart().substring(1).charAt(0);
+    //     }
+    //     else if (lastClass <= lastclassName) {
+    //         classIndexAddOne = textSub.substring(9).trimStart().charAt(0);
+    //         classIndexAddTwo = textSub.substring(9).trimStart().substring(1).charAt(0);
+    //     }
+    //     classQuoted = classIndexAddOne + classIndexAddTwo;
+    //     if (classQuoted != '=\'' && classQuoted != '=\`' && classQuoted != '=\"') {
+    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    //     }
+    // }
+
+    // let quotedSingle = textSub.split('\'').length - 1;
+    // let quotedDouble = textSub.split('\"').length - 1;
+    // let quotedTemplate = textSub.split('\`').length - 1;
+    // if (!tsxclassNameMode) {
+    //     if (classQuoted == '=\'' && quotedSingle >= 2) {
+    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    //     }
+    //     else if (classQuoted == '=\"' && quotedDouble >= 2) {
+    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    //     }
+    //     else if (classQuoted == '=\`' && quotedTemplate >= 2) {
+    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    //     }
+    // }
+
+    // if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
+    //     return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
+    // }
+
+    // if (textSub.length > 1000) { //too long string substring
+    //     textSub = textSub.substring(textSub.length - 1000);
+    //     classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
+    // }
 
     if (textSub.match(classPattern) === null) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };

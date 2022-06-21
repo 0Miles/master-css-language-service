@@ -19,6 +19,7 @@ import {
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
 import { GetHoverInstance, doHover } from './hoverProvider'
+import { GetMasterInstance,GetAllInstance,InTags,GetAllClassListInstance } from './masterCss'
 import { GetDocumentColors, GetColorPresentation } from './documentColorProvider'
 
 
@@ -108,7 +109,7 @@ connection.onColorPresentation((params: ColorPresentationParams) => {
 });
 
 connection.onHover(textDocumentPosition => {
-    let HoverInstance = GetHoverInstance(textDocumentPosition, documents);
+    let HoverInstance = GetMasterInstance(textDocumentPosition, documents);
     if (HoverInstance.instance) {
         return doHover(HoverInstance.instance, HoverInstance.range)
     }

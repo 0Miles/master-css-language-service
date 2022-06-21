@@ -23,13 +23,17 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
     let colors: ColorInformation[] = []
 
     const documentUri = DocumentColor.textDocument.uri;
+    let language = documentUri.substring(documentUri.lastIndexOf('.') + 1);
     let document = documents.get(documentUri);
     let text = document?.getText() ?? '';
 
     if (typeof document == undefined) {
         return [];
     }
-    const classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}/g;
+    let classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}|(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)/g;
+    if (!(language == 'tsx' || language == 'ts' || language == 'jsx'|| language == 'js')) {
+        classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}/g;
+    }
     let classMatch: RegExpExecArray | null;
 
     while ((classMatch = classPattern.exec(text)) !== null) {
