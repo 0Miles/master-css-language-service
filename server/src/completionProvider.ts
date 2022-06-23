@@ -352,7 +352,7 @@ function getColorsItem(colors: { key: string; color: string; }[]): CompletionIte
             b += Math.round(bx * (25 - i) / 25);
 
             masterStyleCompletionItem.push({
-                label: x.key + (i === 25 ? '' : '-' + (i * 2).toString()),
+                label: x.key + (i === 25 ? '' : '-' +(100- (i * 2)).toString()),
                 documentation: '#' + r.toString(16).padStart(2, "0") + g.toString(16).padStart(2, "0") + b.toString(16).padStart(2, "0"),
                 kind: CompletionItemKind.Color,
                 sortText: `${x.key}-${(i * 2).toString().padStart(2, '0')}`
