@@ -15,7 +15,7 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-
+import { Style } from '@master/css';
 
 
 export async function GetDocumentColors(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>
@@ -31,7 +31,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
         return [];
     }
     let classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}|(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)/g;
-    if (!(language == 'tsx' || language == 'ts' || language == 'jsx'|| language == 'js')) {
+    if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
         classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}/g;
     }
     let classMatch: RegExpExecArray | null;
@@ -57,7 +57,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValue( { red:Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4]==undefined?1: Number(colorMatch2[4]) })
+                    color: getColorValue({ red: Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4]) })
                 };
                 colors.push(colorInformation);
             }
@@ -67,7 +67,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValue(hslToRgb(Number(colorMatch2[1]),Number(colorMatch2[2]),Number(colorMatch2[3]), colorMatch2[4]==undefined?1: Number(colorMatch2[4])))
+                    color: getColorValue(hslToRgb(Number(colorMatch2[1]), Number(colorMatch2[2]), Number(colorMatch2[3]), colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4])))
                 };
                 colors.push(colorInformation);
             }
@@ -77,7 +77,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
                         end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                     },
-                    color:getColorValue(hexToRgb(colorMatch2[1]))
+                    color: getColorValue(hexToRgb(colorMatch2[1]))
                 };
                 colors.push(colorInformation);
             }
@@ -91,7 +91,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
             if (colorMatch[0].split('-').length == 1)//:black  black/.5
             {
                 colorName = colorMatch[0].split('/')[0];
-                colorName=colorName.endsWith('_')?colorName.replace('_',''):colorName;
+                colorName = colorName.endsWith('_') ? colorName.replace('_', '') : colorName;
                 if (colorName == 'black') {
                     const colorInformation: ColorInformation = {
                         range: {
@@ -154,23 +154,13 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
 }
 
 function getColorsRGBA(colorName: string, colorNumber: number, colorAlpha: number = 1): Color {
+    const rgbColors = Style.rgbColors;
 
-    let colorString = masterCssColors.find(x => x.key == colorName)?.color ?? 'null';
-    let i = colorNumber / 2;
+    const rgbColorValue = rgbColors[colorName];
+    const levelRgb = rgbColorValue[colorNumber];
+    let levelRgbSplit = levelRgb.split(' ');
 
-
-    let r = parseInt(colorString.substring(0, 2), 16);
-    let rx = i < 25 ? 255 - r : r;
-    r += Math.round(rx * (25 - i) / 25);
-
-    let g = Math.round(parseInt(colorString.substring(2, 4), 16));
-    let gx = i < 25 ? 255 - g : g;
-    g += Math.round(gx * (25 - i) / 25);
-    let b = Math.round(parseInt(colorString.substring(4, 6), 16));
-    let bx = i < 25 ? 255 - b : b;
-    b += Math.round(bx * (25 - i) / 25);
-
-    return { red: r / 255, green: g / 255, blue: b / 255, alpha: colorAlpha };
+    return { red: +levelRgbSplit[0] / 255, green: +levelRgbSplit[1] / 255, blue: +levelRgbSplit[2] / 255, alpha: colorAlpha };
 }
 export interface HWBA { h: number; w: number; b: number; a: number; }
 
@@ -234,10 +224,10 @@ export function hslToRgb(h: number, s: number, l: number, alpha?: number): Color
 
 export function hexToRgb(hex: string): Color {
     const aRgbHex = hex.match(/.{1,2}/g);
-    return { red:parseInt(aRgbHex?.[0]??'0', 16), green: parseInt(aRgbHex?.[1]??'0', 16), blue: parseInt(aRgbHex?.[2]??'0', 16), alpha:parseInt(aRgbHex?.[3]??'FF', 16) }
+    return { red: parseInt(aRgbHex?.[0] ?? '0', 16), green: parseInt(aRgbHex?.[1] ?? '0', 16), blue: parseInt(aRgbHex?.[2] ?? '0', 16), alpha: parseInt(aRgbHex?.[3] ?? 'FF', 16) }
 }
-export function getColorValue(color: Color): Color{
-    return {red:color.red/255.0,green:color.green/255.0,blue:color.blue/255.0,alpha:color.alpha}
+export function getColorValue(color: Color): Color {
+    return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
 }
 
 export function GetColorPresentation(params: ColorPresentationParams) {

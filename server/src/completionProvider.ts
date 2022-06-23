@@ -19,7 +19,10 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import {IsMasterCss,IsClassList } from './masterCss';
+import { IsMasterCss, IsClassList,RgbToHex } from './masterCss';
+import { Style } from '@master/css';
+
+const rgbColors = Style.rgbColors;
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
@@ -45,23 +48,22 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     });
 
 
-    let textSub:string='';
+    let textSub: string = '';
     let dataIsMasterCss = IsMasterCss(text ?? '');
-    let dataIsClassList=IsClassList(text??'');
+    let dataIsClassList = IsClassList(text ?? '');
 
-    if (!(language == 'tsx' || language == 'ts' || language == 'jsx'|| language == 'js')) {
-        dataIsClassList.isClassList=false;
+    if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
+        dataIsClassList.isClassList = false;
     }
 
-    if (dataIsMasterCss.isMasterCss == false&&dataIsClassList.isClassList==false) {
+    if (dataIsMasterCss.isMasterCss == false && dataIsClassList.isClassList == false) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
-    else if(dataIsMasterCss.isMasterCss ==true){
-        textSub=dataIsMasterCss.text;
+    else if (dataIsMasterCss.isMasterCss == true) {
+        textSub = dataIsMasterCss.text;
     }
-    else if(dataIsClassList.isClassList ==true)
-    {
-        textSub=dataIsClassList.text;
+    else if (dataIsClassList.isClassList == true) {
+        textSub = dataIsClassList.text;
     }
 
     // let lastClass = text?.lastIndexOf('class') ?? -1;
@@ -281,7 +283,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum));
 
         if (isColorful) {
-            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCssColors));
+            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem());
         }
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
@@ -336,29 +338,33 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
     return masterStyleCompletionItem;
 }
 
-function getColorsItem(colors: { key: string; color: string; }[]): CompletionItem[] {
+
+
+
+function getColorsItem(): CompletionItem[] {
+
     let masterStyleCompletionItem: CompletionItem[] = [];
-    colors.forEach(x => {
-        for (let i = 1; i <= 49; i++) {
-            let r = parseInt(x.color.substring(0, 2), 16);
-            let rx = i < 25 ? 255 - r : r;
-            r += Math.round(rx * (25 - i) / 25);
 
-            let g = Math.round(parseInt(x.color.substring(2, 4), 16));
-            let gx = i < 25 ? 255 - g : g;
-            g += Math.round(gx * (25 - i) / 25);
-            let b = Math.round(parseInt(x.color.substring(4, 6), 16));
-            let bx = i < 25 ? 255 - b : b;
-            b += Math.round(bx * (25 - i) / 25);
+    Object.keys(rgbColors)
+        .filter((colorName: string) => colorName !== 'black' && colorName !== 'white')
+        .map((colorName: string) => {
+            const eachRgbColor = rgbColors[colorName];
 
-            masterStyleCompletionItem.push({
-                label: x.key + (i === 25 ? '' : '-' +(100- (i * 2)).toString()),
-                documentation: '#' + r.toString(16).padStart(2, "0") + g.toString(16).padStart(2, "0") + b.toString(16).padStart(2, "0"),
-                kind: CompletionItemKind.Color,
-                sortText: `${x.key}-${(i * 2).toString().padStart(2, '0')}`
-            })
-        }
-    });
+            Object.keys(eachRgbColor)
+                .filter((level: string) => level !== '')
+                .map((level: string) => {
+                    const levelRgb = eachRgbColor[level];
+                    let levelRgbSplit=levelRgb.split(' ');
+
+                    masterStyleCompletionItem.push({
+                        label: colorName + '-' +level,
+                        documentation: '#'+RgbToHex(+levelRgbSplit[0], +levelRgbSplit[1], +levelRgbSplit[2]),
+                        kind: CompletionItemKind.Color,
+                        sortText: `${colorName}-${(level).toString().padStart(2, '0')}`
+                    })
+                })
+        })
+
     masterStyleCompletionItem.push({
         label: 'whtie',
         documentation: '#ffffff',
