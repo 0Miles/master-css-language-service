@@ -551,9 +551,6 @@
                     "name": "entity.other.attribute-name"
                 },
                 "2": {
-                    "name": "punctuation.separator.key-value"
-                },
-                "3": {
                     "name": "string.quoted.double"
                 }
             },
