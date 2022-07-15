@@ -19,7 +19,7 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { IsMasterCss, IsClassList,RgbToHex } from './masterCss';
+import { IsMasterCss, IsClassList,RgbToHex ,IsElement} from './masterCss';
 import { Style } from '@master/css';
 
 const rgbColors = Style.rgbColors;
@@ -51,12 +51,13 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let textSub: string = '';
     let dataIsMasterCss = IsMasterCss(text ?? '');
     let dataIsClassList = IsClassList(text ?? '');
+    let dataIsElement = IsElement(text ?? '');
 
     if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
         dataIsClassList.isClassList = false;
     }
 
-    if (dataIsMasterCss.isMasterCss == false && dataIsClassList.isClassList == false) {
+    if (dataIsMasterCss.isMasterCss == false && dataIsClassList.isClassList == false && dataIsElement?.IsElement == false) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
     else if (dataIsMasterCss.isMasterCss == true) {
@@ -64,6 +65,9 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     }
     else if (dataIsClassList.isClassList == true) {
         textSub = dataIsClassList.text;
+    }
+    else if (dataIsElement?.IsElement == true) {
+        textSub = dataIsElement.text;
     }
 
     // let lastClass = text?.lastIndexOf('class') ?? -1;

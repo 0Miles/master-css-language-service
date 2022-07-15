@@ -30,9 +30,9 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
     if (typeof document == undefined) {
         return [];
     }
-    let classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}|(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)/g;
+    let classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}|(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)|(?:\$|(?:[^\s=.`]+\.[^\s.`]+)`([^`]+)`)/g;
     if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
-        classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)}/g;
+        classPattern = /class="([^"]*)"|class='([^']*)'|class=`([^`]*)`|class={([^]*)|(?:\$|(?:[^\s=.`]+\.[^\s.`]+)`([^`]+)`)}/g;
     }
     let classMatch: RegExpExecArray | null;
 

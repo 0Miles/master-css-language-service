@@ -151,7 +151,7 @@ export function IsClassList(document: string) {
     else if (textReplaceSpace2.indexOf(quotedTemp, 2) != -1) {
         return result;
     }
-    result.text=textSub2.substring(1);
+    result.text = textSub2.substring(1);
     result.quoted = quotedTemp;
     result.isClassList = true;
 
@@ -159,8 +159,27 @@ export function IsClassList(document: string) {
 
 }
 
+export function IsElement(document: string) {
+
+    let result = { IsElement: false, quoted: '', text: '' };
+    let reverseDocument = document.split("").reverse().join("");
+
+    let elementPattern = /^`?([^`]+)`(?=\$|(?:[^\s.`]+\.[^\s=.`]+))/g;
+    let elementMatch: RegExpMatchArray | null;
+    elementMatch = reverseDocument.match(elementPattern);
+
+    if (elementMatch == null) {
+        return result;
+    }
+
+    result.IsElement=true;
+    result.quoted='`';
+    result.text=elementMatch[0].split("").reverse().join("");
+    return result;
+}
+
 export function GetMasterInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
-    
+
     const documentUri = textDocumentPosition.textDocument.uri;
     const position = textDocumentPosition.position;
     let document = documents.get(documentUri);
@@ -187,23 +206,26 @@ export function GetMasterInstance(textDocumentPosition: TextDocumentPositionPara
     });
 
     //#region is in class
-    let quoted:string='';
+    let quoted: string = '';
     let dataIsMasterCss = IsMasterCss(text ?? '');
-    let dataIsClassList=IsClassList(text??'');
+    let dataIsClassList = IsClassList(text ?? '');
+    let dataIsElement = IsElement(text ?? '');
 
-    if (!(language == 'tsx' || language == 'ts' || language == 'jsx'|| language == 'js')) {
-        dataIsClassList.isClassList=false;
+    if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
+        dataIsClassList.isClassList = false;
     }
 
-    if (dataIsMasterCss.isMasterCss == false&&dataIsClassList.isClassList==false) {
+    if (dataIsMasterCss.isMasterCss == false && dataIsClassList.isClassList == false && dataIsElement?.IsElement == false) {
         return { isInstance: false, instance: '', range: instanceRange };
     }
-    else if(dataIsMasterCss.isMasterCss ==true){
-        quoted=dataIsMasterCss.quoted;
+    else if (dataIsMasterCss.isMasterCss == true) {
+        quoted = dataIsMasterCss.quoted;
     }
-    else if(dataIsClassList.isClassList ==true)
-    {
-        quoted=dataIsClassList.quoted;
+    else if (dataIsClassList.isClassList == true) {
+        quoted = dataIsClassList.quoted;
+    }
+    else if (dataIsElement?.IsElement == true) {
+        quoted = dataIsElement.quoted;
     }
 
     //#endregion is in class
@@ -340,9 +362,9 @@ export function GetAllClassListInstance(textDocumentPosition: TextDocumentIdenti
 
 
 export function InTags(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
-    let result={
+    let result = {
         inTag: false,
-        tagAttrName:'',
+        tagAttrName: '',
         tagIndex: 0,
         tagRange: { start: Position.create(0, 0), end: Position.create(0, 0) },
         tagString: ''
@@ -363,19 +385,18 @@ export function InTags(textDocumentPosition: TextDocumentPositionParams, documen
 
     while ((tagMatch = tagPattern.exec(text)) !== null) {
         if (tagMatch.index <= documentIndex && tagMatch.index + tagMatch[0].length >= documentIndex) {
-            while ((tagAttrNameMatch = tagAttrNamePattern.exec(tagMatch[0])) !== null)
-            {
-                if (tagMatch.index+tagAttrNameMatch.index <= documentIndex && tagMatch.index+tagAttrNameMatch.index+tagAttrNameMatch[0].length >= documentIndex) {
-                    result.tagAttrName=tagAttrNameMatch[1];
+            while ((tagAttrNameMatch = tagAttrNamePattern.exec(tagMatch[0])) !== null) {
+                if (tagMatch.index + tagAttrNameMatch.index <= documentIndex && tagMatch.index + tagAttrNameMatch.index + tagAttrNameMatch[0].length >= documentIndex) {
+                    result.tagAttrName = tagAttrNameMatch[1];
                 }
             }
-            result.inTag=true;
-            result.tagIndex= tagMatch.index;
-            result.tagRange= {
+            result.inTag = true;
+            result.tagIndex = tagMatch.index;
+            result.tagRange = {
                 start: document?.positionAt(tagMatch.index) ?? Position.create(0, 0),
                 end: document?.positionAt(tagMatch.index + tagMatch[0].length) ?? Position.create(0, 0)
             };
-            result.tagString= tagMatch[0]
+            result.tagString = tagMatch[0]
 
             return result;
         }
