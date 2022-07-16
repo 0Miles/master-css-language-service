@@ -57,21 +57,25 @@ export function IsMasterCss(document: string) {
         if (InCurlyBrackets(textSub) == false) {
             return result;
         }
+        const backtick = textReplaceSpace.match(/([`])/g);
         const cls = textReplaceSpace.match(/cls(['"`])/g);
         const clsx = textReplaceSpace.match(/clsx\((['"`])/g);
         const clsxClassList = textReplaceSpace.match(/clsx\('[^'.|\r|\n]*',{(['"`])/g);
 
-        if (cls == null && clsx == null && clsxClassList == null) {
+        if (cls == null && clsx == null && clsxClassList == null && backtick == null) {
             return result;
         }
         if (cls != null) {
             clsQuoted = cls[0];
         }
-        if (clsx != null) {
+        else if (clsx != null) {
             clsQuoted = clsx[0];
         }
-        if (clsxClassList != null) {
+        else if (clsxClassList != null) {
             clsQuoted = clsxClassList[0];
+        }
+        else if (backtick != null) {
+            clsQuoted = backtick[0]
         }
         clsQuoted.charAt(clsQuoted.length - 1);
         if (textSub.split(clsQuoted).length - 1 >= 2) {
@@ -172,9 +176,9 @@ export function IsElement(document: string) {
         return result;
     }
 
-    result.IsElement=true;
-    result.quoted='`';
-    result.text=elementMatch[0].split("").reverse().join("");
+    result.IsElement = true;
+    result.quoted = '`';
+    result.text = elementMatch[0].split("").reverse().join("");
     return result;
 }
 
