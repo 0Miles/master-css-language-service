@@ -544,7 +544,7 @@
             ]
         },
         "highlight-element": {
-            "begin": "(\\$|(?:[^\\s=.`]+\\.[^\\s.`]+))(`)",
+            "begin": "(\\$|(?:element\\.[^\\s=.`]+))(`)",
             "end": "(`)",
             "captures": {
                 "1": {
@@ -561,6 +561,9 @@
             },
             "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
                 {
                     "include": "#master-css-value-string-quoted-single"
                 },
