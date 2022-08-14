@@ -2,7 +2,7 @@
     "name": "master-css-language-service",
     "description": "Master CSS language service and code highlight for Visual Studio Code",
     "displayName": "Master CSS Language Service",
-    "version": "0.0.78",
+    "version": "0.0.79",
     "author": "Aoyue Design LLC.",
     "funding": "https://docs.master.co/css/donate",
     "homepage": "https://css.master.co",
