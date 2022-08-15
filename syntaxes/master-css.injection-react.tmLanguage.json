@@ -139,19 +139,28 @@
             ]
         },
         "highlight-style-extend-classes": {
-            "begin": "(\\()\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*",
+            "begin": "([^\\s\\(\\.]*)(\\.)([^\\s\\(\\.]*)(\\()\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*",
             "end": "\\)",
             "captures": {
                 "1": {
-                    "name": "meta.brace.round"
+                    "name": "variable.other.object"
                 },
                 "2": {
-                    "name": "string.quoted"
+                    "name": "punctuation.accessor"
                 },
                 "3": {
-                    "name": "punctuation.separator.comma"
+                    "name": "entity.name.function"
                 },
                 "4": {
+                    "name": "meta.brace.round"
+                },
+                "5": {
+                    "name": "string.quoted"
+                },
+                "6": {
+                    "name": "punctuation.separator.comma"
+                },
+                "7": {
                     "name": "punctuation.definition.block"
                 }
             },
