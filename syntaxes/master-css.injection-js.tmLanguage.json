@@ -130,16 +130,41 @@
             ]
         },
         "highlight-style-extend-classes": {
-            "begin": "\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*(\\{)",
+            "begin": "(\\()\\s*((?:'|\"|`)classes(?:'|\"|`))\\s*(\\,)\\s*",
+            "end": "\\)",
+            "captures": {
+                "1": {
+                    "name": "meta.brace.round"
+                },
+                "2": {
+                    "name": "string.quoted"
+                },
+                "3": {
+                    "name": "punctuation.separator.comma"
+                },
+                "4": {
+                    "name": "punctuation.definition.block"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#highlight-style-extend-classes-content"
+                },
+                {
+                    "include": "#highlight-style-extend-classes-content-quoted"
+                }
+            ]
+        },
+        "highlight-style-extend-classes-content": {
+            "begin": "(\\{)",
             "end": "(\\})",
             "captures": {
                 "1": {
-                    "name": "string.quoted"
-                },
-                "2": {
-                    "name": "punctuation.separator.comma"
-                },
-                "3": {
                     "name": "punctuation.definition.block"
                 }
             },
@@ -158,6 +183,25 @@
                 {
                     "include": "#style-extend-classes-quoted-single-string"
                 },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "highlight-style-extend-classes-content-quoted": {
+            "begin": "(\\()",
+            "end": "(\\))",
+            "captures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "patterns": [
                 {
                     "include": "source.ts"
                 }
