@@ -11,9 +11,24 @@
         },
         {
             "include": "#highlight-element"
+        },
+        {
+            "include": "#highlight-Comopnent-template"
         }
     ],
     "repository": {
+        "highlight-Comopnent-template": {
+            "begin": "(template)\\s*(:)\\s*(\\`)",
+            "end": "(\\`)",
+            "patterns": [
+                {
+                    "include": "#highlight-class"
+                },
+                {
+                    "include": "#highlight-class-quoted-single"
+                }
+            ]
+        },
         "highlight-classList-classes": {
             "begin": "(classList)(\\.)(add|remove|replace|replace|toggle)(\\()",
             "end": "(\\))",
@@ -385,6 +400,70 @@
                 },
                 {
                     "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "highlight-class": {
+            "begin": "(?:\\s*)?(className|class)(\\=)(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "contentName": "meta.embedded.block.master-css.class",
+            "patterns": [
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "highlight-class-quoted-single": {
+            "begin": "(?:\\s*)?(className|class)(\\=)(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "entity.other.attribute-name"
+                },
+                "2": {
+                    "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "contentName": "meta.embedded.block.master-css.class",
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
                 },
                 {
                     "include": "source.master-css"
