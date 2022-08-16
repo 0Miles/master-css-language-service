@@ -13,13 +13,16 @@ import {
     ColorPresentationParams,
     ColorPresentation,
     Color,
-    TextEdit
+    TextEdit,
+    Diagnostic,
+    DiagnosticSeverity,
+    CodeLensResolveRequest
 } from 'vscode-languageserver/node';
 
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
 import { GetHoverInstance, doHover } from './hoverProvider'
-import { GetMasterInstance,GetAllInstance,InTags,GetAllClassListInstance } from './masterCss'
+import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance } from './masterCss'
 import { GetDocumentColors, GetColorPresentation } from './documentColorProvider'
 
 
@@ -30,6 +33,79 @@ const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
 let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
+let settings: MasterCSSSettings;
+
+// The example settings
+interface MasterCSSSettings {
+    proxyLanguages: {},
+    classAttributes: string[],
+    files: { exclude: string[] },
+    suggestions: boolean,
+    PreviewOnHovers: boolean,
+    PreviewColor: boolean
+}
+// The global settings, used when the `workspace/configuration` request is not supported by the client.
+// Please note that this is not the case when using this server with the client provided in this example
+// but could happen with other clients.
+const defaultSettings: MasterCSSSettings = {
+    proxyLanguages: {'HTML':'html','PHP':'php','JavascriptReact':'javascriptreact','TypescriptReact':'typescriptreact','Vue':'vue','Svelte':'svelte','Rust':'rust'},
+    classAttributes: ['class', 'className', 'ngClass'],
+    files: { exclude: ['**/.git/**', '**/node_modules/**', '**/.hg/**'] },
+    suggestions: true,
+    PreviewOnHovers: true,
+    PreviewColor: true
+};
+let globalSettings: MasterCSSSettings = defaultSettings;
+
+// Cache the settings of all open documents
+const documentSettings: Map<string, Thenable<MasterCSSSettings>> = new Map();
+
+connection.onDidChangeConfiguration(change => {
+    if (hasConfigurationCapability) {
+        // Reset all cached document settings
+        documentSettings.clear();
+    } else {
+        globalSettings = <MasterCSSSettings>(
+            (change.settings.languageServerExample || defaultSettings)
+        );
+    }
+
+    // Revalidate all open text documents
+    documents.all().forEach(validateTextDocument);
+});
+
+function getDocumentSettings(resource: string): Thenable<MasterCSSSettings> {
+    if (!hasConfigurationCapability) {
+        return Promise.resolve(globalSettings);
+    }
+    let result = documentSettings.get(resource);
+
+    if (!result) {
+        result = connection.workspace.getConfiguration({
+            scopeUri: resource,
+            section: 'masterCSS'
+        });
+        documentSettings.set(resource, result);
+    }
+    return result;
+}
+
+// Only keep settings for open documents
+documents.onDidClose(e => {
+    documentSettings.delete(e.document.uri);
+});
+
+// The content of a text document has changed. This event is emitted
+// when the text document first opened or when its content has changed.
+documents.onDidChangeContent(change => {
+    validateTextDocument(change.document);
+});
+
+async function validateTextDocument(textDocument: TextDocument): Promise<void> {
+    // In this simple example we get the settings for every validate run.
+    settings = await getDocumentSettings(textDocument.uri);
+
+}
 
 connection.onInitialize((params: InitializeParams) => {
     const capabilities = params.capabilities;
@@ -82,11 +158,12 @@ connection.onInitialized(() => {
 
 connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+        if (settings.suggestions == true && CheckFilesExclude(_textDocumentPosition.textDocument.uri)) {
+            let lastInstance = GetLastInstance(_textDocumentPosition, documents);
 
-        let lastInstance = GetLastInstance(_textDocumentPosition, documents);
-
-        if (lastInstance.isInstance == true) {
-            return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language);
+            if (lastInstance.isInstance == true) {
+                return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language);
+            }
         }
         return [];
     }
@@ -101,22 +178,41 @@ connection.onCompletionResolve(
 
 connection.onDocumentColor(
     async (documentColor: DocumentColorParams): Promise<ColorInformation[]> => {
-        return await GetDocumentColors(documentColor, documents);
-});
+        if(settings==null){
+            return [];
+        }
+        if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
+            return await GetDocumentColors(documentColor, documents);
+        }
+        return [];
+    });
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
-    return GetColorPresentation(params);
+    if (settings.PreviewColor == true && CheckFilesExclude(params.textDocument.uri)) {
+        return GetColorPresentation(params);
+    }
+    return [];
 });
 
 connection.onHover(textDocumentPosition => {
-    let HoverInstance = GetMasterInstance(textDocumentPosition, documents);
-    if (HoverInstance.instance) {
-        return doHover(HoverInstance.instance, HoverInstance.range)
+    if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
+        let HoverInstance = GetMasterInstance(textDocumentPosition, documents);
+        if (HoverInstance.instance) {
+            return doHover(HoverInstance.instance, HoverInstance.range)
+        }
     }
     return null;
 });
 
-
+function CheckFilesExclude(path: string): boolean {
+    var minimatch = require("minimatch");
+    for (let exclude of settings.files.exclude) {
+        if (minimatch(path, exclude)) {
+          return false;
+        }
+      }
+      return true;
+}
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events

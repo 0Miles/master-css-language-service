@@ -2,11 +2,13 @@ import * as path from 'path';
 import { workspace, ExtensionContext, Disposable } from 'vscode';
 
 import {
+    DocumentSelector,
     LanguageClient,
     LanguageClientOptions,
     ServerOptions,
     TransportKind
 } from 'vscode-languageclient/node';
+import * as vscode from 'vscode';
 
 let client: LanguageClient;
 
@@ -33,18 +35,19 @@ export function activate(context: ExtensionContext) {
         }
     };
 
+
+    const langs:Record<string, string> = vscode.workspace.getConfiguration('masterCSS').proxyLanguages
+    const userLanguageValue = Object.values(langs)
+
+    let Languages: { scheme: 'file', language: string }[]=[];
+    userLanguageValue.forEach(x=>{
+        Languages.push({ scheme: 'file', language: x })
+    })
+
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
         // Register the server for html documents
-        documentSelector: [
-            { scheme: 'file', language: 'html' },
-            { scheme: 'file', language: 'php' },
-            { scheme: 'file', language: 'javascriptreact' },
-            { scheme: 'file', language: 'typescriptreact' },
-            { scheme: 'file', language: 'vue' },
-            { scheme: 'file', language: 'svelte' },
-            { scheme: 'file', language: 'rust' }
-        ],
+        documentSelector: Languages,
         synchronize: {
             // Notify the server about file changes to '.clientrc files contained in the workspace
             fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
@@ -76,3 +79,7 @@ function unregisterProviders(disposables: Disposable[]) {
     disposables.forEach(disposable => disposable.dispose());
     disposables.length = 0;
 }
+function dedupe(arg0: any[]) {
+    throw new Error('Function not implemented.');
+}
+
