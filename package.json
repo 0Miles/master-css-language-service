@@ -87,7 +87,7 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "default": {"HTML":"html","PHP":"php","JavascriptReact":"javascriptreact","TypescriptReact":"typescriptreact","Vue":"vue","Svelte":"svelte","Rust":"rust"}
+                    "default": {"HTML":"html","PHP":"php","Javascript":"javascript","Typescript":"typescript","JavascriptReact":"javascriptreact","TypescriptReact":"typescriptreact","Vue":"vue","Svelte":"svelte","Rust":"rust"}
                 },
                 "masterCSS.files.exclude": {
                     "type": "array",
