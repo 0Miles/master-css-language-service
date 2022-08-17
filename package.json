@@ -2,7 +2,7 @@
     "name": "master-css-language-service",
     "description": "Master CSS language service and code highlight for Visual Studio Code",
     "displayName": "Master CSS Language Service",
-    "version": "0.0.81",
+    "version": "0.0.82",
     "author": "Aoyue Design LLC.",
     "funding": "https://docs.master.co/css/donate",
     "homepage": "https://css.master.co",
@@ -70,7 +70,17 @@
                     "additionalProperties": {
                         "type": "string"
                     },
-                    "default": {"HTML":"html","PHP":"php","Javascript":"javascript","Typescript":"typescript","JavascriptReact":"javascriptreact","TypescriptReact":"typescriptreact","Vue":"vue","Svelte":"svelte","Rust":"rust"}
+                    "default": {
+                        "HTML": "html",
+                        "PHP": "php",
+                        "Javascript": "javascript",
+                        "Typescript": "typescript",
+                        "JavascriptReact": "javascriptreact",
+                        "TypescriptReact": "typescriptreact",
+                        "Vue": "vue",
+                        "Svelte": "svelte",
+                        "Rust": "rust"
+                    }
                 },
                 "masterCSS.files.exclude": {
                     "type": "array",
