@@ -41,8 +41,6 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
         RegList.push(new RegExp(x + "=\"([^\"]*)\"|" + x + "='([^']*)'|" + x + "=`([^`]*)`|" + x + "={([^}]*)", 'g'));
     })
 
-    console.log(classAttributes);
-
     let classMatch: RegExpExecArray | null;
 
     RegList.forEach(x => {
