@@ -17,6 +17,24 @@
         }
     ],
     "repository": {
+        "highlight-Comopnent": {
+            "begin": "(template)\\s*(:)\\s*(\")",
+            "end": "(\")",
+            "patterns": [
+                {
+                    "include": "#highlight-class-quoted-single"
+                }
+            ]
+        },
+        "highlight-Comopnent-quoted-single": {
+            "begin": "(template)\\s*(:)\\s*(')",
+            "end": "(')",
+            "patterns": [
+                {
+                    "include": "#highlight-class"
+                }
+            ]
+        },
         "highlight-Comopnent-template": {
             "begin": "(template)\\s*(:)\\s*(\\`)",
             "end": "(\\`)",
