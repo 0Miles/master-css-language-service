@@ -41,7 +41,6 @@ Hover over Master class names to see their CSS generation.
 # Settings
 
 ## `editor.quickSuggestions`
-By default VS Code will not trigger completions when editing "string" content, for example within JSX attribute values. Updating the editor.quickSuggestions setting may improve your experience:
 ```json
 "editor.quickSuggestions": {
     "strings": true
