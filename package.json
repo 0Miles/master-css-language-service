@@ -83,6 +83,17 @@
                         "**/.hg/**"
                     ]
                 },
+                "masterCSS.classAttributes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "default": [
+                      "class",
+                      "className"
+                    ],
+                    "markdownDescription": "The HTML attributes for which to provide class completions, hover previews, linting etc."
+                  },
                 "masterCSS.suggestions": {
                     "type": "boolean",
                     "default": true

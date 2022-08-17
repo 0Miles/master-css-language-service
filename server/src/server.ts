@@ -49,7 +49,7 @@ interface MasterCSSSettings {
 // but could happen with other clients.
 const defaultSettings: MasterCSSSettings = {
     proxyLanguages: {'HTML':'html','PHP':'php','JavascriptReact':'javascriptreact','TypescriptReact':'typescriptreact','Vue':'vue','Svelte':'svelte','Rust':'rust'},
-    classAttributes: ['class', 'className', 'ngClass'],
+    classAttributes: ['class', 'className'],
     files: { exclude: ['**/.git/**', '**/node_modules/**', '**/.hg/**'] },
     suggestions: true,
     PreviewOnHovers: true,
@@ -182,7 +182,7 @@ connection.onDocumentColor(
             return [];
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            return await GetDocumentColors(documentColor, documents);
+            return await GetDocumentColors(documentColor, documents,settings.classAttributes);
         }
         return [];
     });
