@@ -41,18 +41,12 @@
                 "path": "./syntaxes/master-css.tmLanguage.json"
             },
             {
-                "scopeName": "source.master-css.injection-html",
-                "path": "./syntaxes/master-css.injection-html.tmLanguage.json",
+                "scopeName": "source.master-css.injection-class",
+                "path": "./syntaxes/master-css.injection-class.tmLanguage.json",
                 "injectTo": [
-                    "source.php",
-                    "text.html.php",
-                    "text.html",
-                    "source.rust",
-                    "source.svelte"
-                ],
-                "embeddedLanguages": {
-                    "meta.embedded.block.master-css.class": "master-css"
-                }
+                    "source",
+                    "text"
+                ]
             },
             {
                 "scopeName": "source.master-css.injection-react",
@@ -62,17 +56,6 @@
                     "source.ts.tsx",
                     "source.jsx",
                     "source.tsx"
-                ],
-                "embeddedLanguages": {
-                    "meta.embedded.block.master-css.class": "master-css"
-                }
-            },
-            {
-                "scopeName": "source.master-css.injection-js",
-                "path": "./syntaxes/master-css.injection-js.tmLanguage.json",
-                "injectTo": [
-                    "source.js",
-                    "source.ts"
                 ],
                 "embeddedLanguages": {
                     "meta.embedded.block.master-css.class": "master-css"
