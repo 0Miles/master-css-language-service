@@ -70,7 +70,7 @@ Configure glob patterns to exclude from all Master Language Service features.
 
 ## `masterCSS.classNameMatches`
 ```json
-"masterCSS.files.exclude": [
+"masterCSS.classNameMatches": [
 
 ],
 ```
