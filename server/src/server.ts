@@ -38,7 +38,7 @@ let settings: MasterCSSSettings;
 
 // The example settings
 interface MasterCSSSettings {
-    proxyLanguages: {},
+    languages: {},
     classNameMatches: string[],
     files: { exclude: string[] },
     suggestions: boolean,
@@ -49,7 +49,17 @@ interface MasterCSSSettings {
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
 const defaultSettings: MasterCSSSettings = {
-    proxyLanguages: { 'HTML': 'html', 'PHP': 'php', 'JavascriptReact': 'javascriptreact', 'TypescriptReact': 'typescriptreact', 'Vue': 'vue', 'Svelte': 'svelte', 'Rust': 'rust' },
+    languages: [
+        "html",
+        "php",
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact",
+        "vue",
+        "svelte",
+        "rust"
+    ],
     classNameMatches: [
         "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
         "(class(?:Name)?={)([^}]*)}",

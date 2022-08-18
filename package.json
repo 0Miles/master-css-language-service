@@ -77,22 +77,22 @@
         "configuration": {
             "title": "Master CSS IntelliSense",
             "properties": {
-                "masterCSS.proxyLanguages": {
-                    "type": "object",
-                    "additionalProperties": {
+                "masterCSS.languages": {
+                    "type": "array",
+                    "items": {
                         "type": "string"
                     },
-                    "default": {
-                        "HTML": "html",
-                        "PHP": "php",
-                        "Javascript": "javascript",
-                        "Typescript": "typescript",
-                        "JavascriptReact": "javascriptreact",
-                        "TypescriptReact": "typescriptreact",
-                        "Vue": "vue",
-                        "Svelte": "svelte",
-                        "Rust": "rust"
-                    }
+                    "default": [
+                        "html",
+                        "php",
+                        "javascript",
+                        "typescript",
+                        "javascriptreact",
+                        "typescriptreact",
+                        "vue",
+                        "svelte",
+                        "rust"
+                    ]
                 },
                 "masterCSS.files.exclude": {
                     "type": "array",
@@ -109,15 +109,15 @@
                 "masterCSS.classNameMatches": {
                     "type": "array",
                     "items": {
-                      "type": "string"
+                        "type": "string"
                     },
                     "default": [
-                      "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
-                      "(class(?:Name)?={)([^}]*)}",
-                      "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
-                      "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
+                        "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
+                        "(class(?:Name)?={)([^}]*)}",
+                        "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
+                        "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
                     ]
-                  },
+                },
                 "masterCSS.suggestions": {
                     "type": "boolean",
                     "default": true

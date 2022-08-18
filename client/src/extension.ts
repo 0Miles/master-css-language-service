@@ -36,11 +36,11 @@ export function activate(context: ExtensionContext) {
     };
 
 
-    const langs:Record<string, string> = vscode.workspace.getConfiguration('masterCSS').proxyLanguages
-    const userLanguageValue = Object.values(langs)
+    const langs= vscode.workspace.getConfiguration('masterCSS').languages
+
 
     let Languages: { scheme: 'file', language: string }[]=[];
-    userLanguageValue.forEach(x=>{
+    langs.forEach(x=>{
         Languages.push({ scheme: 'file', language: x })
     })
 
