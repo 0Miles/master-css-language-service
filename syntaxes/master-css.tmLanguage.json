@@ -326,7 +326,7 @@
                             "name": "constant.character.escape"
                         },
                         "2": {
-                            "name": "punctuation.definition.parameters.begin.bracket.round.css"
+                            "name": "variable punctuation.definition.parameters.begin.bracket.round.css"
                         },
                         "3": {
                             "name": "support.type.property-name.media.css"
@@ -344,7 +344,7 @@
                             "name": "support.constant.property-value.css"
                         },
                         "8": {
-                            "name": "punctuation.definition.parameters.end.bracket.round.css"
+                            "name": "variable punctuation.definition.parameters.end.bracket.round.css"
                         }
                     }
                 }
