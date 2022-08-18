@@ -47,13 +47,21 @@ Hover over Master class names to see their CSS generation.
 },
 ```
 
-## `masterCSS.proxyLanguages`
-`html`, `css`, `javascript` ...
+## `masterCSS.languages`
+`html`, `javascript`, `javascriptreact` ...
 
-Proxy one language to another and simulate its behavior.
+Master Language Service will act on files in these languages.
 ```json
-"masterCSS.proxyLanguages": {
-    "plaintext": "html"
+"masterCSS.languages": [
+  "html",
+  "php",
+  "javascript",
+  "typescript",
+  "javascriptreact",
+  "typescriptreact",
+  "vue",
+  "svelte",
+  "rust"
 },
 ```
 
@@ -68,10 +76,14 @@ Configure glob patterns to exclude from all Master Language Service features.
 ```
 
 ## `masterCSS.classNameMatches`
+Conditions that trigger Master Language Service prompt, expressed in regex.
 ```json
 "masterCSS.classNameMatches": [
-
-],
+  "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
+  "(class(?:Name)?={)([^}]*)}",
+  "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
+  "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
+]
 ```
 
 ## `masterCSS.previewColor = true`

@@ -287,7 +287,7 @@ function getColorsItem(): CompletionItem[] {
         })
 
     masterStyleCompletionItem.push({
-        label: 'whtie',
+        label: 'white',
         documentation: '#ffffff',
         kind: CompletionItemKind.Color
     })
