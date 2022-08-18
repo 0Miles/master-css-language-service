@@ -16,13 +16,14 @@ import {
     TextEdit,
     Diagnostic,
     DiagnosticSeverity,
-    CodeLensResolveRequest
+    CodeLensResolveRequest,
+    Position
 } from 'vscode-languageserver/node';
 
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
 import { GetHoverInstance, doHover } from './hoverProvider'
-import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance } from './masterCss'
+import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance, InMasterCSS } from './masterCss'
 import { GetDocumentColors, GetColorPresentation } from './documentColorProvider'
 
 
@@ -38,7 +39,7 @@ let settings: MasterCSSSettings;
 // The example settings
 interface MasterCSSSettings {
     proxyLanguages: {},
-    classAttributes: string[],
+    classNameMatches: string[],
     files: { exclude: string[] },
     suggestions: boolean,
     PreviewOnHovers: boolean,
@@ -48,8 +49,13 @@ interface MasterCSSSettings {
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
 const defaultSettings: MasterCSSSettings = {
-    proxyLanguages: {'HTML':'html','PHP':'php','JavascriptReact':'javascriptreact','TypescriptReact':'typescriptreact','Vue':'vue','Svelte':'svelte','Rust':'rust'},
-    classAttributes: ['class', 'className'],
+    proxyLanguages: { 'HTML': 'html', 'PHP': 'php', 'JavascriptReact': 'javascriptreact', 'TypescriptReact': 'typescriptreact', 'Vue': 'vue', 'Svelte': 'svelte', 'Rust': 'rust' },
+    classNameMatches: [
+        "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
+        "(class(?:Name)?={)([^}]*)}",
+        "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
+        "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
+      ],
     files: { exclude: ['**/.git/**', '**/node_modules/**', '**/.hg/**'] },
     suggestions: true,
     PreviewOnHovers: true,
@@ -159,9 +165,11 @@ connection.onInitialized(() => {
 connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
         if (settings.suggestions == true && CheckFilesExclude(_textDocumentPosition.textDocument.uri)) {
-            let lastInstance = GetLastInstance(_textDocumentPosition, documents);
 
-            if (lastInstance.isInstance == true) {
+            let inMasterCSS = InMasterCSS(_textDocumentPosition.textDocument.uri, _textDocumentPosition.position, documents, settings.classNameMatches).InMasterCss
+
+            let lastInstance = GetLastInstance(_textDocumentPosition, documents);
+            if (lastInstance.isInstance == true && inMasterCSS == true) {
                 return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language);
             }
         }
@@ -178,11 +186,11 @@ connection.onCompletionResolve(
 
 connection.onDocumentColor(
     async (documentColor: DocumentColorParams): Promise<ColorInformation[]> => {
-        if(settings==null){
+        if (settings == null) {
             return [];
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            return await GetDocumentColors(documentColor, documents,settings.classAttributes);
+            return await GetDocumentColors(documentColor, documents, settings.classNameMatches);
         }
         return [];
     });
@@ -196,9 +204,10 @@ connection.onColorPresentation((params: ColorPresentationParams) => {
 
 connection.onHover(textDocumentPosition => {
     if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
-        let HoverInstance = GetMasterInstance(textDocumentPosition, documents);
-        if (HoverInstance.instance) {
-            return doHover(HoverInstance.instance, HoverInstance.range)
+        let HoverInstance = InMasterCSS(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
+        console.log(HoverInstance)
+        if (HoverInstance.InMasterCss) {
+            return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range)
         }
     }
     return null;
@@ -208,10 +217,10 @@ function CheckFilesExclude(path: string): boolean {
     var minimatch = require("minimatch");
     for (let exclude of settings.files.exclude) {
         if (minimatch(path, exclude)) {
-          return false;
+            return false;
         }
-      }
-      return true;
+    }
+    return true;
 }
 
 // Make the text document manager listen on the connection

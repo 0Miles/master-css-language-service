@@ -19,7 +19,7 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { IsMasterCss, IsClassList,RgbToHex ,IsElement} from './masterCss';
+import { IsMasterCss, IsClassList,RgbToHex ,IsElement,InMasterCSS} from './masterCss';
 import { Style } from '@master/css';
 
 const rgbColors = Style.rgbColors;
@@ -48,94 +48,11 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     });
 
 
-    let textSub: string = '';
-    let dataIsMasterCss = IsMasterCss(text ?? '');
-    let dataIsClassList = IsClassList(text ?? '');
-    let dataIsElement = IsElement(text ?? '');
-
-    if (!(language == 'tsx' || language == 'ts' || language == 'jsx' || language == 'js')) {
-        dataIsClassList.isClassList = false;
-    }
-
-    if (dataIsMasterCss.isMasterCss == false && dataIsClassList.isClassList == false && dataIsElement?.IsElement == false) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    }
-    else if (dataIsMasterCss.isMasterCss == true) {
-        textSub = dataIsMasterCss.text;
-    }
-    else if (dataIsClassList.isClassList == true) {
-        textSub = dataIsClassList.text;
-    }
-    else if (dataIsElement?.IsElement == true) {
-        textSub = dataIsElement.text;
-    }
-
-    // let lastClass = text?.lastIndexOf('class') ?? -1;
-    // let lastclassName = text?.lastIndexOf('className') ?? -1;
-    // let tsxclassName = text?.lastIndexOf('className={') ?? -1;
-
-    // if (lastClass + lastclassName + tsxclassName == -1) {
-    //     return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    // }
-
-    // let tsxclassNameMode = tsxclassName > (lastClass > lastclassName ? lastClass : lastclassName);
-    // let textSub = text?.substring(lastClass > lastclassName ? lastClass : lastclassName);
-    // textSub = textSub == null ? '' : textSub;
-
-
-    // let classQuoted = '', classIndexAddOne = '', classIndexAddTwo = '';
-
-
-    // if (tsxclassNameMode) {
-    //     textSub = text?.substring(tsxclassName) == null ? '' : textSub;
-    //     if (InCurlyBrackets(textSub) == false) {
-    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    //     }
-    // }
-    // else {
-    //     if (lastClass > lastclassName) {
-    //         classIndexAddOne = textSub.substring(5).trimStart().charAt(0);
-    //         classIndexAddTwo = textSub.substring(5).trimStart().substring(1).charAt(0);
-    //     }
-    //     else if (lastClass <= lastclassName) {
-    //         classIndexAddOne = textSub.substring(9).trimStart().charAt(0);
-    //         classIndexAddTwo = textSub.substring(9).trimStart().substring(1).charAt(0);
-    //     }
-    //     classQuoted = classIndexAddOne + classIndexAddTwo;
-    //     if (classQuoted != '=\'' && classQuoted != '=\`' && classQuoted != '=\"') {
-    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    //     }
-    // }
-
-    // let quotedSingle = textSub.split('\'').length - 1;
-    // let quotedDouble = textSub.split('\"').length - 1;
-    // let quotedTemplate = textSub.split('\`').length - 1;
-    // if (!tsxclassNameMode) {
-    //     if (classQuoted == '=\'' && quotedSingle >= 2) {
-    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    //     }
-    //     else if (classQuoted == '=\"' && quotedDouble >= 2) {
-    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    //     }
-    //     else if (classQuoted == '=\`' && quotedTemplate >= 2) {
-    //         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    //     }
-    // }
-
-    // if (!((quotedSingle > 0 || quotedDouble > 0 || quotedTemplate > 0) && (quotedSingle % 2 != 0 || quotedDouble % 2 != 0 || quotedTemplate % 2 != 0))) {
-    //     return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
-    // }
-
-    // if (textSub.length > 1000) { //too long string substring
-    //     textSub = textSub.substring(textSub.length - 1000);
-    //     classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g;
-    // }
-
-    if (textSub.match(classPattern) === null) {
+    if (lineText.match(classPattern) === null) {
         return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language };
     }
     else {
-        while ((classMatch = classPattern.exec(textSub)) !== null) {
+        while ((classMatch = classPattern.exec(lineText)) !== null) {
             lastKey = classMatch[0];
         }
     }

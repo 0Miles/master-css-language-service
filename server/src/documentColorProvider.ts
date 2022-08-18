@@ -31,20 +31,10 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
         return [];
     }
 
-    let RegList = [];
-    let elementReg = /(?:\$|(?:element\.[^\s.`]+)`([^`]+)`)/g;
-    let ClassListReg = /(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)/g;
-
-    RegList.push(elementReg);
-    RegList.push(ClassListReg);
-    classAttributes.forEach(x => {
-        RegList.push(new RegExp(x + "=\"([^\"]*)\"|" + x + "='([^']*)'|" + x + "=`([^`]*)`|" + x + "={([^}]*)", 'g'));
-    })
-
     let classMatch: RegExpExecArray | null;
 
-    RegList.forEach(x => {
-        let classPattern = x;
+    classAttributes.forEach(x => {
+        let classPattern = new RegExp(x,'g')
         while ((classMatch = classPattern.exec(text)) !== null) {
 
             const colorPattern = /(?<=[:|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d])?(?:\([^\s\)]+\))?)/g;

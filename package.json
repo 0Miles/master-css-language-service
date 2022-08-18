@@ -91,18 +91,20 @@
                         "**/.git/**",
                         "**/node_modules/**",
                         "**/.hg/**"
-                    ]
+                    ],
+                    "description": "Configure glob patterns to exclude from all Master Language Service features."
                 },
-                "masterCSS.classAttributes": {
+                "masterCSS.classNameMatches": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
                     "default": [
-                      "class",
-                      "className"
-                    ],
-                    "markdownDescription": "The HTML attributes for which to provide class completions, hover previews, linting etc."
+                      "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
+                      "(class(?:Name)?={)([^}]*)}",
+                      "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
+                      "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
+                    ]
                   },
                 "masterCSS.suggestions": {
                     "type": "boolean",

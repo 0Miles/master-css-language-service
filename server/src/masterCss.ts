@@ -254,20 +254,21 @@ export function GetMasterInstance(textDocumentPosition: TextDocumentPositionPara
 
     return { isInstance: true, instance: instance, range: instanceRange };
 }
-export function GetAllInstance(textDocumentPosition: TextDocumentIdentifier, documents: TextDocuments<TextDocument>) {
+export function GetAllInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>, classNameMatches: string[]) {
     let result: {
         classList: { range: Range, instance: string }[],
-        classIndex: number,
+        classStartIndex: number,
+        classEndIndex: number,
         classString: string
     }[] = [];
 
 
 
-    const documentUri = textDocumentPosition.uri;
+    const documentUri = textDocumentPosition.textDocument.uri;
     let document = documents.get(documentUri);
     let text = document?.getText() ?? '';
 
-    let classPattern = /(?<=<\s?\w+\s+)(?:(class(?:Name)?\s?=\s?)((?:"[^"]+")|(?:'[^']+')|(?:`[^`]+`)))/g;
+    let classPattern = new RegExp(classNameMatches[0], "g")
     let classPattern2 = /(?<=<\s?\w+\s+)(className\s?=\s?{[\w\s]+)((?:`[^`]+`)|(?:"[^"]+")|(?:'[^']+'))[^}]*}/g;
     let instancePattern = /(?:[^"'`\s])+(?:'[\$|@]'|"[\$|@]"|`[\$|@]`)?(?:[^"{'`\s])+(?=\s|\b)/g;
 
@@ -278,9 +279,10 @@ export function GetAllInstance(textDocumentPosition: TextDocumentIdentifier, doc
     while ((classMatch = classPattern.exec(text)) !== null) {
         let resultItem: {
             classList: { range: Range, instance: string }[],
-            classIndex: number,
+            classStartIndex: number,
+            classEndIndex: number,
             classString: string
-        } = { classList: [], classIndex: classMatch.index, classString: classMatch[0] };
+        } = { classList: [], classStartIndex: classMatch.index, classEndIndex: classMatch.index + classMatch[0].length - 1, classString: classMatch[0] };
 
         while ((instanceMatch = instancePattern.exec(classMatch[2])) !== null) {
             resultItem.classList.push(
@@ -297,26 +299,83 @@ export function GetAllInstance(textDocumentPosition: TextDocumentIdentifier, doc
     }
 
 
-    while ((classMatch2 = classPattern2.exec(text)) !== null) {
-        let resultItem: {
-            classList: { range: Range, instance: string }[],
-            classIndex: number,
-            classString: string
-        } = { classList: [], classIndex: classMatch2.index, classString: classMatch2[0] };
 
-        while ((instanceMatch = instancePattern.exec(classMatch2[2])) !== null) {
-            resultItem.classList.push(
-                {
-                    range: {
-                        start: document?.positionAt(classMatch2.index + classMatch2[1].length + instanceMatch.index) ?? Position.create(0, 0),
-                        end: document?.positionAt(classMatch2.index + +classMatch2[1].length + instanceMatch.index + instanceMatch[0].length) ?? Position.create(0, 0)
-                    },
-                    instance: instanceMatch[0]
+    console.log(text.charAt(5))
+    console.log(text.charAt(171))
+    console.log(result)
+    return result;
+}
+export function InMasterCSS(documentUri: string, position: Position, documents: TextDocuments<TextDocument>, classNameMatches: string[]) {
+
+    let result: {
+        InMasterCss: boolean,
+        PositionIndex: number,
+        classStartIndex: number,
+        classEndIndex: number,
+        classString: string,
+        instance: { range: Range, instanceString: string },
+        instanceList: { range: Range, instanceString: string }[],
+    } = {
+        InMasterCss: false,
+        PositionIndex: 0,
+        classStartIndex: 0,
+        classEndIndex: 0,
+        classString: "",
+        instance: { range: { start: Position.create(0, 0), end: Position.create(0, 0) }, instanceString: '' },
+        instanceList: [],
+    };
+
+    let document = documents.get(documentUri);
+    let text = document?.getText() ?? '';
+    let positionIndex = document?.offsetAt(position) ?? 0;
+
+
+    let instancePattern = /(?:[^"'`\s])+(?:'[\$|@]'|"[\$|@]"|`[\$|@]`)?(?:[^"'`\s])+/g;
+
+    let instanceMatch: RegExpExecArray | null;
+    let classMatch: RegExpExecArray | null;
+
+    result.PositionIndex = positionIndex;
+
+    classNameMatches.forEach(x => {
+        let classPattern = new RegExp(x, "g")
+
+        while ((classMatch = classPattern.exec(text)) !== null) {
+            if ((classMatch.index <= positionIndex && classMatch.index + classMatch[0].length - 1 >= positionIndex) == true) {
+                result.InMasterCss = true;
+                result.PositionIndex = positionIndex;
+                result.classStartIndex = classMatch.index;
+                result.classEndIndex = classMatch.index + classMatch[0].length - 1;
+                result.classString = classMatch[0];
+
+                while ((instanceMatch = instancePattern.exec(classMatch[2])) !== null) {
+                    result.instanceList.push(
+                        {
+                            range: {
+                                start: document?.positionAt(classMatch.index + classMatch[1].length + instanceMatch.index) ?? Position.create(0, 0),
+                                end: document?.positionAt(classMatch.index + classMatch[1].length + instanceMatch.index + instanceMatch[0].length) ?? Position.create(0, 0)
+                            },
+                            instanceString: instanceMatch[0]
+                        }
+                    );
+                    if ((classMatch.index + classMatch[1].length + instanceMatch.index <= positionIndex && classMatch.index + classMatch[1].length + instanceMatch.index + instanceMatch[0].length >= positionIndex) == true) {
+                        result.instance = {
+                            range: {
+                                start: document?.positionAt(classMatch.index + classMatch[1].length + instanceMatch.index) ?? Position.create(0, 0),
+                                end: document?.positionAt(classMatch.index + classMatch[1].length + instanceMatch.index + instanceMatch[0].length) ?? Position.create(0, 0)
+                            },
+                            instanceString: instanceMatch[0]
+                        }
+                    }
                 }
-            );
+
+                return result;
+            }
+            else if (classMatch.index > positionIndex) {
+                break;
+            }
         }
-        result.push(resultItem);
-    }
+    })
 
     return result;
 }
