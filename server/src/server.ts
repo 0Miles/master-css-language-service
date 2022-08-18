@@ -205,7 +205,6 @@ connection.onColorPresentation((params: ColorPresentationParams) => {
 connection.onHover(textDocumentPosition => {
     if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
         let HoverInstance = InMasterCSS(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
-        console.log(HoverInstance)
         if (HoverInstance.InMasterCss) {
             return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range)
         }
