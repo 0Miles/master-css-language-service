@@ -1,0 +1,18 @@
+version: 2
+
+workflows:
+  version: 2
+  package:
+    jobs:
+      - release:
+          context: Master
+
+jobs:
+  release:
+    docker:
+      - image: "cimg/node:17.1.0"
+    steps:
+      - checkout
+      - run:
+          name: semantic release
+          command: npm i semantic-release@18 @semantic-release/exec@6 semantic-release-vsce && npx semantic-release || true
