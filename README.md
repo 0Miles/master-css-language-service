@@ -14,11 +14,11 @@ The official [Master CSS](https://github.com/master-co/css) Language Service ext
 - [Generate preview](#generate-preview)
 - [Settings](#settings)
   - [`editor.quickSuggestions`](#editorquicksuggestions)
-  - [`masterCSS.proxyLanguages`](#mastercssproxylanguages)
+  - [`masterCSS.languages`](#mastercsslanguages)
   - [`masterCSS.files.exclude`](#mastercssfilesexclude)
   - [`masterCSS.classNameMatches`](#mastercssclassnamematches)
-  - [`masterCSS.previewColor = true`](#mastercsspreviewcolor--true)
-  - [`masterCSS.previewOnHover = true`](#mastercsspreviewonhover--true)
+  - [`masterCSS.previewColor: true`](#mastercsspreviewcolor-true)
+  - [`masterCSS.previewOnHover: true`](#mastercsspreviewonhover-true)
   - [`masterCSS.suggestions: true`](#mastercsssuggestions-true)
 
 # Code-completion
@@ -86,8 +86,8 @@ Conditions that trigger Master Language Service prompt, expressed in regex.
 ]
 ```
 
-## `masterCSS.previewColor = true`
+## `masterCSS.previewColor: true`
 
-## `masterCSS.previewOnHover = true`
+## `masterCSS.previewOnHover: true`
 
 ## `masterCSS.suggestions: true`
