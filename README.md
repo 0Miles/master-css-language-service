@@ -36,7 +36,7 @@ Hover over Master class names to see their CSS generation.
 ![rendering-preview](https://user-images.githubusercontent.com/33840671/185128766-614f302e-7cc3-4294-9179-76f29069d4a6.gif)
 
 # Settings
-We have given friendly presets based on mainstream frameworks and languages. If you think there are other commonly used ones that should be built in, please send a [feature issue](https://github.com/master-co/css-language-service/issues) to us.
+We have given friendly presets based on mainstream frameworks and languages. If you think there are other commonly used ones that should be built in, please [send a feature issue](https://github.com/master-co/css-language-service/issues/new?assignees=&labels=enhancement&template=feature_request.yml) to us.
 
 The following examples are default values：
 
