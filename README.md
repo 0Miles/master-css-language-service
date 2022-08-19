@@ -82,7 +82,8 @@ Conditions that trigger Master Language Service prompt, expressed in regex.
   "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
   "(class(?:Name)?={)([^}]*)}",
   "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
-  "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)"
+  "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)",
+  "(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))"
 ]
 ```
 
