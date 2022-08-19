@@ -1,17 +1,12 @@
 ![image](https://raw.githubusercontent.com/master-co/css-language-service/alpha/images/cover.jpg)
 
-The official [Master CSS](https://github.com/master-co/css) Language Service extension for Visual Studio Code upgrades your development experience, and provides many advanced features.
-
-- [Introduction](https://css.master.co)
-- [Setup](https://docs.master.co/css/setup)
-- [Why Master CSS](https://docs.master.co/css/why-master-css)
-- [Github Discussions](https://github.com/master-co/css/discussions)
-- [Join Master Discord](https://discord.gg/sZNKpAAAw6)
+The official [Master CSS](https://github.com/master-co/css) Language Service extension for Visual Studio Code upgrades your development experience.
 
 ##### On this page
-- [Code-completion](#code-completion)
-- [Syntax highlighting](#syntax-highlighting)
-- [Generate preview](#generate-preview)
+- [Features](#features)
+  - [Code-completion](#code-completion)
+  - [Syntax highlighting](#syntax-highlighting)
+  - [Generate preview](#generate-preview)
 - [Settings](#settings)
   - [`editor.quickSuggestions`](#editorquicksuggestions)
   - [`masterCSS.languages`](#mastercsslanguages)
@@ -21,24 +16,29 @@ The official [Master CSS](https://github.com/master-co/css) Language Service ext
   - [`masterCSS.previewOnHover: true`](#mastercsspreviewonhover-true)
   - [`masterCSS.suggestions: true`](#mastercsssuggestions-true)
 
-# Code-completion
+# Features
+
+## Code-completion
 Smart suggestions for style names, values, semantics and selectors.
 
 ![code-completion](https://user-images.githubusercontent.com/33840671/185128193-de6c0550-7fa6-4b2d-842c-72f6b79e6d8f.gif)
 
-# Syntax highlighting
+## Syntax highlighting
 Highlight class names to make them easier to read and identify.
 
 ![syntax-highlighting](https://user-images.githubusercontent.com/33840671/185127233-1556414a-2859-425f-a421-4b30ff228b9e.jpg)
 
 Master CSS has pioneered applying syntax highlighting to class names in markup, which solves the problem of unreadable classes that are too long.
 
-# Generate preview
+## Generate preview
 Hover over Master class names to see their CSS generation.
 
 ![rendering-preview](https://user-images.githubusercontent.com/33840671/185128766-614f302e-7cc3-4294-9179-76f29069d4a6.gif)
 
 # Settings
+We have given friendly presets based on mainstream frameworks and languages. If you think there are other commonly used ones that should be built in, please send a [feature issue](https://github.com/master-co/css-language-service/issues) to us.
+
+The following examples are default values：
 
 ## `editor.quickSuggestions`
 ```json
@@ -48,9 +48,7 @@ Hover over Master class names to see their CSS generation.
 ```
 
 ## `masterCSS.languages`
-`html`, `javascript`, `javascriptreact` ...
-
-Master Language Service will act on files in these languages.
+Configure which languages should apply the Master CSS Language Service.
 ```json
 "masterCSS.languages": [
   "html",
@@ -62,11 +60,11 @@ Master Language Service will act on files in these languages.
   "vue",
   "svelte",
   "rust"
-},
+],
 ```
 
 ## `masterCSS.files.exclude`
-Configure glob patterns to exclude from all Master Language Service features.
+Configure a glob pattern to prevent Master CSS Language Service from being applied.
 ```json
 "masterCSS.files.exclude": [
     "**/.git/**",
@@ -76,7 +74,7 @@ Configure glob patterns to exclude from all Master Language Service features.
 ```
 
 ## `masterCSS.classNameMatches`
-Conditions that trigger Master Language Service prompt, expressed in regex.
+Configure Regex patterns as conditions for triggering Suggestions and generating previews.
 ```json
 "masterCSS.classNameMatches": [
   "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
@@ -84,11 +82,14 @@ Conditions that trigger Master Language Service prompt, expressed in regex.
   "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
   "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)",
   "(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))"
-]
+],
 ```
 
 ## `masterCSS.previewColor: true`
+Render color boxes by color-related class names as previews.
 
 ## `masterCSS.previewOnHover: true`
+Preview the generated CSS rules when hovering over a class name.
 
 ## `masterCSS.suggestions: true`
+Enable autocomplete suggestions.
