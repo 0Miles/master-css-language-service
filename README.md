@@ -2,6 +2,8 @@
 
 The official [Master CSS](https://github.com/master-co/css) Language Service extension for Visual Studio Code upgrades your development experience.
 
+[![Install to Visual Studio Code now](https://user-images.githubusercontent.com/33840671/185619535-3b426030-7efd-4470-a8d1-d35b5698ee0e.jpg)](vscode:extension/masterco.master-css-language-service)
+
 ##### On this page
 - [Features](#features)
   - [Code-completion](#code-completion)
