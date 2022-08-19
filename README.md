@@ -38,6 +38,8 @@ Hover over Master class names to see their CSS generation.
 # Settings
 We have given friendly presets based on mainstream frameworks and languages. If you think there are other commonly used ones that should be built in, please [send a feature issue](https://github.com/master-co/css-language-service/issues/new?assignees=&labels=enhancement&template=feature_request.yml) to us.
 
+- [User and Workspace Settings - Visual Studio Code](https://code.visualstudio.com/docs/getstarted/settings#:~:text=To%20open%20the%20Settings%20editor,macOS%20%2D%20Code%20%3E%20Preferences%20%3E%20Settings)
+
 The following examples are default values：
 
 ## `editor.quickSuggestions`
