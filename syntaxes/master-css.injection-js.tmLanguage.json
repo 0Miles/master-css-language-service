@@ -15,13 +15,22 @@
     ],
     "repository": {
         "highlight-element": {
-            "begin": "(\\$|(?:(element|el)\\.[^\\s=.`]+))(`)",
+            "begin": "(?:(\\$)|(?:(element|el)(\\.)([^\\s=.`]+)))(`)",
             "end": "(`)",
             "captures": {
                 "1": {
-                    "name": "entity.other.attribute-name"
+                    "name": "variable.other.object"
                 },
                 "2": {
+                    "name": "variable.other.object"
+                },
+                "3": {
+                    "name": "punctuation.accessor string.template"
+                },
+                "4": {
+                    "name": "entity.name.function.tagged-template"
+                },
+                "5": {
                     "name": "string.quoted.double"
                 }
             },
