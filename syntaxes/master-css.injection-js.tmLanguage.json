@@ -15,7 +15,7 @@
     ],
     "repository": {
         "highlight-element": {
-            "begin": "(\\$|(?:element\\.[^\\s=.`]+))(`)",
+            "begin": "(\\$|(?:(element|el)\\.[^\\s=.`]+))(`)",
             "end": "(`)",
             "captures": {
                 "1": {
