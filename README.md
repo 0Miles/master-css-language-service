@@ -83,7 +83,7 @@ Configure Regex patterns as conditions for triggering Suggestions and generating
 "masterCSS.classNameMatches": [
   "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
   "(class(?:Name)?={)([^}]*)}",
-  "(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)",
+  "(?:(\\$|(?:(?:element|el)\\.[^\\s.`]+)`)([^`]+)`)",
   "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)",
   "(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))"
 ],
