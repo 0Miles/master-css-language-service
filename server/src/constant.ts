@@ -11,7 +11,7 @@ enum MasterStyleKeyType {
 }
 
 export const masterCssSelectors = [
-    { label: 'lang()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
+    { label: 'lang()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'has', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',
     'out-of-range', 'required', 'optional', 'root', 'empty',
     { label: 'nth-child()', kind: CompletionItemKind.Function },
@@ -37,7 +37,7 @@ export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first
 export const masterCssMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
     { label: 'media()', kind: CompletionItemKind.Function }];
 export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
-export const masterCssOtherKeys = ['ext','gap','ont','ovf','quotes','bottom','center','left','middle','top','right','px','py','pt','pb','pl','pr','mx','my','mt','mb','ml','mr'];
+export const masterCssOtherKeys = ['ext', 'gap', 'ont', 'ovf', 'quotes', 'bottom', 'center', 'left', 'middle', 'top', 'right', 'px', 'py', 'pt', 'pb', 'pl', 'pr', 'mx', 'my', 'mt', 'mb', 'ml', 'mr'];
 
 export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
 
@@ -73,7 +73,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         colorful: true,
         values: []
     },
-        //APPEARANCE
+    //APPEARANCE
     {
         key: ['font-color', 'font', 'f'],
         colorful: true,
@@ -222,7 +222,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
             { label: 'minmax(,)', kind: CompletionItemKind.Function }]
     },
     {
-        key: ['grid-column', 'grid-col','grid-column-span','grid-col-span','grid-column-start','grid-col-start','grid-column-end','grid-col-end'],
+        key: ['grid-column', 'grid-col', 'grid-column-span', 'grid-col-span', 'grid-column-start', 'grid-col-start', 'grid-column-end', 'grid-col-end'],
         colorful: false,
         values: []
     },
@@ -247,7 +247,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['none']
     },
     {
-        key: ['grid-template-areas','grid-area'],
+        key: ['grid-template-areas', 'grid-area'],
         colorful: false,
         values: ['none']
     },
@@ -269,32 +269,32 @@ export const masterCssKeyValues: MasterCssKey[] = [
     },
     //GRID AND FLEXBOX
     {
-        key: ['align-content','ac'],
+        key: ['align-content', 'ac'],
         colorful: false,
         values: ['space-around', 'space-between', 'space-evenly', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['align-items','ai'],
+        key: ['align-items', 'ai'],
         colorful: false,
         values: ['self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['align-self','as'],
+        key: ['align-self', 'as'],
         colorful: false,
         values: ['auto', 'self-start', 'self-end', 'normal', 'baseline', 'center', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-content','jc'],
+        key: ['justify-content', 'jc'],
         colorful: false,
         values: ['space-around', 'space-between', 'space-evenly', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-items','ji'],
+        key: ['justify-items', 'ji'],
         colorful: false,
         values: ['self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
     {
-        key: ['justify-self','js'],
+        key: ['justify-self', 'js'],
         colorful: false,
         values: ['auto', 'self-start', 'self-end', 'normal', 'left', 'center', 'right', 'stretch', 'start', 'end', 'flex-start', 'flex-end']
     },
@@ -685,7 +685,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['repeat', 'no-repeat', 'repeat-x', 'repeat-y']
     },
     {
-        key: ['background-size','background', 'bg'],
+        key: ['background-size', 'background', 'bg'],
         colorful: false,
         values: ['auto', 'cover', 'contain']
     },
@@ -1029,7 +1029,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity']
     },
     {
-        key: ['box-shadow', 'shadow','s'],
+        key: ['box-shadow', 'shadow', 's'],
         colorful: true,
         values: ['inset']
     },
