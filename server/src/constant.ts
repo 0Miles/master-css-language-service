@@ -213,7 +213,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-auto-flow'],
         colorful: false,
-        values: ['row', 'column', 'dense', 'row;dense', 'column;dense']
+        values: ['row', 'column', 'dense', 'row|dense', 'column|dense']
     },
     {
         key: ['grid-auto-rows'],
@@ -405,7 +405,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['font-style'],
         colorful: false,
-        values: ['oblique;deg']
+        values: ['oblique|deg']
     },
     {
         key: ['font-style', 'font', 'f'],
@@ -436,7 +436,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['text-decoration', 'text', 't'],
         colorful: false,
-        values: ['underline;', 'line-through;', 'overline;']
+        values: ['underline', 'line-through', 'overline']
     },
     {
         key: ['text-decoration-color', 'text-decoration'],
@@ -1103,7 +1103,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['scroll-snap-type', 'scroll-snap'],
         colorful: false,
-        values: ['x', 'y', 'both', 'block', 'inline', 'x;mandatory', 'y;proximity', 'both;mandatory']
+        values: ['x', 'y', 'both', 'block', 'inline', 'x|mandatory', 'y|proximity', 'both|mandatory']
     },
     //INTERACTIVITY
 
