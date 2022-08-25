@@ -11,7 +11,7 @@ enum MasterStyleKeyType {
 }
 
 export const masterCssSelectors = [
-    { label: 'lang()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'has', 'active', 'focus', 'focus-visible', 'focus-within',
+    { label: 'lang()', kind: CompletionItemKind.Function },{ label: 'has()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',
     'out-of-range', 'required', 'optional', 'root', 'empty',
     { label: 'nth-child()', kind: CompletionItemKind.Function },
