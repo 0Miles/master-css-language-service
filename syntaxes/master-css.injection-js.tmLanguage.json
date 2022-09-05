@@ -42,6 +42,59 @@
             "contentName": "meta.embedded.block.master-css.class",
             "patterns": [
                 {
+                    "include": "#element-template-expression"
+                },
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "element-template-expression": {
+            "begin": "(\\${)",
+            "end": "(})",
+            "captures": {
+                "1": {
+                    "name": "punctuation.definition.template-expression.begin"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.template-expression.end"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#element-template-expression-string"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "element-template-expression-string": {
+            "begin": "('|\")",
+            "end": "('|\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "patterns": [
+                {
                     "include": "#master-css-value-string"
                 },
                 {
