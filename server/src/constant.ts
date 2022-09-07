@@ -1178,7 +1178,7 @@ export const masterCssType = [
 export const masterCssSemantic = [
     {
         key: 'display',
-        values: ['hide', 'hidden', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table']
+        values: ['hide', 'hidden', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'sr-only']
     },
     {
         key: 'isolation',

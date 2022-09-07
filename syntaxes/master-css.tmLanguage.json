@@ -129,7 +129,7 @@
                     }
                 },
                 {
-                    "match": "(?<![\\-])\\b(center\\-content|break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|grid|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel)",
+                    "match": "(?<![\\-])\\b(sr\\-only|center\\-content|break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|grid|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
