@@ -73,7 +73,38 @@
             },
             "patterns": [
                 {
+                    "include": "#element-template-expression-round"
+                },
+                {
                     "include": "#element-template-expression-string"
+                },
+                {
+                    "include": "#element-template-expression-string-quoted-single"
+                },
+                {
+                    "include": "source.ts"
+                }
+            ]
+        },
+        "element-template-expression-round": {
+            "begin": "(\\()",
+            "end": "(\\))",
+            "captures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "meta.brace.round"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#element-template-expression-string"
+                },
+                {
+                    "include": "#element-template-expression-string-quoted-single"
                 },
                 {
                     "include": "source.ts"
@@ -81,8 +112,33 @@
             ]
         },
         "element-template-expression-string": {
-            "begin": "('|\")",
-            "end": "('|\")",
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string-quoted-single"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "element-template-expression-string-quoted-single": {
+            "begin": "(')",
+            "end": "(')",
             "captures": {
                 "1": {
                     "name": "string.quoted"
@@ -96,9 +152,6 @@
             "patterns": [
                 {
                     "include": "#master-css-value-string"
-                },
-                {
-                    "include": "#master-css-value-string-quoted-single"
                 },
                 {
                     "include": "source.master-css"

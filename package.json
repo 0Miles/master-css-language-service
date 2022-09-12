@@ -72,6 +72,18 @@
                 "embeddedLanguages": {
                     "meta.embedded.block.master-css.class": "master-css"
                 }
+            },
+            {
+                "scopeName": "source.master-css.injection-string",
+                "path": "./syntaxes/master-css.injection-string.tmLanguage.json",
+                "injectTo": [
+                    "source.js.jsx",
+                    "source.ts.tsx",
+                    "source.jsx",
+                    "source.tsx",
+                    "source.js",
+                    "source.ts"
+                ]
             }
         ],
         "configuration": {
