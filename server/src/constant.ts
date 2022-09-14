@@ -140,7 +140,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['display', 'd'],
         colorful: false,
-        values: ['flex', 'grid', 'inline', 'none', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'table-cell', 'table-caption', 'flow-root', 'list-item', 'table-row', 'table-column', 'table-row-group', 'table-column-group', 'table-header-group', 'table-footer-group']
+        values: ['hidden', 'hide', 'flex', 'grid', 'inline', 'none', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'table-cell', 'table-caption', 'flow-root', 'list-item', 'table-row', 'table-column', 'table-row-group', 'table-column-group', 'table-header-group', 'table-footer-group']
     },
     {
         key: ['float'],
@@ -1178,7 +1178,7 @@ export const masterCssType = [
 export const masterCssSemantic = [
     {
         key: 'display',
-        values: ['hide', 'hidden', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'sr-only']
+        values: ['hidden', 'hide', 'flex', 'grid', 'inline', 'none', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'table-cell', 'table-caption', 'flow-root', 'list-item', 'table-row', 'table-column', 'table-row-group', 'table-column-group', 'table-header-group', 'table-footer-group']
     },
     {
         key: 'isolation',
