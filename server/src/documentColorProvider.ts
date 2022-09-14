@@ -40,7 +40,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
             const colorPattern = /(?<=[:|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d])?(?:\([^\s\)]+\))?)/g;
             const rgbaColorPattern = /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g;
             const hslaColorPattern = /hsla?\(([\d.]+),([\d.]+)%,([\d.]+)%(?:,([\d.]+))?\)/g;
-            const hexColorPattern = /#([abcdef\d]{6,8})?/g;
+            const hexColorPattern = /#([0-9a-fA-F]{6,8})/g;
             let colorMatch: RegExpExecArray | null;
             let colorMatch2: RegExpExecArray | null;
             let colorName: string;
