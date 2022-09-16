@@ -1251,4 +1251,12 @@ export const masterCssSemantic = [
         key: 'text-transform',
         values: ['capitalize', 'lowercase', 'uppercase']
     },
+    {
+        key: 'pointer-events',
+        values: ['untouchable']
+    },
+    {
+        key: 'justify-content',
+        values: ['center-content']
+    },
 ]
