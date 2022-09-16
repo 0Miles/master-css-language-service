@@ -24,7 +24,7 @@ import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
 import { GetHoverInstance, doHover } from './hoverProvider'
 import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance, InMasterCSS } from './masterCss'
-import { GetDocumentColors, GetColorPresentation } from './documentColorProvider'
+import { GetDocumentColors, GetColorPresentation,GetColorRender } from './documentColorProvider'
 
 
 
@@ -200,15 +200,22 @@ connection.onDocumentColor(
             return [];
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            return await GetDocumentColors(documentColor, documents, settings.classNameMatches);
+            let colorInformation = await GetDocumentColors(documentColor, documents,settings.classNameMatches);
+            colorInformation = colorInformation.concat(await GetColorRender(documentColor, documents));
+            return colorInformation
         }
         return [];
     });
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
     if (settings.PreviewColor == true && CheckFilesExclude(params.textDocument.uri)) {
-        return GetColorPresentation(params);
+        let document = documents.get(params.textDocument.uri);
+        let colorString = document?.getText(params.range) 
+
+        return GetColorPresentation(params,colorString??'');
     }
+
+
     return [];
 });
 

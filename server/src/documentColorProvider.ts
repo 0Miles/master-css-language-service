@@ -18,6 +18,37 @@ import { TextDocument } from 'vscode-languageserver-textdocument';
 import { Style } from '@master/css';
 
 
+export async function GetColorRender(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>): Promise<ColorInformation[]> {
+    let colors: ColorInformation[] = [];
+    const documentUri = DocumentColor.textDocument.uri;
+    let document = documents.get(documentUri);
+    let text = document?.getText() ?? '';
+
+    if (typeof document == undefined) {
+        return [];
+    }
+    let classMatch: RegExpExecArray | null;
+    const hexColorPattern = /:'([0-9a-fA-F]{6,8})'/g;
+    let colorMatch: RegExpExecArray | null;
+
+    let classPattern = new RegExp('(?<=colors:\\s*{\\s*.*)([^}]*)}','g')
+    while ((classMatch = classPattern.exec(text)) !== null) {
+                //#region  for rgb、hls
+                while ((colorMatch = hexColorPattern.exec(classMatch[0]))) {
+                    const colorInformation: ColorInformation = {
+                        range: {
+                            start: document?.positionAt(classMatch.index + colorMatch.index + 2 ) ?? Position.create(0, 0),
+                            end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length -1) ?? Position.create(0, 0)
+                        },
+                        color: getColorValue(hexToRgb(colorMatch[1]))
+                    };
+                    colors.push(colorInformation);
+                }
+                //#endregion for rgb、hls
+    }
+    return colors;
+}
+
 export async function GetDocumentColors(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>, classAttributes: string[]
 ): Promise<ColorInformation[]> {
     let colors: ColorInformation[] = []
@@ -230,14 +261,27 @@ export function getColorValue(color: Color): Color {
     return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
 }
 
-export function GetColorPresentation(params: ColorPresentationParams) {
+export function GetColorPresentation(params: ColorPresentationParams,colorString: string) {
     const result: ColorPresentation[] = [];
     let color = params.color;
     let range = params.range;
 
+
     const red256 = Math.round(color.red * 255), green256 = Math.round(color.green * 255), blue256 = Math.round(color.blue * 255);
 
     let label;
+
+    if(colorString.match(new RegExp('([0-9a-fA-F]{6,8})','g'))!=null)
+    {
+        if (color.alpha === 1) {
+            label = `${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`;
+        } else {
+            label = `${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`;
+        }
+        result.push({ label: label, textEdit: TextEdit.replace(range, label) });
+        return result;
+    }
+
     if (color.alpha === 1) {
         label = `rgb(${red256},${green256},${blue256})`;
     } else {
