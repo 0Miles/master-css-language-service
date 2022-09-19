@@ -69,7 +69,7 @@
                     }
                 },
                 {
-                    "match": "(?<![^\\s;:{]+:[^\\s;]*)([^\\s;:\"'{]+)(:)(?!\\b(?:\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)?(?:\\:|out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|has|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|marker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|nth|where|part|slotted)\\b)",
+                    "match": "(?<![^\\s;:{]+:[^\\s;]*)([^\\s;:\"'{]+)(:)(?!:)(?!\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)(?!out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|has|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|marker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|nth|where|part|slotted)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -151,7 +151,7 @@
                     }
                 },
                 {
-                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:\"'`]*)([^\\s;\"'`:@_!\\[\\|,\\(\\)\\.\\}\\+>~</]+)",
+                    "match": "(?<=(?:(?:[^\\s;:]+:)|@|~|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:\"'`]*)([^\\s;\"'`:@_!\\[\\|,\\(\\)\\.\\{\\}\\+>~</]+)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
@@ -291,18 +291,18 @@
                     "match": "(\\[)([^\\s\\]]+)(\\])",
                     "captures": {
                         "1": {
-                            "name": "punctuation.definition.entity.begin.bracket.square.css"
+                            "name": "variable punctuation.definition.entity.begin.bracket.square.css"
                         },
                         "2": {
                             "name": "entity.other.attribute-name.css"
                         },
                         "3": {
-                            "name": "punctuation.definition.entity.end.bracket.square.css"
+                            "name": "variable punctuation.definition.entity.end.bracket.square.css"
                         }
                     }
                 },
                 {
-                    "match": "(?:(_)|(\\+(?!\\d)|>|~))([\\*^\\s;'\"`@:><.\\[\\],_\\+\\(\\){]*)",
+                    "match": "(?:(_)|(\\+(?!\\d)|>|~))(\\*?[^\\s;'\"`@:><.\\[\\],_\\+\\(\\)\\{]*)",
                     "captures": {
                         "1": {
                             "name": "comment.block"
@@ -311,6 +311,14 @@
                             "name": "keyword.operator.combinator"
                         },
                         "3": {
+                            "name": "entity.name.tag.css"
+                        }
+                    }
+                },
+                {
+                    "match": "(\\*?[^\\s;'\"`@:><.\\[\\],_\\+\\(\\)\\{]+)(?=[^\\{]*{)",
+                    "captures": {
+                        "1": {
                             "name": "entity.name.tag.css"
                         }
                     }
