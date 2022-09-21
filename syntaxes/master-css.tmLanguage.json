@@ -48,8 +48,7 @@
         "master-css-group-split-sign": {
             "patterns": [
                 {
-                    "begin": "(;)",
-                    "end": "\\b",
+                    "match": "(;)",
                     "captures": {
                         "1": {
                             "name": "master-css.class.split"
@@ -346,7 +345,7 @@
                             "name": "constant.numeric.css"
                         },
                         "6": {
-                            "name": "keyword.other.unit.px.css"
+                            "name": "keyword.other.unit"
                         },
                         "7": {
                             "name": "support.constant.property-value.css"
