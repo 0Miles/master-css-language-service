@@ -177,7 +177,7 @@
             ]
         },
         "highlight-master-config-css-object": {
-            "begin": "(css)(:)\\s*({)",
+            "begin": "(css)\\s*(:)\\s*({)",
             "end": "}",
             "captures": {
                 "1": {
@@ -205,8 +205,8 @@
             ]
         },
         "master-config-css-object-classes": {
-            "begin": "(classes)(:)\\s*({)",
-            "end": "(})(,)?",
+            "begin": "(classes)\\s*(:)\\s*({)",
+            "end": "(})\\s*(,)?",
             "captures": {
                 "1": {
                     "name": "meta.object-literal.key"
