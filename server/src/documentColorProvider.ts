@@ -28,7 +28,7 @@ export async function GetColorRender(DocumentColor: DocumentColorParams, documen
         return [];
     }
     let classMatch: RegExpExecArray | null;
-    const hexColorPattern = /:'([0-9a-fA-F]{6,8})'/g;
+    const hexColorPattern = /(:\s*'\s*)([0-9a-fA-F]{6,8})'/g;
     let colorMatch: RegExpExecArray | null;
 
     let classPattern = new RegExp('(?<=colors:\\s*{\\s*.*)([^}]*)}','g')
@@ -37,10 +37,10 @@ export async function GetColorRender(DocumentColor: DocumentColorParams, documen
                 while ((colorMatch = hexColorPattern.exec(classMatch[0]))) {
                     const colorInformation: ColorInformation = {
                         range: {
-                            start: document?.positionAt(classMatch.index + colorMatch.index + 2 ) ?? Position.create(0, 0),
+                            start: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[1].length ) ?? Position.create(0, 0),
                             end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length -1) ?? Position.create(0, 0)
                         },
-                        color: getColorValue(hexToRgb(colorMatch[1]))
+                        color: getColorValue(hexToRgb(colorMatch[2]))
                     };
                     colors.push(colorInformation);
                 }
