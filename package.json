@@ -129,7 +129,7 @@
                         "(?:(\\$|(?:(?:element|el)\\.[^\\s.`]+)`)([^`]+)`)",
                         "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)",
                         "(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
-                        "(?<=classes:\\s*{\\s*.*)([\\s\\w\\:\\,]*)('[^']*')"
+                        "(?<=classes\\s*:\\s*{\\s*.*)([\\s\\w\\:\\,]*)('[^']*')"
                     ]
                 },
                 "masterCSS.suggestions": {
