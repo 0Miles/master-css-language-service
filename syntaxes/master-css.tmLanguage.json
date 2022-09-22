@@ -42,6 +42,12 @@
                 },
                 {
                     "include": "#master-css-group-split-sign"
+                },
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
                 }
             ]
         },
@@ -352,6 +358,56 @@
                         },
                         "8": {
                             "name": "variable punctuation.definition.parameters.end.bracket.round.css"
+                        }
+                    }
+                }
+            ]
+        },
+        "master-css-value-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-value-string-quoted-single": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "class-string": {
+            "patterns": [
+                {
+                    "match": "(\\S)",
+                    "captures": {
+                        "1": {
+                            "name": "string.quoted"
                         }
                     }
                 }
