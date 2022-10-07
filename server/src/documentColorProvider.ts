@@ -181,6 +181,17 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
             }
         }
     })
+    
+    const set = new Set();
+    colors = colors.filter(item => {
+        if (set.has(document?.offsetAt(item.range.start))) {
+          return false;
+        } else {
+          set.add(document?.offsetAt(item.range.start));
+          return true;
+        }
+      });
+
     return colors;
 }
 
