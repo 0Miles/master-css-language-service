@@ -305,10 +305,10 @@ export function GetAllInstance(textDocumentPosition: TextDocumentPositionParams,
     console.log(result)
     return result;
 }
-export function InMasterCSS(documentUri: string, position: Position, documents: TextDocuments<TextDocument>, classNameMatches: string[]) {
+export function PositionCheck(documentUri: string, position: Position, documents: TextDocuments<TextDocument>, RegExpList: string[]) {
 
     let result: {
-        InMasterCss: boolean,
+        IsMatch: boolean,
         PositionIndex: number,
         classStartIndex: number,
         classEndIndex: number,
@@ -316,7 +316,7 @@ export function InMasterCSS(documentUri: string, position: Position, documents: 
         instance: { range: Range, instanceString: string },
         instanceList: { range: Range, instanceString: string }[],
     } = {
-        InMasterCss: false,
+        IsMatch: false,
         PositionIndex: 0,
         classStartIndex: 0,
         classEndIndex: 0,
@@ -337,12 +337,12 @@ export function InMasterCSS(documentUri: string, position: Position, documents: 
 
     result.PositionIndex = positionIndex;
 
-    classNameMatches.forEach(x => {
+    RegExpList.forEach(x => {
         let classPattern = new RegExp(x, "g")
 
         while ((classMatch = classPattern.exec(text)) !== null) {
             if ((classMatch.index <= positionIndex && classMatch.index + classMatch[0].length - 1 >= positionIndex) == true) {
-                result.InMasterCss = true;
+                result.IsMatch = true;
                 result.PositionIndex = positionIndex;
                 result.classStartIndex = classMatch.index;
                 result.classEndIndex = classMatch.index + classMatch[0].length - 1;
