@@ -28,7 +28,7 @@ export async function GetColorRender(DocumentColor: DocumentColorParams, documen
         return [];
     }
     let classMatch: RegExpExecArray | null;
-    const hexColorPattern = /(:\s*'\s*)#([0-9a-fA-F]{6,8})'/g;
+    const hexColorPattern = /(:\s*)'#([0-9a-fA-F]{6,8})'/g;
     let colorMatch: RegExpExecArray | null;
 
     let classPattern = new RegExp('(?<=colors:\\s*{\\s*.*)([^}]*)}','g')
@@ -285,9 +285,9 @@ export function GetColorPresentation(params: ColorPresentationParams,isColorRend
     if(isColorRender)
     {
         if (color.alpha === 1) {
-            label = `#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`;
+            label = `'#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`;
         } else {
-            label = `#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`;
+            label = `'#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`;
         }
         result.push({ label: label, textEdit: TextEdit.replace(range, label) });
         return result;
