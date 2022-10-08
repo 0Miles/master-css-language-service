@@ -42,6 +42,12 @@
                 },
                 {
                     "include": "#master-css-group-split-sign"
+                },
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "#master-css-value-string-quoted-single"
                 }
             ]
         },
@@ -68,7 +74,7 @@
                     }
                 },
                 {
-                    "match": "(?<![^\\s;:{]+:[^\\s;]*)([^\\s;:\"'{]+)(:)(?!:)(?!\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)(?!out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|has|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|marker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|nth|where|part|slotted)",
+                    "match": "(?<![^\\s;:{]+:[^\\s;]*)([^\\s;:\"'`{]+)(:)(?!:)(?!\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)(?!out\\-of\\-range|first\\-of\\-type|last\\-of\\-type|only\\-of\\-type|first\\-selector\\-button|scrollbar\\-track\\-piece|search\\-cancel\\-button|search\\-results\\-button|any\\-link|focus\\-visible|focus\\-within|read\\-only|read\\-write|placeholder\\-showen|in\\-range|first\\-letter|first\\-child|last\\-child|only\\-child|first\\-letter|first\\-line|scrollbar\\-button|scrollbar\\-thumb|scrollbar\\-track|scrollbar\\-corner|link|visited|target|scope|hover|has|active|focus|autofill|enabled|disabled|default|checked|indeterminate|valid|invalid|required|optional|root|empty|defined|fullscreen|odd|even|first|last|after|before|backdrop|cue|marker|placeholder|selection|scrollbar|resizer|nth\\-last\\-of\\-type|nth\\-last\\-child|nth\\-of\\-type|nth\\-child|host\\-context|lang|host|is|not|nth|where|part|slotted)",
                     "captures": {
                         "1": {
                             "name": "support.type.property-name.css"
@@ -83,7 +89,7 @@
         "master-css-value": {
             "patterns": [
                 {
-                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;\"']*)(\\))",
+                    "match": "(?<=[^\\s;:]+:)(var)(\\()(\\-\\-[^\\s;\"'`]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -100,7 +106,7 @@
                     }
                 },
                 {
-                    "match": "(?<=[^\\s;:]+:)(\\$)(\\()([^\\s;\"']*)(\\))",
+                    "match": "(?<=[^\\s;:\"'`]+:)(\\$)(\\()([^\\s;\"'`]*)(\\))",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -117,7 +123,7 @@
                     }
                 },
                 {
-                    "match": "([^\\s;\\:\\|,@\"'\\)]+)(\\()",
+                    "match": "([^\\s;\\:\\|,@\"'`\\)]+)(\\()",
                     "captures": {
                         "1": {
                             "name": "support.function.misc.css"
@@ -352,6 +358,56 @@
                         },
                         "8": {
                             "name": "variable punctuation.definition.parameters.end.bracket.round.css"
+                        }
+                    }
+                }
+            ]
+        },
+        "master-css-value-string": {
+            "begin": "(\")",
+            "end": "(\")",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.double.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-value-string-quoted-single": {
+            "begin": "(')",
+            "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted.single.html"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "class-string": {
+            "patterns": [
+                {
+                    "match": "(\\S)",
+                    "captures": {
+                        "1": {
+                            "name": "string.quoted"
                         }
                     }
                 }
