@@ -7,7 +7,7 @@
             "include": "#highlight-style-extend-classes"
         },
         {
-            "include": "#highlight-master-config-css-object"
+            "include": "#master-config-css-object-classes"
         },
         {
             "include": "#highlight-classList-classes"
@@ -173,34 +173,6 @@
                 },
                 {
                     "include": "#class-string"
-                }
-            ]
-        },
-        "highlight-master-config-css-object": {
-            "begin": "(css)\\s*(:)\\s*({)",
-            "end": "}",
-            "captures": {
-                "1": {
-                    "name": "meta.object-literal.key"
-                },
-                "2": {
-                    "name": "punctuation.separator.key-value"
-                },
-                "3": {
-                    "name": "punctuation.definition.block"
-                }
-            },
-            "endCaptures": {
-                "1": {
-                    "name": "punctuation.definition.block"
-                }
-            },
-            "patterns": [
-                {
-                    "include": "#master-config-css-object-classes"
-                },
-                {
-                    "include": "source.tsx"
                 }
             ]
         },
