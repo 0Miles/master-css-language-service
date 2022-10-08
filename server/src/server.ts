@@ -209,7 +209,7 @@ connection.onDocumentColor(
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
     if (settings.PreviewColor == true && CheckFilesExclude(params.textDocument.uri)) {
-        let colorRender = ['(?<=colors:\\s*{\\s*.*)([^}]*)}','g'];
+        let colorRender = ['(?<=colors:\\s*{\\s*.*)([^}]*)}'];
         let isColorRender = PositionCheck(params.textDocument.uri, params.range.start, documents, colorRender);
         
         return GetColorPresentation(params,isColorRender.IsMatch);
