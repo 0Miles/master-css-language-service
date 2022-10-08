@@ -19,7 +19,7 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { IsMasterCss, IsClassList,RgbToHex ,IsElement,InMasterCSS} from './masterCss';
+import { IsMasterCss, IsClassList,RgbToHex ,IsElement,PositionCheck} from './masterCss';
 import { Style } from '@master/css';
 
 const rgbColors = Style.rgbColors;

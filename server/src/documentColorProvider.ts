@@ -28,7 +28,7 @@ export async function GetColorRender(DocumentColor: DocumentColorParams, documen
         return [];
     }
     let classMatch: RegExpExecArray | null;
-    const hexColorPattern = /(:\s*'\s*)([0-9a-fA-F]{6,8})'/g;
+    const hexColorPattern = /(:\s*)'#([0-9a-fA-F]{6,8})'/g;
     let colorMatch: RegExpExecArray | null;
 
     let classPattern = new RegExp('(?<=colors:\\s*{\\s*.*)([^}]*)}','g')
@@ -181,6 +181,17 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
             }
         }
     })
+    
+    const set = new Set();
+    colors = colors.filter(item => {
+        if (set.has(document?.offsetAt(item.range.start))) {
+          return false;
+        } else {
+          set.add(document?.offsetAt(item.range.start));
+          return true;
+        }
+      });
+
     return colors;
 }
 
@@ -261,7 +272,7 @@ export function getColorValue(color: Color): Color {
     return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
 }
 
-export function GetColorPresentation(params: ColorPresentationParams,colorString: string) {
+export function GetColorPresentation(params: ColorPresentationParams,isColorRender = false) {
     const result: ColorPresentation[] = [];
     let color = params.color;
     let range = params.range;
@@ -271,12 +282,12 @@ export function GetColorPresentation(params: ColorPresentationParams,colorString
 
     let label;
 
-    if(colorString.match(new RegExp('([0-9a-fA-F]{6,8})','g'))!=null)
+    if(isColorRender)
     {
         if (color.alpha === 1) {
-            label = `${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`;
+            label = `'#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`;
         } else {
-            label = `${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`;
+            label = `'#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`;
         }
         result.push({ label: label, textEdit: TextEdit.replace(range, label) });
         return result;

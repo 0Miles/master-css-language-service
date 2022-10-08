@@ -23,7 +23,7 @@ import {
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
 import { GetHoverInstance, doHover } from './hoverProvider'
-import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance, InMasterCSS } from './masterCss'
+import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance, PositionCheck } from './masterCss'
 import { GetDocumentColors, GetColorPresentation,GetColorRender } from './documentColorProvider'
 
 
@@ -176,7 +176,7 @@ connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
         if (settings.suggestions == true && CheckFilesExclude(_textDocumentPosition.textDocument.uri)) {
 
-            let inMasterCSS = InMasterCSS(_textDocumentPosition.textDocument.uri, _textDocumentPosition.position, documents, settings.classNameMatches).InMasterCss
+            let inMasterCSS = PositionCheck(_textDocumentPosition.textDocument.uri, _textDocumentPosition.position, documents, settings.classNameMatches).IsMatch
 
             let lastInstance = GetLastInstance(_textDocumentPosition, documents);
             if (lastInstance.isInstance == true && inMasterCSS == true) {
@@ -209,20 +209,18 @@ connection.onDocumentColor(
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
     if (settings.PreviewColor == true && CheckFilesExclude(params.textDocument.uri)) {
-        let document = documents.get(params.textDocument.uri);
-        let colorString = document?.getText(params.range) 
-
-        return GetColorPresentation(params,colorString??'');
+        let colorRender = ['(?<=colors:\\s*{\\s*.*)([^}]*)}','g'];
+        let isColorRender = PositionCheck(params.textDocument.uri, params.range.start, documents, colorRender);
+        
+        return GetColorPresentation(params,isColorRender.IsMatch);
     }
-
-
     return [];
 });
 
 connection.onHover(textDocumentPosition => {
     if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
-        let HoverInstance = InMasterCSS(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
-        if (HoverInstance.InMasterCss) {
+        let HoverInstance = PositionCheck(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
+        if (HoverInstance.IsMatch) {
             return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range)
         }
     }
