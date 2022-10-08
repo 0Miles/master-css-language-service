@@ -282,7 +282,7 @@
                     }
                 },
                 {
-                    "match": "(\\:{1,2})((?:\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)?(?:file\\-selector-button|search\\-cancel\\-button|search\\-results\\-button|scrollbar\\-track\\-piece|scrollbar\\-button|scrollbar\\-track|scrollbar\\-thumb|scrollbar\\-corner|first\\-letter|first\\-line|placeholder|scrollbar|selection|backdrop|resizer|before|after|marker|cue))",
+                    "match": "(\\:{1,2})((?:\\-webkit\\-|\\-moz\\-|\\-o\\-|\\-ms\\-)?(?:range\\-thumb|slider\\-thumb|file\\-selector-button|search\\-cancel\\-button|search\\-results\\-button|scrollbar\\-track\\-piece|scrollbar\\-button|scrollbar\\-track|scrollbar\\-thumb|scrollbar\\-corner|first\\-letter|first\\-line|placeholder|scrollbar|selection|backdrop|resizer|before|after|marker|cue))",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.pseudo-element.css punctuation.definition.entity.css"
