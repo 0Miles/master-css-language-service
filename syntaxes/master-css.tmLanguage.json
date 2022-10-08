@@ -224,7 +224,7 @@
         "master-css-selector": {
             "patterns": [
                 {
-                    "match": "(?<![\\|/\\,])(\\.)(?!\\d)([^\\s;'\"`@:><.\\[\\]_\\+\\(\\)]*)",
+                    "match": "(?<![\\|/])(\\.)(?!\\d)([^\\s;'\"`@:><.\\[\\]_\\+\\(\\),]*)",
                     "captures": {
                         "1": {
                             "name": "entity.other.attribute-name.class.css"
