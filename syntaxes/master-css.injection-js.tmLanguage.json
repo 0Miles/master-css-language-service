@@ -423,6 +423,9 @@
                     "include": "#master-css-template-expression-string-quoted-single"
                 },
                 {
+                    "include": "#master-css-template-expression-string-template"
+                },
+                {
                     "include": "source.tsx"
                 }
             ]
@@ -446,6 +449,9 @@
                 },
                 {
                     "include": "#master-css-template-expression-string-quoted-single"
+                },
+                {
+                    "include": "#master-css-template-expression-string-template"
                 },
                 {
                     "include": "source.tsx"
@@ -480,6 +486,31 @@
         "master-css-template-expression-string-quoted-single": {
             "begin": "(')",
             "end": "(')",
+            "captures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "string.quoted"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-css-value-string"
+                },
+                {
+                    "include": "source.master-css"
+                },
+                {
+                    "include": "#class-string"
+                }
+            ]
+        },
+        "master-css-template-expression-string-template": {
+            "begin": "(`)",
+            "end": "(`)",
             "captures": {
                 "1": {
                     "name": "string.quoted"
