@@ -10,6 +10,9 @@
             "include": "#master-config-css-object-classes"
         },
         {
+            "include": "#master-config-css-object-classes-2"
+        },
+        {
             "include": "#highlight-classList-classes"
         },
         {
@@ -185,6 +188,43 @@
                 },
                 "2": {
                     "name": "punctuation.separator.key-value"
+                },
+                "3": {
+                    "name": "punctuation.definition.block"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.block"
+                },
+                "2": {
+                    "name": "punctuation.separator.comma"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#style-extend-classes-template-string"
+                },
+                {
+                    "include": "#style-extend-classes-quoted-double-string"
+                },
+                {
+                    "include": "#style-extend-classes-quoted-single-string"
+                },
+                {
+                    "include": "source.tsx"
+                }
+            ]
+        },
+        "master-config-css-object-classes-2": {
+            "begin": "(classes)\\s*(=)\\s*({)",
+            "end": "(})\\s*(;)?",
+            "captures": {
+                "1": {
+                    "name": "meta.object-literal.key"
+                },
+                "2": {
+                    "name": "keyword.operator.assignment"
                 },
                 "3": {
                     "name": "punctuation.definition.block"
