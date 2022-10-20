@@ -59,6 +59,13 @@
                 ]
             },
             {
+                "scopeName": "source.master-css.injection-vue",
+                "path": "./syntaxes/master-css.injection-vue.tmLanguage.json",
+                "injectTo": [
+                    "source.vue"
+                ]
+            },
+            {
                 "scopeName": "source.master-css.injection-js",
                 "path": "./syntaxes/master-css.injection-js.tmLanguage.json",
                 "injectTo": [
@@ -82,7 +89,8 @@
                     "source.jsx",
                     "source.tsx",
                     "source.js",
-                    "source.ts"
+                    "source.ts",
+                    "source.vue"
                 ]
             }
         ],
