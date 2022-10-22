@@ -36,35 +36,10 @@ export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first
 ];
 export const masterCssMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
     { label: 'media()', kind: CompletionItemKind.Function }];
-export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
+// export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
 export const masterCssOtherKeys = ['ext', 'gap', 'ont', 'ovf', 'quotes', 'bottom', 'center', 'left', 'middle', 'top', 'right', 'px', 'py', 'pt', 'pb', 'pl', 'pr', 'mx', 'my', 'mt', 'mb', 'ml', 'mr'];
 
 export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
-
-export const masterCssColors = [
-    // {key:'black',color: '000000'},
-    // {key:'white',color: 'ffffff'},
-    { key: 'fade', color: '71798e' },
-    { key: 'gray', color: '7c7c7e' },
-    { key: 'brown', color: '936753' },
-    { key: 'orange', color: 'ff6600' },
-    { key: 'gold', color: 'ff9d00' },
-    { key: 'yellow', color: 'ffc800' },
-    { key: 'grass', color: '85d016' },
-    { key: 'green', color: '2fb655' },
-    { key: 'beryl', color: '00cc7e' },
-    { key: 'teal', color: '00ccaa' },
-    { key: 'cyan', color: '12d0ed' },
-    { key: 'sky', color: '00a6ff' },
-    { key: 'blue', color: '0f62fe' },
-    { key: 'indigo', color: '4f46e5' },
-    { key: 'violet', color: '6316e9' },
-    { key: 'purple', color: '8318e7' },
-    { key: 'fuchsia', color: 'cc22c9' },
-    { key: 'pink', color: 'd92671' },
-    { key: 'crimson', color: 'dc143c' },
-    { key: 'red', color: 'ed1c24' }
-];
 
 export const masterCssKeyValues: MasterCssKey[] = [
 

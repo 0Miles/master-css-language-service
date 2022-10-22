@@ -6,8 +6,6 @@ import {
 } from 'vscode-languageserver/node';
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
 
-import { StyleSheet, Style } from '@master/css';
-
 function InCurlyBrackets(text: string): boolean {
     let curlybrackets = 0;
     for (let i = 0; i < text.length; i++) {
