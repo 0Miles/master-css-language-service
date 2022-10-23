@@ -3,11 +3,8 @@ import {
     masterCssSelectors,
     masterStyleElements,
     masterCssMedia,
-    masterCssBreakpoints,
     masterCssOtherKeys,
-    masterCssColors,
     masterCssType,
-    masterCssSemantic,
     masterCssCommonValues
 } from './constant'
 
@@ -19,10 +16,15 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { IsMasterCss, IsClassList,RgbToHex ,IsElement,PositionCheck} from './masterCss';
-import { Style } from '@master/css';
+import { IsMasterCss, IsClassList, RgbToHex ,IsElement,PositionCheck } from './masterCss';
+import MasterCSS, {
+        defaultColors,
+        defaultBreakpoints,
+        defaultSemantics
+    } from '@master/css';
 
-const rgbColors = Style.rgbColors;
+const masterCssBreakpoints = Object.keys(defaultBreakpoints);
+const masterCssSemantics = Object.keys(defaultSemantics)
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
@@ -106,7 +108,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let isElements = !(elementsPattern.exec(instance) === null && triggerKey !== '::');
 
     let masterCssKeys: Array<string | CompletionItem> = [];
-    let masterCssSemanticKeys: Array<string | CompletionItem> = [];
     let masterCssValues: Array<string | CompletionItem> = [];
     masterCssKeys = masterCssKeys.concat(masterCssOtherKeys);
 
@@ -127,23 +128,16 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     // });
 
-    masterCssSemantic.forEach(x => {
-        //masterCssKeys = masterCssKeys.concat(x.values);
-        masterCssSemanticKeys = masterCssSemanticKeys.concat(x.values);
-    })
-
-
-
     masterCssKeyValues.forEach(x => {
         masterCssKeys = masterCssKeys.concat(x.key);
         if (x.key.includes(key)) {
             masterCssValues = masterCssValues.concat(x.values.filter(y => !masterCssValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y === 'string' ? y : y.label))));
             if (x.colorful) {
                 isColorful = true;
-                masterCssType.map(y => {
-                    y.type == 'color';
-                    masterCssValues = masterCssValues.concat(y.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z === 'string' ? z : z.label))));
-                })
+                const needPushList = masterCssType.find(y => y.type === 'color')?.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z === 'string' ? z : z.label)));
+                if (needPushList) {
+                    masterCssValues = masterCssValues.concat(needPushList);
+                }
             }
         }
     })
@@ -153,7 +147,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemantics, CompletionItemKind.Property));
 
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem);
@@ -167,7 +161,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (!masterCssKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemanticKeys, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemantics, CompletionItemKind.Property));
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem);
         }
@@ -191,7 +185,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         return masterStyleCompletionItem;
     }
 
-    if (masterCssSemanticKeys.includes(key)) {
+    if (masterCssSemantics.includes(key)) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
@@ -266,20 +260,17 @@ function getColorsItem(): CompletionItem[] {
 
     let masterStyleCompletionItem: CompletionItem[] = [];
 
-    Object.keys(rgbColors)
+    Object.keys(defaultColors)
         .filter((colorName: string) => colorName !== 'black' && colorName !== 'white')
         .map((colorName: string) => {
-            const eachRgbColor = rgbColors[colorName];
+            const colors = (defaultColors as any)[colorName];
 
-            Object.keys(eachRgbColor)
+            Object.keys(colors)
                 .filter((level: string) => level !== '')
                 .map((level: string) => {
-                    const levelRgb = eachRgbColor[level];
-                    let levelRgbSplit=levelRgb.split(' ');
-
                     masterStyleCompletionItem.push({
                         label: colorName + '-' +level,
-                        documentation: '#'+RgbToHex(+levelRgbSplit[0], +levelRgbSplit[1], +levelRgbSplit[2]),
+                        documentation: colors[level],
                         kind: CompletionItemKind.Color,
                         sortText: `${colorName}-${(level).toString().padStart(2, '0')}`
                     })

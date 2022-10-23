@@ -1,8 +1,4 @@
 import {
-    masterCssColors
-} from './constant'
-
-import {
     TextDocuments,
     TextDocumentPositionParams,
     ColorInformation,
@@ -15,7 +11,8 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { Style } from '@master/css';
+import { defaultColors } from '@master/css';
+import { hexToRgb } from './utils/hex-to-rgb';
 
 
 export async function GetColorRender(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>): Promise<ColorInformation[]> {
@@ -143,7 +140,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                         colors.push(colorInformation);
                     }
                     else {
-                        if (masterCssColors.findIndex(x => x.key == colorName) != -1) {
+                        if (Object.keys(defaultColors).find(x => x == colorName)) {
                             const colorInformation: ColorInformation = {
                                 range: {
                                     start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
@@ -162,7 +159,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
                     colorNumber = Number(colorMatch[0].split('-')[1].split('/')[0]);
 
 
-                    if (masterCssColors.findIndex(x => x.key == colorName) != -1 && colorNumber > 0 && colorNumber < 100 && colorNumber % 2 == 0) {
+                    if (Object.keys(defaultColors).find(x => x == colorName) && colorNumber > 0 && colorNumber < 100) {
                         const colorInformation: ColorInformation = {
                             range: {
                                 start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
@@ -196,13 +193,12 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
 }
 
 function getColorsRGBA(colorName: string, colorNumber: number, colorAlpha: number = 1): Color {
-    const rgbColors = Style.rgbColors;
+    const rgbColors: any = defaultColors;
 
     const rgbColorValue = rgbColors[colorName];
-    const levelRgb = rgbColorValue[colorNumber];
-    let levelRgbSplit = levelRgb.split(' ');
+    const levelRgb = hexToRgb(rgbColorValue[colorNumber]);
 
-    return { red: +levelRgbSplit[0] / 255, green: +levelRgbSplit[1] / 255, blue: +levelRgbSplit[2] / 255, alpha: colorAlpha };
+    return { red: levelRgb.red/255, green: levelRgb.green/255, blue: levelRgb.blue/255, alpha: colorAlpha };
 }
 export interface HWBA { h: number; w: number; b: number; a: number; }
 
@@ -263,11 +259,6 @@ export function hslToRgb(h: number, s: number, l: number, alpha?: number): Color
     return { red: 255 * f(0), green: 255 * f(8), blue: 255 * f(4), alpha: alpha ?? 1 }
 }
 
-
-export function hexToRgb(hex: string): Color {
-    const aRgbHex = hex.match(/.{1,2}/g);
-    return { red: parseInt(aRgbHex?.[0] ?? '0', 16), green: parseInt(aRgbHex?.[1] ?? '0', 16), blue: parseInt(aRgbHex?.[2] ?? '0', 16), alpha: parseInt(aRgbHex?.[3] ?? 'FF', 16) }
-}
 export function getColorValue(color: Color): Color {
     return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
 }
