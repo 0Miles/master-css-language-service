@@ -16,8 +16,7 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { IsMasterCss, IsClassList, RgbToHex ,IsElement,PositionCheck } from './masterCss';
-import MasterCSS, {
+import {
         defaultColors,
         defaultBreakpoints,
         defaultSemantics

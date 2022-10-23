@@ -10,20 +10,14 @@ import {
     InitializeResult,
     DocumentColorParams,
     ColorInformation,
-    ColorPresentationParams,
-    ColorPresentation,
-    Color,
-    TextEdit,
-    Diagnostic,
-    DiagnosticSeverity,
-    CodeLensResolveRequest,
-    Position
-} from 'vscode-languageserver/node';
+    ColorPresentationParams} from 'vscode-languageserver/node';
 
-import { Range, TextDocument } from 'vscode-languageserver-textdocument';
+import * as minimatch from 'minimatch';
+
+import { TextDocument } from 'vscode-languageserver-textdocument';
 import { GetLastInstance, GetCompletionItem } from './completionProvider'
-import { GetHoverInstance, doHover } from './hoverProvider'
-import { GetMasterInstance, GetAllInstance, InTags, GetAllClassListInstance, PositionCheck } from './masterCss'
+import { doHover } from './hoverProvider'
+import { PositionCheck } from './masterCss'
 import { GetDocumentColors, GetColorPresentation,GetColorRender } from './documentColorProvider'
 
 
@@ -228,7 +222,6 @@ connection.onHover(textDocumentPosition => {
 });
 
 function CheckFilesExclude(path: string): boolean {
-    var minimatch = require("minimatch");
     for (let exclude of settings.files.exclude) {
         if (minimatch(path, exclude)) {
             return false;
