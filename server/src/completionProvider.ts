@@ -15,15 +15,7 @@ import {
     TextDocumentPositionParams
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
-
-import {
-        defaultColors,
-        defaultBreakpoints,
-        defaultSemantics
-    } from '@master/css';
-
-const masterCssBreakpoints = Object.keys(defaultBreakpoints);
-const masterCssSemantics = Object.keys(defaultSemantics)
+import MasterCSS from '@master/css';
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
@@ -87,7 +79,7 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string) {
+export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS()) {
 
     let masterStyleCompletionItem: CompletionItem[] = [];
     let haveValue = instance.split(':').length;
@@ -146,7 +138,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemantics, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property));
 
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem);
@@ -160,7 +152,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (!masterCssKeys.includes(key) && triggerKey !== ":") {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSemantics, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property));
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem);
         }
@@ -177,14 +169,14 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssBreakpoints, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.breakpoints ?? {}), CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash('@' + last, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
     }
 
-    if (masterCssSemantics.includes(key) && !masterCssKeyValues.find(x=>x.key.includes(key))) {
+    if (Object.keys(masterCss.config.semantics ?? {}).includes(key) && !masterCssKeyValues.find(x => x.key.includes(key))) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
@@ -197,7 +189,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum));
 
         if (isColorful) {
-            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem());
+            masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss));
         }
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
@@ -255,37 +247,35 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
 
 
 
-function getColorsItem(): CompletionItem[] {
+function getColorsItem(masterCss: MasterCSS = new MasterCSS()): CompletionItem[] {
 
     let masterStyleCompletionItem: CompletionItem[] = [];
 
-    Object.keys(defaultColors)
-        .filter((colorName: string) => colorName !== 'black' && colorName !== 'white')
-        .map((colorName: string) => {
-            const colors = (defaultColors as any)[colorName];
-
+    Object.keys(masterCss.colorsThemesMap)
+        .forEach((colorName: string) => {
+            const colors = masterCss.colorsThemesMap[colorName];
             Object.keys(colors)
-                .filter((level: string) => level !== '')
-                .map((level: string) => {
-                    masterStyleCompletionItem.push({
-                        label: colorName + '-' +level,
-                        documentation: colors[level],
-                        kind: CompletionItemKind.Color,
-                        sortText: `${colorName}-${(level).toString().padStart(2, '0')}`
-                    })
-                })
-        })
-
-    masterStyleCompletionItem.push({
-        label: 'white',
-        documentation: '#ffffff',
-        kind: CompletionItemKind.Color
-    })
-    masterStyleCompletionItem.push({
-        label: 'black',
-        documentation: '#000000',
-        kind: CompletionItemKind.Color
-    })
+                .forEach((level: string) => {
+                    const colorValue: any = masterCss.colorsThemesMap[colorName][level];
+                    try {
+                        if (level === '') {
+                            masterStyleCompletionItem.push({
+                                label: colorName,
+                                documentation: Object.values<string>(colorValue)[0],
+                                kind: CompletionItemKind.Color,
+                                sortText: `${colorName}`
+                            });
+                        } else if (!isNaN(+level)) {
+                            masterStyleCompletionItem.push({
+                                label: colorName + '-' + level,
+                                documentation: Object.values<string>(colorValue)[0],
+                                kind: CompletionItemKind.Color,
+                                sortText: `${colorName}-${(level).toString().padStart(2, '0')}`
+                            });
+                        }
+                    } catch (_) { }
+                });
+        });
 
     return masterStyleCompletionItem;
 }

@@ -4,7 +4,7 @@ import {
     Hover
 } from 'vscode-languageserver/node';
 import { Range, TextDocument } from 'vscode-languageserver-textdocument';
-import { render } from '@master/css'
+import MasterCSS, { render } from '@master/css'
 import { css_beautify } from 'js-beautify';
 
 
@@ -139,9 +139,9 @@ function InCurlyBrackets(text: string): boolean {
     return true;
 }
 
-export function doHover(instance: string, range: Range): Hover | null {
-    let renderText = render(instance.split(' '));
-    if (renderText == null || renderText == '' || renderText == ' ') {
+export function doHover(instance: string, range: Range, masterCss: MasterCSS = new MasterCSS()): Hover | null {
+    let renderText = render(instance.split(' '), masterCss);
+    if (!renderText || renderText == ' ') {
         return null;
     }
 

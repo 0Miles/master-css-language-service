@@ -6,10 +6,6 @@ interface MasterCssKey {
     values: Array<string | CompletionItem>;
 }
 
-enum MasterStyleKeyType {
-    'color', 'other', 'reserved'
-}
-
 export const masterCssSelectors = [
     { label: 'lang()', kind: CompletionItemKind.Function },{ label: 'has()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',

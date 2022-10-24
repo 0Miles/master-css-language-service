@@ -12,13 +12,16 @@ import {
     ColorInformation,
     ColorPresentationParams} from 'vscode-languageserver/node';
 
+import { WorkspaceFolder } from 'vscode-languageserver';
+import MasterCSS, { configure, extend } from '@master/css'
+
 import * as minimatch from 'minimatch';
 
 import { TextDocument } from 'vscode-languageserver-textdocument';
-import { GetLastInstance, GetCompletionItem } from './completionProvider'
-import { doHover } from './hoverProvider'
-import { PositionCheck } from './masterCss'
-import { GetDocumentColors, GetColorPresentation,GetColorRender } from './documentColorProvider'
+import { GetLastInstance, GetCompletionItem } from './completionProvider';
+import { doHover } from './hoverProvider';
+import { PositionCheck } from './masterCss';
+import { GetDocumentColors, GetColorPresentation,GetColorRender } from './documentColorProvider';
 
 
 
@@ -29,6 +32,8 @@ let hasConfigurationCapability = false;
 let hasWorkspaceFolderCapability = false;
 let hasDiagnosticRelatedInformationCapability = false;
 let settings: MasterCSSSettings;
+
+let MasterCSSObject: MasterCSS | undefined;
 
 // The example settings
 interface MasterCSSSettings {
@@ -84,7 +89,7 @@ connection.onDidChangeConfiguration(change => {
     documents.all().forEach(validateTextDocument);
 });
 
-function getDocumentSettings(resource: string): Thenable<MasterCSSSettings> {
+async function getDocumentSettings(resource: string): Promise<MasterCSSSettings> {
     if (!hasConfigurationCapability) {
         return Promise.resolve(globalSettings);
     }
@@ -97,6 +102,27 @@ function getDocumentSettings(resource: string): Thenable<MasterCSSSettings> {
         });
         documentSettings.set(resource, result);
     }
+
+    connection.workspace.getWorkspaceFolders()
+
+    const workspaceFolders = await connection.workspace.getWorkspaceFolders();
+    let root: WorkspaceFolder | undefined;
+    if (workspaceFolders?.length === 1) {
+        root = workspaceFolders[0];
+    } else {
+        root = workspaceFolders?.find(x => resource.includes(x.uri));
+    }
+    if (root?.uri) {
+        try {
+            let userConfig = null;
+            try {
+                const uri2path = await import('file-uri-to-path');
+                userConfig = await import(uri2path(root.uri.replace('%3A', ':') + '/master.css.js'));
+            } catch (_) { }
+            MasterCSSObject = new MasterCSS(configure(userConfig));
+        } catch(_) { }
+    }
+
     return result;
 }
 
@@ -174,7 +200,7 @@ connection.onCompletion(
 
             let lastInstance = GetLastInstance(_textDocumentPosition, documents);
             if (lastInstance.isInstance == true && inMasterCSS == true) {
-                return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language);
+                return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language, MasterCSSObject);
             }
         }
         return [];
@@ -194,7 +220,7 @@ connection.onDocumentColor(
             return [];
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            let colorInformation = await GetDocumentColors(documentColor, documents,settings.classNameMatches);
+            let colorInformation = await GetDocumentColors(documentColor, documents,settings.classNameMatches, MasterCSSObject);
             colorInformation = colorInformation.concat(await GetColorRender(documentColor, documents));
             return colorInformation
         }
@@ -215,7 +241,7 @@ connection.onHover(textDocumentPosition => {
     if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
         let HoverInstance = PositionCheck(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
         if (HoverInstance.IsMatch) {
-            return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range)
+            return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range, MasterCSSObject)
         }
     }
     return null;

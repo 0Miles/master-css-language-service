@@ -1,6 +1,5 @@
 import {
     TextDocuments,
-    TextDocumentPositionParams,
     ColorInformation,
     Color,
     DocumentColorParams,
@@ -11,8 +10,9 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 
-import { defaultColors } from '@master/css';
+import MasterCSS from '@master/css';
 import { hexToRgb } from './utils/hex-to-rgb';
+import { instancePattern } from './utils/regex';
 
 
 export async function GetColorRender(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>): Promise<ColorInformation[]> {
@@ -46,7 +46,7 @@ export async function GetColorRender(DocumentColor: DocumentColorParams, documen
     return colors;
 }
 
-export async function GetDocumentColors(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>, classAttributes: string[]
+export async function GetDocumentColors(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>, classAttributes: string[], masterCss: MasterCSS = new MasterCSS()
 ): Promise<ColorInformation[]> {
     let colors: ColorInformation[] = []
 
@@ -61,120 +61,105 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
 
     let classMatch: RegExpExecArray | null;
 
+    const allMasterCssColorKeys = Object.keys(masterCss.colorsThemesMap);
+
     classAttributes.forEach(x => {
         let classPattern = new RegExp(x,'g')
         while ((classMatch = classPattern.exec(text)) !== null) {
 
-            const colorPattern = /(?<=[:|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d]*)?(?:\([^\s\)]+\))?)/g;
-            const rgbaColorPattern = /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g;
-            const hslaColorPattern = /hsla?\(([\d.]+),([\d.]+)%,([\d.]+)%(?:,([\d.]+))?\)/g;
-            const hexColorPattern = /#([0-9a-fA-F]{6,8})/g;
-            let colorMatch: RegExpExecArray | null;
-            let colorMatch2: RegExpExecArray | null;
-            let colorName: string;
-            let colorNumber: number;
-            let colorAlpha: number;
-            //check color
+            let instanceMatch: RegExpExecArray | null;
+            while ((instanceMatch = instancePattern.exec(classMatch[2])) !== null) {
+                const instanceStartIndex = classMatch.index + classMatch[1].length + instanceMatch.index;
+                const theme = masterCss.themeNames.find(x => instanceMatch?.[0]?.endsWith(`@${x}`)) ?? '';
 
-            while ((colorMatch = colorPattern.exec(classMatch[0])) !== null) {
-                //#region  for rgb、hls
-                if ((colorMatch2 = rgbaColorPattern.exec(colorMatch[0]))) {
-                    const colorInformation: ColorInformation = {
-                        range: {
-                            start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                            end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
-                        },
-                        color: getColorValue({ red: Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4]) })
-                    };
-                    colors.push(colorInformation);
-                }
-                else if ((colorMatch2 = hslaColorPattern.exec(colorMatch[0]))) {
-                    const colorInformation: ColorInformation = {
-                        range: {
-                            start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                            end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
-                        },
-                        color: getColorValue(hslToRgb(Number(colorMatch2[1]), Number(colorMatch2[2]), Number(colorMatch2[3]), colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4])))
-                    };
-                    colors.push(colorInformation);
-                }
-                else if ((colorMatch2 = hexColorPattern.exec(colorMatch[0]))) {
-                    const colorInformation: ColorInformation = {
-                        range: {
-                            start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                            end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
-                        },
-                        color: getColorValue(hexToRgb(colorMatch2[1]))
-                    };
-                    colors.push(colorInformation);
-                }
-                //#endregion for rgb、hls
-
-                //#region for mastercss color
-                colorAlpha = 1;
-                if (colorMatch[0].split('/').length == 2) {
-                    colorAlpha = Number('0' + colorMatch[0].split('/')[1]);
-                }
-                if (colorMatch[0].split('-').length == 1)//:black  black/.5
-                {
-                    colorName = colorMatch[0].split('/')[0];
-                    colorName = colorName.endsWith('_') ? colorName.replace('_', '') : colorName;
-                    if (colorName == 'black') {
+                const colorPattern = /(?<=[:|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d]*)?(?:\([^\s\)]+\))?)/g;
+                const rgbaColorPattern = /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g;
+                const hslaColorPattern = /hsla?\(([\d.]+),([\d.]+)%,([\d.]+)%(?:,([\d.]+))?\)/g;
+                const hexColorPattern = /#([0-9a-fA-F]{6,8})/g;
+                let colorMatch: RegExpExecArray | null;
+                let colorMatch2: RegExpExecArray | null;
+                let colorName: string;
+                let colorNumber: number;
+                let colorAlpha: number;
+                //check color
+                while ((colorMatch = colorPattern.exec(instanceMatch[0])) !== null) {
+                    //#region  for rgb、hls
+                    if ((colorMatch2 = rgbaColorPattern.exec(colorMatch[0]))) {
                         const colorInformation: ColorInformation = {
                             range: {
-                                start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                                end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                                start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
+                                end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                             },
-                            color: { red: 0, green: 0, blue: 0, alpha: colorAlpha }
+                            color: getColorValue({ red: Number(colorMatch2[1]), green: Number(colorMatch2[2]), blue: Number(colorMatch2[3]), alpha: colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4]) })
                         };
                         colors.push(colorInformation);
                     }
-                    else if (colorName == 'white') {
+                    else if ((colorMatch2 = hslaColorPattern.exec(colorMatch[0]))) {
                         const colorInformation: ColorInformation = {
                             range: {
-                                start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                                end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                                start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
+                                end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                             },
-                            color: { red: 1, green: 1, blue: 1, alpha: colorAlpha }
+                            color: getColorValue(hslToRgb(Number(colorMatch2[1]), Number(colorMatch2[2]), Number(colorMatch2[3]), colorMatch2[4] == undefined ? 1 : Number(colorMatch2[4])))
                         };
                         colors.push(colorInformation);
                     }
-                    else {
-                        if (Object.keys(defaultColors).find(x => x == colorName)) {
+                    else if ((colorMatch2 = hexColorPattern.exec(colorMatch[0]))) {
+                        const colorInformation: ColorInformation = {
+                            range: {
+                                start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
+                                end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                            },
+                            color: getColorValue(hexToRgb(colorMatch2[1]))
+                        };
+                        colors.push(colorInformation);
+                    }
+                    //#endregion for rgb、hls
+
+                    //#region for mastercss color
+                    colorAlpha = 1;
+                    if (colorMatch[0].split('/').length == 2) {
+                        colorAlpha = Number('0' + colorMatch[0].split('/')[1]);
+                    }
+                    if (colorMatch[0].split('-').length == 1)//:black  black/.5
+                    {
+                        colorName = colorMatch[0].split('/')[0];
+                        colorName = colorName.endsWith('_') ? colorName.replace('_', '') : colorName;
+                        if (allMasterCssColorKeys.find(x => x == colorName)) {
                             const colorInformation: ColorInformation = {
                                 range: {
-                                    start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                                    end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                                    start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
+                                    end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
                                 },
-                                color: getColorsRGBA(colorName, 50, colorAlpha)
+                                color: getColorsRGBA(colorName, '', colorAlpha, theme, masterCss)
+                            };
+                            colors.push(colorInformation);
+                        }
+
+                    }
+                    else if (colorMatch[0].split('-').length == 2) { //:red-60 red-60/.5
+
+                        colorName = colorMatch[0].split('-')[0];
+                        colorNumber = Number(colorMatch[0].split('-')[1].split('/')[0]);
+
+
+                        if (allMasterCssColorKeys.find(x => x == colorName) && colorNumber > 0 && colorNumber < 100) {
+                            const colorInformation: ColorInformation = {
+                                range: {
+                                    start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
+                                    end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                                },
+                                color: getColorsRGBA(colorName, colorNumber, colorAlpha, theme, masterCss)
                             };
                             colors.push(colorInformation);
                         }
                     }
 
-                }
-                else if (colorMatch[0].split('-').length == 2) { //:red-60 red-60/.5
-
-                    colorName = colorMatch[0].split('-')[0];
-                    colorNumber = Number(colorMatch[0].split('-')[1].split('/')[0]);
-
-
-                    if (Object.keys(defaultColors).find(x => x == colorName) && colorNumber > 0 && colorNumber < 100) {
-                        const colorInformation: ColorInformation = {
-                            range: {
-                                start: document?.positionAt(classMatch.index + colorMatch.index) ?? Position.create(0, 0),
-                                end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
-                            },
-                            color: getColorsRGBA(colorName, colorNumber, colorAlpha)
-                        };
-                        colors.push(colorInformation);
+                    else if (colorMatch[0].split('-').length != 2) {
+                        continue;
                     }
+                    //#endregion  for mastercss color
                 }
-
-                else if (colorMatch[0].split('-').length != 2) {
-                    continue;
-                }
-                //#endregion  for mastercss color
             }
         }
     })
@@ -192,13 +177,15 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
     return colors;
 }
 
-function getColorsRGBA(colorName: string, colorNumber: number, colorAlpha: number = 1): Color {
-    const rgbColors: any = defaultColors;
-
-    const rgbColorValue = rgbColors[colorName];
-    const levelRgb = hexToRgb(rgbColorValue[colorNumber]);
-
-    return { red: levelRgb.red/255, green: levelRgb.green/255, blue: levelRgb.blue/255, alpha: colorAlpha };
+function getColorsRGBA(colorName: string, colorNumber: number | string, colorAlpha: number = 1, theme: string = '', masterCss: MasterCSS = new MasterCSS()): Color {
+    try {
+        const colorNumberMap = masterCss.colorsThemesMap[colorName];
+        const levelRgb = hexToRgb(colorNumberMap[colorNumber][theme] ?? colorNumberMap[colorNumber][''] ?? Object.values(colorNumberMap[colorNumber])[0]);
+    
+        return { red: levelRgb.red/255, green: levelRgb.green/255, blue: levelRgb.blue/255, alpha: colorAlpha };
+    } catch(ex) {
+        return { red: 0, green: 0, blue: 0, alpha: 1 };
+    }
 }
 export interface HWBA { h: number; w: number; b: number; a: number; }
 
@@ -263,7 +250,7 @@ export function getColorValue(color: Color): Color {
     return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
 }
 
-export function GetColorPresentation(params: ColorPresentationParams,isColorRender = false) {
+export function GetColorPresentation(params: ColorPresentationParams, isColorRender = false) {
     const result: ColorPresentation[] = [];
     let color = params.color;
     let range = params.range;
