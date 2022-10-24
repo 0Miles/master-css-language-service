@@ -42,9 +42,8 @@ export const masterCssOtherKeys = ['ext', 'gap', 'ont', 'ovf', 'quotes', 'bottom
 export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
 
 export const masterCssKeyValues: MasterCssKey[] = [
-
     {
-        key: ['color'],
+        key: ['color', 'fg', 'foreground'],
         colorful: true,
         values: []
     },
