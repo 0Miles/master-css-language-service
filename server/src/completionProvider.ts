@@ -184,7 +184,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         return masterStyleCompletionItem;
     }
 
-    if (masterCssSemantics.includes(key)) {
+    if (masterCssSemantics.includes(key) && !masterCssKeyValues.find(x=>x.key.includes(key))) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
