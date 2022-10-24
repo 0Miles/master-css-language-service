@@ -268,7 +268,7 @@ export function GetAllInstance(textDocumentPosition: TextDocumentPositionParams,
 
     let classPattern = new RegExp(classNameMatches[0], "g")
     let classPattern2 = /(?<=<\s?\w+\s+)(className\s?=\s?{[\w\s]+)((?:`[^`]+`)|(?:"[^"]+")|(?:'[^']+'))[^}]*}/g;
-    let instancePattern = /(?:[^"'`\s])+(?:'[\$|@]'|"[\$|@]"|`[\$|@]`)?(?:[^"{'`\s])+(?=\s|\b)/g;
+    let instancePattern = /[^\s:]+:\w*\(?((?<!\\)["'`])((?:\\\1|(?:(?!\1))[\S\s])*)((?<!\\)\1)\)?|[^\s"'`]+/g;
 
     let classMatch: RegExpExecArray | null;
     let classMatch2: RegExpExecArray | null;
@@ -328,7 +328,7 @@ export function PositionCheck(documentUri: string, position: Position, documents
     let positionIndex = document?.offsetAt(position) ?? 0;
 
 
-    let instancePattern = /(?:[^"'`\s])+(?:'[\$|@]'|"[\$|@]"|`[\$|@]`)?(?:[^"'`\s])+/g;
+    let instancePattern = /[^\s:]+:\w*\(?((?<!\\)["'`])((?:\\\1|(?:(?!\1))[\S\s])*)((?<!\\)\1)\)?|[^\s"'`]+/g;
 
     let instanceMatch: RegExpExecArray | null;
     let classMatch: RegExpExecArray | null;
@@ -391,7 +391,7 @@ export function GetAllClassListInstance(textDocumentPosition: TextDocumentIdenti
 
     let classPattern = /(?:((?:add)|(?:remove)|(?:replace)|(?:toggle)))\(([^\)]+)\)/g;
     //let classPattern2 = /((?:`[^`]+`)|(?:"[^"]+")|(?:'[^']+'))+/g;
-    let instancePattern = /(?:[^"'`\s])+(?:'[\$|@]'|"[\$|@]"|`[\$|@]`)?(?:[^"{'`\s])+(?=\s|\b)/g;
+    let instancePattern = /[^\s:]+:\w*\(?((?<!\\)["'`])((?:\\\1|(?:(?!\1))[\S\s])*)((?<!\\)\1)\)?|[^\s"'`]+/g;
 
     let classMatch: RegExpExecArray | null;
     let classMatch2: RegExpExecArray | null;
