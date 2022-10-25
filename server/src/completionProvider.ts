@@ -60,24 +60,6 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
 
     return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language };
 }
-function InCurlyBrackets(text: string): boolean {
-    let curlybrackets = 0;
-    for (let i = 0; i < text.length; i++) {
-        if (text.charAt(i) == '{') {
-            curlybrackets += 1;
-        }
-        else if (text.charAt(i) == '}') {
-            curlybrackets -= 1;
-            if (curlybrackets <= 0) {
-                return false;
-            }
-        }
-    }
-    if (curlybrackets <= 0) {
-        return false;
-    }
-    return true;
-}
 
 export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS()) {
 
@@ -85,14 +67,11 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let haveValue = instance.split(':').length;
     let key = instance.split(':')[0];
     key = key.trim();
-    let first = instance.split(':')[1];
     let instanceLength = instance.split(':|@').length;
     let last = instance.split(':|@')[instanceLength - 1];
 
     const mediaPattern = /[^\\s"]+@+([^\\s:"@]+)/g;
     const elementsPattern = /[^\\s"]+::+([^\\s:"@]+)/g;
-    let mediaMatch: RegExpExecArray | null;
-    let elementsMatch: RegExpExecArray | null;
 
     let isColorful = false;
     let isMedia = !(mediaPattern.exec(instance) === null && triggerKey !== '@');
@@ -101,23 +80,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let masterCssKeys: Array<string | CompletionItem> = [];
     let masterCssValues: Array<string | CompletionItem> = [];
     masterCssKeys = masterCssKeys.concat(masterCssOtherKeys);
-
-    // Styles.forEach(x => {
-    //     const match = x.matches?.toString().match(/(?:\^([\w\-\@\~\\]+)?(?:\(([a-z]*)\|?.*\))?\??:)/);
-    //     if (x.key) {
-    //         masterCssKeys.push(x.key);
-    //         if (x.key === key) {
-    //             isColorful = x.colorful;
-    //         }
-    //     }
-
-    //     if (match?.[1] !== null && !masterCssKeys.includes(match?.[1] ?? '')) {
-    //         masterCssKeys.push(match?.[1]?.replace('\\', '') ?? '');
-    //     } else if (match?.[2] !== null && !masterCssKeys.includes(match?.[2] ?? '')) {
-    //         masterCssKeys.push(match?.[2]?.replace('\\', '') ?? '');
-    //     }
-
-    // });
 
     masterCssKeyValues.forEach(x => {
         masterCssKeys = masterCssKeys.concat(x.key);
@@ -240,7 +202,6 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
             });
         }
     });
-
     return masterStyleCompletionItem;
 }
 

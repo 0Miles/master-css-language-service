@@ -7,7 +7,7 @@ interface MasterCssKey {
 }
 
 export const masterCssSelectors = [
-    { label: 'lang()', kind: CompletionItemKind.Function },{ label: 'has()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
+    { label: 'lang()', kind: CompletionItemKind.Function }, { label: 'has()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',
     'out-of-range', 'required', 'optional', 'root', 'empty',
     { label: 'nth-child()', kind: CompletionItemKind.Function },
@@ -24,18 +24,57 @@ export const masterCssSelectors = [
     { label: 'where()', kind: CompletionItemKind.Function },
     'odd', 'even', 'first', 'last'
 ];
+
 export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first-letter', 'first-line', 'file-selector-button', 'marker',
     { label: 'part()', kind: CompletionItemKind.Function }, 'placeholder'
     , 'selection',
     { label: 'slotted()', kind: CompletionItemKind.Function }, 'scrollbar', 'scrollbar-button', 'scrollbar-thumb', 'scrollbar-track', 'scrollbar-track-piece', 'scrollbar-corner', 'resizer',
     'search-cancel-button', 'search-results-button'
 ];
-export const masterCssMedia = ['all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
-    { label: 'media()', kind: CompletionItemKind.Function }];
-// export const masterCssBreakpoints = ['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl'];
-export const masterCssOtherKeys = ['ext', 'gap', 'ont', 'ovf', 'quotes', 'bottom', 'center', 'left', 'middle', 'top', 'right', 'px', 'py', 'pt', 'pb', 'pl', 'pr', 'mx', 'my', 'mt', 'mb', 'ml', 'mr'];
 
-export const masterCssCommonValues = [{ label: 'var()', kind: CompletionItemKind.Function }, { label: 'calc()', kind: CompletionItemKind.Function }, 'inherit', 'initial', 'unset'];
+export const masterCssMedia = [
+    'all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
+    { label: 'media()', kind: CompletionItemKind.Function }
+];
+
+export const masterCssOtherKeys = [
+    'ext', 'gap', 'ont', 'ovf', 'quotes', 'bottom', 'center', 'left', 'middle', 'top', 'right', 'px', 'py', 'pt', 'pb', 'pl', 'pr', 'mx', 'my', 'mt', 'mb', 'ml', 'mr'
+];
+
+export const masterCssCommonValues = [
+    { label: 'var()', kind: CompletionItemKind.Function },
+    { label: 'calc()', kind: CompletionItemKind.Function },
+    'inherit',
+    'initial',
+    'unset'
+];
+
+const boxUnderneath = [
+    'content',
+    'border',
+    'padding',
+    'content-box',
+    'border-box',
+    'padding-box'
+];
+
+const contentExtrema = [
+    'min',
+    'max',
+    'min-content',
+    'max-content'
+];
+
+const sizingValues = [
+    'full',
+    'fit',
+    'max',
+    'min',
+    '100%',
+    'fit-content',
+    'max-content',
+    'min-content'
+];
 
 export const masterCssKeyValues: MasterCssKey[] = [
     {
@@ -135,7 +174,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['position'],
         colorful: false,
-        values: ['relative', 'absolute', 'static', 'fixed', 'sticky']
+        values: ['abs', 'rel', 'absolute', 'relative', 'static', 'fixed', 'sticky']
     },
     {
         key: ['z-index', 'z'],
@@ -151,12 +190,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['flex-basis'],
         colorful: false,
-        values: ['100%', 'full', 'fit', 'fit-content', 'max', 'max-content', 'min', 'min-content']
+        values: [...sizingValues]
     },
     {
         key: ['flex-direction', 'flex'],
         colorful: false,
-        values: ['column', 'row', 'column-reverse', 'row-reverse']
+        values: ['col', 'column', 'row', 'col-reverse', 'column-reverse', 'row-reverse']
     },
     {
         key: ['flex-grow', 'flex-shrink'],
@@ -177,7 +216,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-auto-columns', 'grid-auto-cols'],
         colorful: false,
-        values: ['auto', 'min-content', 'max-content',
+        values: ['auto', ...contentExtrema,
             { label: 'minmax(,)', kind: CompletionItemKind.Function }]
     },
     {
@@ -188,7 +227,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-auto-rows'],
         colorful: false,
-        values: ['auto', 'min-content', 'max-content',
+        values: ['auto', ...contentExtrema,
             { label: 'minmax(,)', kind: CompletionItemKind.Function }]
     },
     {
@@ -224,7 +263,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-template-columns', 'grid-template-cols'],
         colorful: false,
-        values: ['none', 'max', 'max-content', 'min', 'min-content',
+        values: ['none', ...contentExtrema,
             { label: 'repeat(,)', kind: CompletionItemKind.Function },
             { label: 'fit-content()', kind: CompletionItemKind.Function },
             { label: 'minmax()', kind: CompletionItemKind.Function }]
@@ -232,7 +271,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-template-rows'],
         colorful: false,
-        values: ['none', 'max', 'max-content', 'min', 'min-content',
+        values: ['none', ...contentExtrema,
             { label: 'repeat(,)', kind: CompletionItemKind.Function },
             { label: 'fit-content()', kind: CompletionItemKind.Function },
             { label: 'minmax()', kind: CompletionItemKind.Function }]
@@ -330,6 +369,9 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['font-family', 'font', 'f'],
         colorful: false,
         values: [
+            'mono',
+            'sans',
+            'serif',
             "'CourierNew',Courier,monospace",
             "'FranklinGothicMedium','ArialNarrow',Arial,sans-serif",
             "'GillSans','GillSansMT',Calibri,'TrebuchetMS',sans-serif",
@@ -346,7 +388,6 @@ export const masterCssKeyValues: MasterCssKey[] = [
             'fantasy',
             'monospace',
             'sans-serif',
-            'serif',
             "-apple-system,BlinkMacSystemFont,'SegoeUI',Roboto,Oxygen,Ubuntu,Cantarell,'OpenSans','HelveticaNeue',sans-serif"
         ]
     },
@@ -390,7 +431,29 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['font-weight', 'font', 'f'],
         colorful: false,
-        values: ['thin', 'extralight', 'light', 'regular', 'medium', 'semibold', 'bold', 'extrabold', 'heavy', 'normal', 'lighter', 'border']
+        values: [
+            'thin',
+            'extralight',
+            'light',
+            'regular',
+            'medium',
+            'semibold',
+            'bold',
+            'extrabold',
+            'heavy',
+            'normal',
+            'lighter',
+            'border',
+            '100',
+            '200',
+            '300',
+            '400',
+            '500',
+            '600',
+            '700',
+            '800',
+            '900'
+        ]
     },
     {
         key: ['font', 'f'],
@@ -614,14 +677,9 @@ export const masterCssKeyValues: MasterCssKey[] = [
         values: ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity']
     },
     {
-        key: ['background-clip'],
-        colorful: false,
-        values: ['border-box', 'content-box', 'padding-box']
-    },
-    {
         key: ['background-clip', 'bg'],
         colorful: false,
-        values: ['text']
+        values: [...boxUnderneath]
     },
     {
         key: ['background-color', 'background', 'bg'],
@@ -642,7 +700,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['background-origin', 'bg'],
         colorful: false,
-        values: ['border-box', 'content-box', 'padding-box']
+        values: [...boxUnderneath]
     },
     {
         key: ['background-position', 'bg'],
@@ -740,14 +798,9 @@ export const masterCssKeyValues: MasterCssKey[] = [
             { label: 'clamp()', kind: CompletionItemKind.Function }]
     },
     {
-        key: ['shape-outside'],
-        colorful: false,
-        values: ['none']
-    },
-    {
         key: ['shape-outside', 'shape'],
         colorful: false,
-        values: ['margin', 'content', 'border', 'padding',
+        values: ['none', 'margin', ...boxUnderneath, 'margin-box',
             { label: 'inset()', kind: CompletionItemKind.Function },
             { label: 'circle()', kind: CompletionItemKind.Function },
             { label: 'ellipse()', kind: CompletionItemKind.Function },
@@ -758,7 +811,17 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['clip-path', 'clip'],
         colorful: false,
-        values: ['none', 'margin', 'border', 'padding', 'content', 'fill', 'stroke', 'view',
+        values: [
+            'none',
+            'margin',
+            'fill',
+            'stroke',
+            'view',
+            ...boxUnderneath,
+            'margin-box',
+            'fill-box',
+            'stroke-box',
+            'view-box',
             { label: 'inset()', kind: CompletionItemKind.Function },
             { label: 'circle()', kind: CompletionItemKind.Function },
             { label: 'ellipse()', kind: CompletionItemKind.Function },
@@ -775,37 +838,37 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['box-sizing', 'box'],
         colorful: false,
-        values: ['content-box', 'content', 'border-box', 'border']
+        values: ['content', 'border', 'content-box', 'border-box']
     },
     {
         key: ['width', 'w'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     {
         key: ['min-width', 'min-w'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     {
         key: ['max-width', 'max-w'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     {
         key: ['height', 'h'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     {
         key: ['min-height', 'min-h'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     {
         key: ['max-height', 'max-h'],
         colorful: false,
-        values: ['full', 'fit-content', 'fit', 'max-content', 'max', 'min-content', 'min']
+        values: [...sizingValues]
     },
     //TYPOGRAPHY
     {
@@ -887,7 +950,18 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['transform-box', 'transform'],
         colorful: false,
-        values: ['content', 'fill', 'stroke', 'view', 'border', 'content-box', 'fill-box', 'stroke-box', 'view-box', 'border-box']
+        values: [
+            'content',
+            'fill',
+            'stroke',
+            'view',
+            'border',
+            'content-box',
+            'fill-box',
+            'stroke-box',
+            'view-box',
+            'border-box'
+        ]
     },
     {
         key: ['transform-origin', 'transform'],
@@ -1134,7 +1208,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         colorful: false,
         values: []
     }
-]
+];
 
 export const masterCssType = [
     {
@@ -1143,90 +1217,4 @@ export const masterCssType = [
             { label: 'rgb()', kind: CompletionItemKind.Function },
             { label: 'hsl()', kind: CompletionItemKind.Function }]
     }
-]
-
-export const masterCssSemantic = [
-    {
-        key: 'display',
-        values: ['hidden', 'hide', 'flex', 'grid', 'inline', 'none', 'block', 'table', 'contents', 'inline-block', 'inline-flex', 'inline-grid', 'inline-table', 'table-cell', 'table-caption', 'flow-root', 'list-item', 'table-row', 'table-column', 'table-row-group', 'table-column-group', 'table-header-group', 'table-footer-group']
-    },
-    {
-        key: 'isolation',
-        values: ['isolate']
-    },
-    {
-        key: 'position',
-        values: ['rel', 'abs', 'static', 'fixed', 'sticky']
-    },
-    {
-        key: 'white-space',
-        values: ['break-spaces']
-    },
-    {
-        key: 'word-break',
-        values: ['break-word']
-    },
-    {
-        key: 'border-radius',
-        values: ['round', 'rounded']
-    },
-    {
-        key: 'aspect-ratio',
-        values: ['square', 'video']
-    },
-    {
-        key: 'transform',
-        values: [
-            { label: 'translate()', kind: CompletionItemKind.Function },
-            { label: 'translate3d()', kind: CompletionItemKind.Function },
-            { label: 'translateX()', kind: CompletionItemKind.Function },
-            { label: 'translateY()', kind: CompletionItemKind.Function },
-            { label: 'translateZ()', kind: CompletionItemKind.Function },
-            { label: 'scale()', kind: CompletionItemKind.Function },
-            { label: 'scale3d()', kind: CompletionItemKind.Function },
-            { label: 'scaleX()', kind: CompletionItemKind.Function },
-            { label: 'scaleY()', kind: CompletionItemKind.Function },
-            { label: 'scaleZ()', kind: CompletionItemKind.Function },
-            { label: 'skew()', kind: CompletionItemKind.Function },
-            { label: 'skewX()', kind: CompletionItemKind.Function },
-            { label: 'skewY()', kind: CompletionItemKind.Function },
-            { label: 'rotate()', kind: CompletionItemKind.Function },
-            { label: 'rotate3d()', kind: CompletionItemKind.Function },
-            { label: 'rotateX()', kind: CompletionItemKind.Function },
-            { label: 'rotateY()', kind: CompletionItemKind.Function },
-            { label: 'rotateZ()', kind: CompletionItemKind.Function },
-            { label: 'perspective()', kind: CompletionItemKind.Function },
-            { label: 'matrix()', kind: CompletionItemKind.Function },
-            { label: 'matrix3d()', kind: CompletionItemKind.Function }]
-    },
-    {
-        key: 'visibility',
-        values: ['visible', 'invisible', 'collapse']
-    },
-    {
-        key: 'filter',
-        values: [
-            { label: 'blur()', kind: CompletionItemKind.Function },
-            { label: 'brightness()', kind: CompletionItemKind.Function },
-            { label: 'contrast()', kind: CompletionItemKind.Function },
-            { label: 'drop-shadow()', kind: CompletionItemKind.Function },
-            { label: 'grayscale()', kind: CompletionItemKind.Function },
-            { label: 'hue-rotate(degree)', kind: CompletionItemKind.Function },
-            { label: 'invert()', kind: CompletionItemKind.Function },
-            { label: 'opacity()', kind: CompletionItemKind.Function },
-            { label: 'saturate()', kind: CompletionItemKind.Function },
-            { label: 'sepia()', kind: CompletionItemKind.Function }]
-    },
-    {
-        key: 'text-transform',
-        values: ['capitalize', 'lowercase', 'uppercase']
-    },
-    {
-        key: 'pointer-events',
-        values: ['untouchable']
-    },
-    {
-        key: 'justify-content',
-        values: ['center-content']
-    },
-]
+];
