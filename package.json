@@ -178,6 +178,7 @@
         "@types/js-beautify": "^1.13.3",
         "file-uri-to-path": "^2.0.0",
         "js-beautify": "^1.14.3",
-        "minimatch": "^5.1.0"
+        "minimatch": "^5.1.0",
+        "pascal-case": "^3.1.2"
     }
 }

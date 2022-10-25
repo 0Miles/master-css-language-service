@@ -1,7 +1,7 @@
 import {
     masterCssKeyValues,
     masterCssSelectors,
-    masterStyleElements,
+    masterCssElements,
     masterCssMedia,
     masterCssOtherKeys,
     masterCssType,
@@ -16,6 +16,15 @@ import {
 } from 'vscode-languageserver/node';
 import { TextDocument } from 'vscode-languageserver-textdocument';
 import MasterCSS from '@master/css';
+import { pascalCase } from 'pascal-case';
+
+let cssKeys: Array<string | CompletionItem> = [];
+cssKeys = cssKeys.concat(masterCssOtherKeys);
+masterCssKeyValues.forEach(x => {
+    cssKeys = cssKeys.concat(x.key);
+})
+
+const masterCssKeys: Array<string | CompletionItem> = [...new Set(cssKeys)];
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri;
@@ -77,14 +86,47 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let isMedia = !(mediaPattern.exec(instance) === null && triggerKey !== '@');
     let isElements = !(elementsPattern.exec(instance) === null && triggerKey !== '::');
 
-    let masterCssKeys: Array<string | CompletionItem> = [];
     let masterCssValues: Array<string | CompletionItem> = [];
-    masterCssKeys = masterCssKeys.concat(masterCssOtherKeys);
-
+    const masterCustomSelectors = Object.keys(masterCss.config.selectors ?? {})
+        .map(x => x.endsWith('(') ? `${x})` : x)    
+        .filter(x => x.match(/:[^\:]+/) && !masterCssSelectors.find(existedSelector => (typeof existedSelector === 'string' ? existedSelector : existedSelector.label) === `:${x}`))
+        .map(x => {
+            x = x.substring(1);
+            if (x.endsWith(')')) {
+                return { label: x, kind: CompletionItemKind.Function };
+            }
+            return x;
+        });
+    console.log(masterCustomSelectors);
+    const masterCustomElements = Object.keys(masterCss.config.selectors ?? {})
+        .map(x => x.endsWith('(') ? `${x})` : x)
+        .filter(x => x.match(/::[^\:]+/) && !masterCssElements.find(existedElement => (typeof existedElement === 'string' ? existedElement : existedElement.label) === `::${x}`))
+        .map(x => {
+            x = x.substring(2);
+            if (x.endsWith(')')) {
+                return { label: x, kind: CompletionItemKind.Function };
+            }
+            return x;
+        });
+    
     masterCssKeyValues.forEach(x => {
-        masterCssKeys = masterCssKeys.concat(x.key);
         if (x.key.includes(key)) {
-            masterCssValues = masterCssValues.concat(x.values.filter(y => !masterCssValues.find(z => (typeof z === 'string' ? z : z.label) === (typeof y === 'string' ? y : y.label))));
+            masterCssValues = masterCssValues.concat(
+                x.values.filter(cssValue => 
+                    !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
+                )
+            );
+            const pascalCaseFullKey = pascalCase(x.key[0]);
+            if (masterCss.config.values?.[pascalCaseFullKey]) {
+                const masterCustomValues = Object.keys(masterCss.config.values[pascalCaseFullKey]);
+                masterCssValues = masterCssValues.concat(
+                    masterCustomValues
+                        .filter(customValue => 
+                            !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === customValue)
+                        )
+                );
+            }
+
             if (x.colorful) {
                 isColorful = true;
                 const needPushList = masterCssType.find(y => y.type === 'color')?.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z === 'string' ? z : z.label)));
@@ -95,9 +137,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         }
     })
 
-    masterCssKeys = [...new Set(masterCssKeys)];
-
-
     if (startWithSpace == true && triggerKey !== "@" && triggerKey !== ":") {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'));
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property));
@@ -106,7 +145,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
             return HaveDash(key, masterStyleCompletionItem);
         }
         return masterStyleCompletionItem;
-
     }
     else if (startWithSpace == true) {  //triggerKey==@|: //ex " :"
         return []
@@ -122,7 +160,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterStyleElements, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssElements, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomElements, CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
         }
@@ -140,6 +179,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (Object.keys(masterCss.config.semantics ?? {}).includes(key) && !masterCssKeyValues.find(x => x.key.includes(key))) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors, CompletionItemKind.Property));
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {
             return HaveDash(last, masterStyleCompletionItem);
         }
@@ -148,7 +188,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
     else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, CompletionItemKind.Enum));
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum).map(x => {x.sortText = 'z'+x; return x;}));
 
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss));
@@ -161,6 +201,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function));
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors, CompletionItemKind.Property));
     }
 
     if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== "@" && triggerKey !== ":") {

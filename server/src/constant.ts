@@ -13,7 +13,6 @@ export const masterCssSelectors = [
     { label: 'nth-child()', kind: CompletionItemKind.Function },
     { label: 'nth-last-child()', kind: CompletionItemKind.Function }, 'first-child', 'last-child', 'only-child',
     { label: 'nth-of-type()', kind: CompletionItemKind.Function },
-    { label: 'nth()', kind: CompletionItemKind.Function },
 
     { label: 'nth-last-of-type()', kind: CompletionItemKind.Function }, 'first-of-type', 'last-of-type', 'only-of-type', 'defined', 'first', 'fullscreen',
     { label: 'host()', kind: CompletionItemKind.Function },
@@ -21,14 +20,13 @@ export const masterCssSelectors = [
     { label: 'is()', kind: CompletionItemKind.Function }, 'left',
     { label: 'not()', kind: CompletionItemKind.Function },
     'right',
-    { label: 'where()', kind: CompletionItemKind.Function },
-    'odd', 'even', 'first', 'last'
+    { label: 'where()', kind: CompletionItemKind.Function }
 ];
 
-export const masterStyleElements = ['after', 'before', 'backdrop', 'cue', 'first-letter', 'first-line', 'file-selector-button', 'marker',
+export const masterCssElements = ['after', 'before', 'backdrop', 'cue', 'first-letter', 'first-line', 'file-selector-button', 'marker',
     { label: 'part()', kind: CompletionItemKind.Function }, 'placeholder'
     , 'selection',
-    { label: 'slotted()', kind: CompletionItemKind.Function }, 'scrollbar', 'scrollbar-button', 'scrollbar-thumb', 'scrollbar-track', 'scrollbar-track-piece', 'scrollbar-corner', 'resizer',
+    { label: 'slotted()', kind: CompletionItemKind.Function }, 'resizer',
     'search-cancel-button', 'search-results-button'
 ];
 
@@ -47,33 +45,6 @@ export const masterCssCommonValues = [
     'inherit',
     'initial',
     'unset'
-];
-
-const boxUnderneath = [
-    'content',
-    'border',
-    'padding',
-    'content-box',
-    'border-box',
-    'padding-box'
-];
-
-const contentExtrema = [
-    'min',
-    'max',
-    'min-content',
-    'max-content'
-];
-
-const sizingValues = [
-    'full',
-    'fit',
-    'max',
-    'min',
-    '100%',
-    'fit-content',
-    'max-content',
-    'min-content'
 ];
 
 export const masterCssKeyValues: MasterCssKey[] = [
@@ -174,7 +145,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['position'],
         colorful: false,
-        values: ['abs', 'rel', 'absolute', 'relative', 'static', 'fixed', 'sticky']
+        values: ['absolute', 'relative', 'static', 'fixed', 'sticky']
     },
     {
         key: ['z-index', 'z'],
@@ -190,12 +161,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['flex-basis'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['flex-direction', 'flex'],
         colorful: false,
-        values: ['col', 'column', 'row', 'col-reverse', 'column-reverse', 'row-reverse']
+        values: ['column', 'row', 'column-reverse', 'row-reverse']
     },
     {
         key: ['flex-grow', 'flex-shrink'],
@@ -216,7 +187,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-auto-columns', 'grid-auto-cols'],
         colorful: false,
-        values: ['auto', ...contentExtrema,
+        values: ['auto', 'min-content', 'max-content',
             { label: 'minmax(,)', kind: CompletionItemKind.Function }]
     },
     {
@@ -227,7 +198,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-auto-rows'],
         colorful: false,
-        values: ['auto', ...contentExtrema,
+        values: ['auto', 'min-content', 'max-content',
             { label: 'minmax(,)', kind: CompletionItemKind.Function }]
     },
     {
@@ -263,7 +234,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-template-columns', 'grid-template-cols'],
         colorful: false,
-        values: ['none', ...contentExtrema,
+        values: ['none', 'min-content', 'max-content',
             { label: 'repeat(,)', kind: CompletionItemKind.Function },
             { label: 'fit-content()', kind: CompletionItemKind.Function },
             { label: 'minmax()', kind: CompletionItemKind.Function }]
@@ -271,7 +242,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['grid-template-rows'],
         colorful: false,
-        values: ['none', ...contentExtrema,
+        values: ['none', 'min-content', 'max-content',
             { label: 'repeat(,)', kind: CompletionItemKind.Function },
             { label: 'fit-content()', kind: CompletionItemKind.Function },
             { label: 'minmax()', kind: CompletionItemKind.Function }]
@@ -310,7 +281,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['order', 'o'],
         colorful: false,
-        values: ['first', 'last']
+        values: []
     },
     {
         key: ['place-content'],
@@ -369,9 +340,6 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['font-family', 'font', 'f'],
         colorful: false,
         values: [
-            'mono',
-            'sans',
-            'serif',
             "'CourierNew',Courier,monospace",
             "'FranklinGothicMedium','ArialNarrow',Arial,sans-serif",
             "'GillSans','GillSansMT',Calibri,'TrebuchetMS',sans-serif",
@@ -388,6 +356,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
             'fantasy',
             'monospace',
             'sans-serif',
+            'serif',
             "-apple-system,BlinkMacSystemFont,'SegoeUI',Roboto,Oxygen,Ubuntu,Cantarell,'OpenSans','HelveticaNeue',sans-serif"
         ]
     },
@@ -432,18 +401,6 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['font-weight', 'font', 'f'],
         colorful: false,
         values: [
-            'thin',
-            'extralight',
-            'light',
-            'regular',
-            'medium',
-            'semibold',
-            'bold',
-            'extrabold',
-            'heavy',
-            'normal',
-            'lighter',
-            'border',
             '100',
             '200',
             '300',
@@ -679,7 +636,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['background-clip', 'bg'],
         colorful: false,
-        values: [...boxUnderneath]
+        values: ['content-box', 'border-box', 'padding-box']
     },
     {
         key: ['background-color', 'background', 'bg'],
@@ -700,7 +657,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['background-origin', 'bg'],
         colorful: false,
-        values: [...boxUnderneath]
+        values: ['content-box', 'border-box', 'padding-box']
     },
     {
         key: ['background-position', 'bg'],
@@ -800,7 +757,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['shape-outside', 'shape'],
         colorful: false,
-        values: ['none', 'margin', ...boxUnderneath, 'margin-box',
+        values: ['none', 'content-box', 'border-box', 'padding-box', 'margin-box',
             { label: 'inset()', kind: CompletionItemKind.Function },
             { label: 'circle()', kind: CompletionItemKind.Function },
             { label: 'ellipse()', kind: CompletionItemKind.Function },
@@ -813,11 +770,9 @@ export const masterCssKeyValues: MasterCssKey[] = [
         colorful: false,
         values: [
             'none',
-            'margin',
-            'fill',
-            'stroke',
-            'view',
-            ...boxUnderneath,
+            'content-box',
+            'border-box',
+            'padding-box',
             'margin-box',
             'fill-box',
             'stroke-box',
@@ -838,37 +793,37 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['box-sizing', 'box'],
         colorful: false,
-        values: ['content', 'border', 'content-box', 'border-box']
+        values: ['content-box', 'border-box']
     },
     {
         key: ['width', 'w'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['min-width', 'min-w'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['max-width', 'max-w'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['height', 'h'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['min-height', 'min-h'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     {
         key: ['max-height', 'max-h'],
         colorful: false,
-        values: [...sizingValues]
+        values: ['100%', 'fit-content', 'max-content', 'min-content']
     },
     //TYPOGRAPHY
     {
@@ -951,11 +906,6 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['transform-box', 'transform'],
         colorful: false,
         values: [
-            'content',
-            'fill',
-            'stroke',
-            'view',
-            'border',
             'content-box',
             'fill-box',
             'stroke-box',
