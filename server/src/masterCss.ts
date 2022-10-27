@@ -28,8 +28,8 @@ export function PositionCheck(documentUri: string, position: Position, documents
     let text = document?.getText() ?? '';
     let positionIndex = document?.offsetAt(position) ?? 0;
 
-    const startIndex = document?.offsetAt({ line: position.line - 50, character: 0}) ?? 0;
-    const endIndex = document?.offsetAt({ line: position.line + 50, character: 0 }) ?? undefined;
+    const startIndex = document?.offsetAt({ line: position.line - 100, character: 0}) ?? 0;
+    const endIndex = document?.offsetAt({ line: position.line + 100, character: 0 }) ?? undefined;
     text = text.substring(startIndex, endIndex);
 
     let instanceMatch: RegExpExecArray | null;
