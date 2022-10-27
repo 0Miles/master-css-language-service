@@ -122,7 +122,6 @@ async function getDocumentSettings(resource: string): Promise<MasterCSSSettings>
             MasterCSSObject = new MasterCSS(configure(userConfig));
         } catch(_) { }
     }
-
     return result;
 }
 
@@ -133,7 +132,7 @@ documents.onDidClose(e => {
 
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
-documents.onDidChangeContent(change => {
+documents.onDidOpen(change => {
     validateTextDocument(change.document);
 });
 
@@ -193,7 +192,7 @@ connection.onInitialized(() => {
 });
 
 connection.onCompletion(
-    (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+    (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {        
         if (settings.suggestions == true && CheckFilesExclude(_textDocumentPosition.textDocument.uri)) {
 
             let inMasterCSS = PositionCheck(_textDocumentPosition.textDocument.uri, _textDocumentPosition.position, documents, settings.classNameMatches).IsMatch
