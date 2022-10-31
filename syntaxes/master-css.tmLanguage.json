@@ -83,6 +83,17 @@
                             "name": "variable punctuation.separator.key-value.css"
                         }
                     }
+                },
+                {
+                    "match": "(?<![^\\s;:{]+:[^\\s;]*)(order)(:)(?=first|last)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.property-name.css"
+                        },
+                        "2": {
+                            "name": "variable punctuation.separator.key-value.css"
+                        }
+                    }
                 }
             ]
         },
