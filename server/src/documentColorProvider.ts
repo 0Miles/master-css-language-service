@@ -65,7 +65,7 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
         const instanceStartIndex = instanceMatch.index;
         const theme = masterCss.themeNames.find(x => instanceMatch?.[0]?.endsWith(`@${x}`)) ?? '';
 
-        const colorPattern = /(?<=[:|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d]*)?(?:\([^\s\)]+\))?)/g;
+        const colorPattern = /(?<=[:;|])(?:#?\w+(?:-[\d]{1,2})?(?:\/.?[\d]*)?(?:\([^\s\)]+\))?)/g;
         const rgbaColorPattern = /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g;
         const hslaColorPattern = /hsla?\(([\d.]+),([\d.]+)%,([\d.]+)%(?:,([\d.]+))?\)/g;
         const hexColorPattern = /#([0-9a-fA-F]{6,8})/g;
