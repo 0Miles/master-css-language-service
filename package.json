@@ -2,13 +2,13 @@
     "name": "master-css-language-service",
     "description": "Master CSS language service and code highlight for Visual Studio Code",
     "displayName": "Master CSS Language Service",
-    "version": "0.0.86",
     "author": "Aoyue Design LLC.",
     "funding": "https://docs.master.co/css/donate",
     "homepage": "https://css.master.co",
     "private": false,
     "license": "MIT",
     "publisher": "masterco",
+    "version": "2.1.19",
     "icon": "images/icon.png",
     "repository": {
         "type": "git",
@@ -172,13 +172,5 @@
         "eslint": "^8.10.0",
         "mocha": "^9.2.1",
         "typescript": "^4.6.2"
-    },
-    "dependencies": {
-        "@master/css": "^2.0.0-alpha.72",
-        "@types/js-beautify": "^1.13.3",
-        "file-uri-to-path": "^2.0.0",
-        "js-beautify": "^1.14.3",
-        "minimatch": "^5.1.0",
-        "pascal-case": "^3.1.2"
     }
 }

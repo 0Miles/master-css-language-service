@@ -133,6 +133,9 @@
                     "include": "#style-extend-classes-string-quoted-single"
                 },
                 {
+                    "include": "#highlight-master-config-css-object-classes"
+                },
+                {
                     "include": "source.tsx"
                 }
             ]
