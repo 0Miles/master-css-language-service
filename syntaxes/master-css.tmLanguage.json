@@ -153,7 +153,33 @@
                     }
                 },
                 {
-                    "match": "(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?(x)?",
+                    "match": "(\\-)?(\\d+\\.\\d+|\\.\\d+|\\d+)(%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?(x)(\\-)?(\\d+\\.\\d+|\\.\\d+|\\d+)(%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.operator.css"
+                        },
+                        "2": {
+                            "name": "constant.numeric.css"
+                        },
+                        "3": {
+                            "name": "keyword.other.unit"
+                        },
+                        "4": {
+                            "name": "variable master-css.class.x"
+                        },
+                        "5": {
+                            "name": "keyword.operator.css"
+                        },
+                        "6": {
+                            "name": "constant.numeric.css"
+                        },
+                        "7": {
+                            "name": "keyword.other.unit"
+                        }
+                    }
+                },
+                {
+                    "match": "(?<=(?:[^\\s;:]+:|[@~]|(?:[^\\s;\\:\\|,]+\\())[^\\s;\\:\"'`]*)(\\+|\\-|\\*|\\/)?(\\d+\\.\\d+|\\.\\d+|\\d+)(%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw|deg|grad|rad|turn|s)?(x)?",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.css"
