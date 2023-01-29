@@ -11,8 +11,11 @@ import {
 import { TextDocument } from 'vscode-languageserver-textdocument'
 
 import MasterCSS from '@master/css'
-import { hexToRgb } from './utils/hex-to-rgb'
-import { instancePattern } from './utils/regex'
+import { hexToRgb } from '../utils/hex-to-rgb'
+import { instancePattern } from '../utils/regex'
+import { rgbToHsl } from '../utils/rgb-to-hsl'
+import { hslToRgb } from '../utils/hsl-to-rgb'
+import { toTwoDigitHex } from '../utils/to-two-digit-hex'
 
 
 export async function GetColorRender(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>): Promise<ColorInformation[]> {
@@ -177,64 +180,7 @@ function getColorsRGBA(colorName: string, colorAlpha = 1, theme = '', masterCss:
         return { red: 0, green: 0, blue: 0, alpha: 1 }
     }
 }
-export interface HWBA { h: number; w: number; b: number; a: number; }
 
-export interface HSLA { h: number; s: number; l: number; a: number; }
-
-function toTwoDigitHex(n: number): string {
-    const r = n.toString(16)
-    return r.length !== 2 ? '0' + r : r
-}
-export function hslFromColor(rgba: Color): HSLA {
-    const r = rgba.red
-    const g = rgba.green
-    const b = rgba.blue
-    const a = rgba.alpha
-
-    const max = Math.max(r, g, b)
-    const min = Math.min(r, g, b)
-    let h = 0
-    let s = 0
-    const l = (min + max) / 2
-    const chroma = max - min
-
-    if (chroma > 0) {
-        s = Math.min((l <= 0.5 ? chroma / (2 * l) : chroma / (2 - (2 * l))), 1)
-
-        switch (max) {
-            case r: h = (g - b) / chroma + (g < b ? 6 : 0); break
-            case g: h = (b - r) / chroma + 2; break
-            case b: h = (r - g) / chroma + 4; break
-        }
-
-        h *= 60
-        h = Math.round(h)
-    }
-    return { h, s, l, a }
-}
-export function hwbFromColor(rgba: Color): HWBA {
-    const hsl = hslFromColor(rgba)
-    const white = Math.min(rgba.red, rgba.green, rgba.blue)
-    const black = 1 - Math.max(rgba.red, rgba.green, rgba.blue)
-
-    return {
-        h: hsl.h,
-        w: white,
-        b: black,
-        a: hsl.a
-    }
-}
-
-
-export function hslToRgb(h: number, s: number, l: number, alpha?: number): Color {
-    l /= 100
-    const k = (n: number) => (n + h / 30) % 12
-    const a = (s / 100) * Math.min(l, 1 - l)
-    const f = (n: number) =>
-        l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
-
-    return { red: 255 * f(0), green: 255 * f(8), blue: 255 * f(4), alpha: alpha ?? 1 }
-}
 
 export function getColorValue(color: Color): Color {
     return { red: color.red / 255.0, green: color.green / 255.0, blue: color.blue / 255.0, alpha: color.alpha }
@@ -275,21 +221,13 @@ export function GetColorPresentation(params: ColorPresentationParams, isColorRen
     }
     result.push({ label: label, textEdit: TextEdit.replace(range, label) })
 
-    const hsl = hslFromColor(color)
+    const hsl = rgbToHsl(color)
     if (hsl.a === 1) {
         label = `hsl(${hsl.h},${Math.round(hsl.s * 100)}%,${Math.round(hsl.l * 100)}%)`
     } else {
         label = `hsla(${hsl.h},${Math.round(hsl.s * 100)}%,${Math.round(hsl.l * 100)}%,${hsl.a})`
     }
     result.push({ label: label, textEdit: TextEdit.replace(range, label) })
-
-    // const hwb = hwbFromColor(color);
-    // if (hwb.a === 1) {
-    //     label = `hwb(${hwb.h} ${Math.round(hwb.w * 100)}% ${Math.round(hwb.b * 100)}%)`;
-    // } else {
-    //     label = `hwb(${hwb.h} ${Math.round(hwb.w * 100)}% ${Math.round(hwb.b * 100)}% / ${hwb.a})`;
-    // }
-    // result.push({ label: label, textEdit: TextEdit.replace(range, label) });
 
     return result
 }

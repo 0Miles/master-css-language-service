@@ -6,7 +6,7 @@ import {
     masterCssOtherKeys,
     masterCssType,
     masterCssCommonValues
-} from './constant'
+} from '../constant'
 
 import {
     TextDocuments,

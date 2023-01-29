@@ -20,10 +20,11 @@ import MasterCSS from '@master/css'
 import * as minimatch from 'minimatch'
 
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import { GetLastInstance, GetCompletionItem } from './completionProvider'
-import { doHover } from './hoverProvider'
-import { PositionCheck } from './masterCss'
-import { GetDocumentColors, GetColorPresentation, GetColorRender } from './documentColorProvider'
+import { GetLastInstance, GetCompletionItem } from './providers/completion'
+import { doHover } from './providers/hover'
+import { PositionCheck } from './position-check'
+import { GetDocumentColors, GetColorPresentation, GetColorRender } from './providers/color'
+import * as path from 'path'
 
 
 
@@ -45,7 +46,8 @@ interface MasterCSSSettings {
     files: { exclude: string[] },
     suggestions: boolean,
     PreviewOnHovers: boolean,
-    PreviewColor: boolean
+    PreviewColor: boolean,
+    configFileLocation: string
 }
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
@@ -63,15 +65,20 @@ const defaultSettings: MasterCSSSettings = {
         'rust'
     ],
     classNameMatches: [
-        '(class(?:Name)?\\s?=\\s?)((?:"[^"]+")|(?:\'[^\']+\')|(?:`[^`]+`))',
+        '(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
         '(class(?:Name)?={)([^}]*)}',
-        '(?:(\\$|(?:element\\.[^\\s.`]+)`)([^`]+)`)',
-        '(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)'
+        '(?:(\\$|(?:(?:element|el)\\.[^\\s.`]+)`)([^`]+)`)',
+        '(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)',
+        '(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
+        '(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^\']*)(\'[^\']*\')',
+        '(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^\"]*)(\"[^\"]*\")',
+        '(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^`]*)(`[^`]*`)'
     ],
     files: { exclude: ['**/.git/**', '**/node_modules/**', '**/.hg/**'] },
     suggestions: true,
     PreviewOnHovers: true,
-    PreviewColor: true
+    PreviewColor: true,
+    configFileLocation: ''
 }
 let globalSettings: MasterCSSSettings = defaultSettings
 
@@ -84,7 +91,7 @@ connection.onDidChangeConfiguration(change => {
         documentSettings.clear()
     } else {
         globalSettings = <MasterCSSSettings>(
-            (change.settings.languageServerExample || defaultSettings)
+            (change.settings.masterCSS || defaultSettings)
         )
     }
 
@@ -105,28 +112,7 @@ async function getDocumentSettings(resource: string): Promise<MasterCSSSettings>
         })
         documentSettings.set(resource, result)
     }
-
-    connection.workspace.getWorkspaceFolders()
-
-    const workspaceFolders = await connection.workspace.getWorkspaceFolders()
-    let root: WorkspaceFolder | undefined
-    if (workspaceFolders?.length === 1) {
-        root = workspaceFolders[0]
-    } else {
-        root = workspaceFolders?.find(x => resource.includes(x.uri))
-    }
-    if (root?.uri) {
-        try {
-            try {
-                const uri2path = await import('file-uri-to-path');
-                const compiler = await new MasterCSSCompiler({ cwd: uri2path(root.uri.replace('%3A', ':')) })
-                const config: any = compiler.readConfig()
-                MasterCSSObject = new MasterCSS(config)
-            } catch (_) {
-                MasterCSSObject = new MasterCSS()
-            }
-        } catch (_) { /* empty */ }
-    }
+    
     return result
 }
 
@@ -144,6 +130,26 @@ documents.onDidOpen(change => {
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     // In this simple example we get the settings for every validate run.
     settings = await getDocumentSettings(textDocument.uri)
+
+    const workspaceFolders = await connection.workspace.getWorkspaceFolders()
+    let root: WorkspaceFolder | undefined
+    if (workspaceFolders?.length === 1) {
+        root = workspaceFolders[0]
+    } else {
+        root = workspaceFolders?.find(x => textDocument.uri.includes(x.uri))
+    }
+    if (root?.uri) {
+        try {
+            try {
+                const uri2path = await import('file-uri-to-path');
+                const compiler = await new MasterCSSCompiler({ cwd: path.join(uri2path(root.uri.replace('%3A', ':')), settings.configFileLocation) })
+                const config: any = compiler.readConfig()
+                MasterCSSObject = new MasterCSS(config)
+            } catch (_) {
+                MasterCSSObject = new MasterCSS()
+            }
+        } catch (_) { /* empty */ }
+    }
 
 }
 

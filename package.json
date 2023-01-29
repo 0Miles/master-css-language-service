@@ -153,6 +153,10 @@
                 "masterCSS.PreviewColor": {
                     "type": "boolean",
                     "default": true
+                },
+                "masterCSS.configFileLocation": {
+                    "type": "string",
+                    "default": ""
                 }
             }
         }
