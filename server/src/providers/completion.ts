@@ -14,9 +14,10 @@ import {
     CompletionItemKind,
     TextDocumentPositionParams
 } from 'vscode-languageserver/node'
-import { TextDocument } from 'vscode-languageserver-textdocument'
+import { Position, TextDocument } from 'vscode-languageserver-textdocument'
 import MasterCSS from '@master/css'
 import { pascalCase } from 'pascal-case'
+import { getDefaultCSSDataProvider } from 'vscode-css-languageservice'
 
 let cssKeys: Array<string | CompletionItem> = []
 cssKeys = cssKeys.concat(masterCssOtherKeys)
@@ -25,6 +26,31 @@ masterCssKeyValues.forEach(x => {
 })
 
 const masterCssKeys: Array<string | CompletionItem> = [...new Set(cssKeys)]
+
+// temporary
+function checkConfigColorsBlock(document: TextDocument, position: Position, lineText: string) {
+    if ((lineText.match(/'|"|`/g)?.length ?? 0) % 2 === 0) {
+        return false
+    }
+    for (let i = position.line; i > 0; i--) {
+        const text = document.getText({
+            start: {
+                line: i-1,
+                character: 0
+            },
+            end: {
+                line: i,
+                character: 0
+            }
+        })
+        if (text.includes('}')) {
+            return false
+        } else if (text.includes('colors:')) {
+            return true
+        }
+    }
+    return false
+}
 
 export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
     const documentUri = textDocumentPosition.textDocument.uri
@@ -36,38 +62,51 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
     let lastKey = ''
 
     const document = documents.get(documentUri)
-    const line = document?.getText({
-        start: { line: position.line, character: 0 },
-        end: { line: position.line, character: position.character },
-    })
-
-    let lineText: string = line == null ? '' : line
-    lineText = lineText.trim()
-
-    const text = document?.getText({
-        start: { line: 0, character: 0 },
-        end: { line: position.line, character: position.character },
-    })
-
-
-    if (lineText.match(classPattern) === null) {
-        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language }
-    }
-    else {
-        while ((classMatch = classPattern.exec(lineText)) !== null) {
-            lastKey = classMatch[0]
+    if (document) {
+        const line = document?.getText({
+            start: { line: position.line, character: 0 },
+            end: { line: position.line, character: position.character },
+        })
+    
+        let lineText: string = line == null ? '' : line
+        lineText = lineText.trim()
+    
+        const text = document?.getText({
+            start: { line: 0, character: 0 },
+            end: { line: position.line, character: position.character },
+        })
+    
+    
+        let triggerKey = lineText.charAt(lineText.length - 1)
+        let isStart = position.character == 1 || lineText.charAt(lineText.length - 2) === ' ' || lineText.charAt(lineText.length - 2) === '' || lineText.charAt(lineText.length - 2) === '"' || lineText.charAt(lineText.length - 2) === '\'' || lineText.charAt(lineText.length - 2) === '{'
+        let isConfigColorsBlock = checkConfigColorsBlock(document, position, lineText)
+        
+        if (lineText.match(classPattern) === null) {
+            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock }
         }
+        else {
+            while ((classMatch = classPattern.exec(lineText)) !== null) {
+                lastKey = classMatch[0]
+            }
+        }
+    
+    
+        if (lineText.charAt(lineText.length - 2) === ':' && lineText.charAt(lineText.length - 1) === ':') {
+            triggerKey = '::'
+            isStart = false
+        }
+    
+        return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language, isConfigColorsBlock }
     }
+    return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock: false }
+}
 
-    let triggerKey = lineText.charAt(lineText.length - 1)
-    let isStart = position.character == 1 || lineText.charAt(lineText.length - 2) === ' ' || lineText.charAt(lineText.length - 2) === '' || lineText.charAt(lineText.length - 2) === '"' || lineText.charAt(lineText.length - 2) === '\'' || lineText.charAt(lineText.length - 2) === '{'
+export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS()){
+    let masterStyleCompletionItem: CompletionItem[] = []
 
-    if (lineText.charAt(lineText.length - 2) === ':' && lineText.charAt(lineText.length - 1) === ':') {
-        triggerKey = '::'
-        isStart = false
-    }
+    masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss))
 
-    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language }
+    return masterStyleCompletionItem
 }
 
 export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS()) {
@@ -252,7 +291,6 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
 function getColorsItem(masterCss: MasterCSS = new MasterCSS()): CompletionItem[] {
 
     const masterStyleCompletionItem: CompletionItem[] = []
-
     Object.keys(masterCss.colorThemesMap)
         .forEach((colorName: string) => {
             const colorValue: any = masterCss.colorThemesMap[colorName]
