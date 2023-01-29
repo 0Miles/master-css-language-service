@@ -17,6 +17,9 @@
         },
         {
             "include": "#highlight-element"
+        },
+        {
+            "include": "#highlight-element2"
         }
     ],
     "repository": {
@@ -60,6 +63,49 @@
                 },
                 {
                     "include": "#class-string"
+                }
+            ]
+        },
+        "highlight-element2": {
+            "begin": "(?:(\\$)|(?:(element|el|style)(\\.)([^\\s=.`(]+)))\\s*(\\()",
+            "end": "(\\))",
+            "captures": {
+                "1": {
+                    "name": "variable.other.object"
+                },
+                "2": {
+                    "name": "variable.other.object"
+                },
+                "3": {
+                    "name": "punctuation.accessor string.template"
+                },
+                "4": {
+                    "name": "entity.name.function.tagged-template"
+                },
+                "5": {
+                    "name": "punctuation.definition.block"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.block"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-any-object-classes"
+                },
+                {
+                    "include": "#classList-classes-template-string"
+                },
+                {
+                    "include": "#classList-classes-quoted-double-string"
+                },
+                {
+                    "include": "#classList-classes-quoted-single-string"
+                },
+                {
+                    "include": "source.tsx"
                 }
             ]
         },
@@ -111,6 +157,40 @@
                     "name": "punctuation.separator.key-value"
                 },
                 "3": {
+                    "name": "punctuation.definition.block"
+                }
+            },
+            "endCaptures": {
+                "1": {
+                    "name": "punctuation.definition.block"
+                },
+                "2": {
+                    "name": "punctuation.separator.comma"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#master-config-css-object-classes-inside"
+                },
+                {
+                    "include": "#style-extend-classes-string-template"
+                },
+                {
+                    "include": "#style-extend-classes-string-quoted-double"
+                },
+                {
+                    "include": "#style-extend-classes-string-quoted-single"
+                },
+                {
+                    "include": "source.tsx"
+                }
+            ]
+        },
+        "master-any-object-classes": {
+            "begin": "\\s*({)",
+            "end": "(})\\s*(,)?",
+            "captures": {
+                "1": {
                     "name": "punctuation.definition.block"
                 }
             },
@@ -384,7 +464,7 @@
                     "include": "#class-string"
                 }
             ]
-        },        
+        },
         "style-extend-classes-string-template": {
             "begin": "((?!'|\"|`)\\S*(?!'|\"|`)\\s*)?(:)\\s*(`)",
             "end": "(`)",

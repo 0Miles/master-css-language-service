@@ -8,7 +8,7 @@
     "private": false,
     "license": "MIT",
     "publisher": "masterco",
-    "version": "2.1.26",
+    "version": "2.1.27",
     "icon": "images/icon.png",
     "repository": {
         "type": "git",
@@ -135,6 +135,7 @@
                         "(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
                         "(class(?:Name)?={)([^}]*)}",
                         "(?:(\\$|(?:(?:element|el|style)\\.[^\\s.`]+)`)([^`]+)`)",
+                        "(style\\.(?:.*)\\()([^)]*)\\)",
                         "(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)",
                         "(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:'[^']+')|(?:`[^`]+`))",
                         "(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^']*)('[^']*')",

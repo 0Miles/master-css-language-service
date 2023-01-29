@@ -69,6 +69,7 @@ const defaultSettings: MasterCSSSettings = {
         '(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
         '(class(?:Name)?={)([^}]*)}',
         '(?:(\\$|(?:(?:element|el|style)\\.[^\\s.`]+)`)([^`]+)`)',
+        '(style\\.(?:.*)\\()([^)]*)\\)',
         '(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)',
         '(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
         '(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^\']*)(\'[^\']*\')',
