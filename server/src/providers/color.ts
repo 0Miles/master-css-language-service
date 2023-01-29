@@ -32,7 +32,7 @@ export async function GetConfigFileColorRender(DocumentColor: DocumentColorParam
     const colorNamePattern = /(:\s*)['"`]([^'"`]+)['"`]/g
     let colorMatch: RegExpExecArray | null
 
-    const classPattern = new RegExp('(?<=colors:\\s*{\\s*.*)([^}]*)}', 'g')
+    const classPattern = /(?<=colors:\s*{\s*.*)([^}]*)}/g
     while ((classMatch = classPattern.exec(text)) !== null) {
         while ((colorMatch = colorNamePattern.exec(classMatch[0]))) {
             const colorValue = parseColorString(colorMatch[2], '', masterCss)

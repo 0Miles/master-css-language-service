@@ -105,3 +105,7 @@ Preview the generated CSS rules when hovering over a class name.
 
 ### `masterCSS.suggestions: true`
 Enable autocomplete suggestions.
+
+### `masterCSS.configFileLocation`
+Configure the directory where the `master.css.js` file should be located.
+Use relative path.

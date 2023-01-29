@@ -232,7 +232,7 @@ export function getBrowserLabel(browsers: string[] = []): string | null {
         .join(', ');
 }
 function getEntryMarkdownDescription(entry: any): string {
-    if (!entry.description || entry.description === '') {
+    if (!entry?.description || entry?.description === '') {
         return '';
     }
 

@@ -163,7 +163,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
                 masterCssKeyCompletionItems.push({
                     label: masterKey + ':',
                     kind: CompletionItemKind.Property,
-                    documentation: originalCssProperty?.description
+                    documentation: originalCssProperty?.description ?? ''
                 })
             }
         }
@@ -171,11 +171,11 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         if (x.key.includes(key)) {
             masterCssValues = masterCssValues.concat(
                 originalCssValues
-                    .filter(cssValue => cssValue.description)
+                    .filter(cssValue => cssValue?.description)
                     .map(cssValue => ({
                         label: cssValue.name,
                         kind: CompletionItemKind.Property,
-                        documentation: cssValue.description
+                        documentation: cssValue?.description ?? ''
                     } as CompletionItem))
                     .filter(cssValue =>
                         !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
@@ -236,6 +236,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property))
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.breakpoints ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCss.themeNames, CompletionItemKind.Property))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
             return HaveDash('@' + last, masterStyleCompletionItem)
         }
