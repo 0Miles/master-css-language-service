@@ -35,7 +35,7 @@ function checkConfigColorsBlock(document: TextDocument, position: Position, line
     for (let i = position.line; i > 0; i--) {
         const text = document.getText({
             start: {
-                line: i-1,
+                line: i - 1,
                 character: 0
             },
             end: {
@@ -67,20 +67,20 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
             start: { line: position.line, character: 0 },
             end: { line: position.line, character: position.character },
         })
-    
+
         let lineText: string = line == null ? '' : line
         lineText = lineText.trim()
-    
+
         const text = document?.getText({
             start: { line: 0, character: 0 },
             end: { line: position.line, character: position.character },
         })
-    
-    
+
+
         let triggerKey = lineText.charAt(lineText.length - 1)
         let isStart = position.character == 1 || lineText.charAt(lineText.length - 2) === ' ' || lineText.charAt(lineText.length - 2) === '' || lineText.charAt(lineText.length - 2) === '"' || lineText.charAt(lineText.length - 2) === '\'' || lineText.charAt(lineText.length - 2) === '{'
         let isConfigColorsBlock = checkConfigColorsBlock(document, position, lineText)
-        
+
         if (lineText.match(classPattern) === null) {
             return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock }
         }
@@ -89,19 +89,19 @@ export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams
                 lastKey = classMatch[0]
             }
         }
-    
-    
+
+
         if (lineText.charAt(lineText.length - 2) === ':' && lineText.charAt(lineText.length - 1) === ':') {
             triggerKey = '::'
             isStart = false
         }
-    
+
         return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language, isConfigColorsBlock }
     }
     return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock: false }
 }
 
-export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS()){
+export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS()) {
     let masterStyleCompletionItem: CompletionItem[] = []
 
     masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss))
@@ -110,6 +110,9 @@ export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterC
 }
 
 export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS()) {
+
+    const cssDataProvider = getDefaultCSSDataProvider()
+    const cssProperties = cssDataProvider.provideProperties()
 
     let masterStyleCompletionItem: CompletionItem[] = []
     const haveValue = instance.split(':').length
@@ -125,7 +128,9 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     const isMedia = !(mediaPattern.exec(instance) === null && triggerKey !== '@')
     const isElements = !(elementsPattern.exec(instance) === null && triggerKey !== '::')
 
+    let masterCssKeyCompletionItems: Array<CompletionItem> = []
     let masterCssValues: Array<string | CompletionItem> = []
+
     const masterCustomSelectors = Object.keys(masterCss.config.selectors ?? {})
         .map(x => x.endsWith('(') ? `${x})` : x)
         .filter(x => x.match(/:[^:]+/) && !masterCssSelectors.find(existedSelector => (typeof existedSelector === 'string' ? existedSelector : existedSelector.label) === `:${x}`))
@@ -149,13 +154,34 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         })
 
     masterCssKeyValues.forEach(x => {
+        const fullKey = x.key[0]
+        const originalCssProperty = cssProperties.find(x => x.name == fullKey)
+        const originalCssValues = originalCssProperty?.values ?? []
+        for (const masterKey of x.key) {
+            if (!masterCssKeyCompletionItems.find(existedValue => existedValue.label === masterKey + ':')) {
+
+                masterCssKeyCompletionItems.push({
+                    label: masterKey + ':',
+                    kind: CompletionItemKind.Property,
+                    documentation: originalCssProperty?.description
+                })
+            }
+        }
+
         if (x.key.includes(key)) {
             masterCssValues = masterCssValues.concat(
-                x.values.filter(cssValue =>
-                    !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
-                )
+                originalCssValues
+                    .filter(cssValue => cssValue.description)
+                    .map(cssValue => ({
+                        label: cssValue.name,
+                        kind: CompletionItemKind.Property,
+                        documentation: cssValue.description
+                    } as CompletionItem))
+                    .filter(cssValue =>
+                        !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
+                    )
             )
-            const pascalCaseFullKey = pascalCase(x.key[0])
+            const pascalCaseFullKey = pascalCase(fullKey)
             if (masterCss.config.values?.[pascalCaseFullKey]) {
                 const masterCustomValues = Object.keys(masterCss.config.values[pascalCaseFullKey])
                 masterCssValues = masterCssValues.concat(
@@ -177,7 +203,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     })
 
     if (startWithSpace == true && triggerKey !== '@' && triggerKey !== ':') {  //ex " background"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(masterCssKeyCompletionItems)
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property))
 
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
