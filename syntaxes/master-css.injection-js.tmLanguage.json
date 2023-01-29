@@ -21,7 +21,7 @@
     ],
     "repository": {
         "highlight-element": {
-            "begin": "(?:(\\$)|(?:(element|el)(\\.)([^\\s=.`]+)))(`)",
+            "begin": "(?:(\\$)|(?:(element|el|style)(\\.)([^\\s=.`]+)))(`)",
             "end": "(`)",
             "captures": {
                 "1": {

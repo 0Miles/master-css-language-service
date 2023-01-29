@@ -20,10 +20,10 @@ import MasterCSS from '@master/css'
 import * as minimatch from 'minimatch'
 
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import { GetLastInstance, GetCompletionItem } from './providers/completion'
+import { GetLastInstance, GetCompletionItem, GetConfigColorsCompletionItem } from './providers/completion'
 import { doHover } from './providers/hover'
 import { PositionCheck } from './position-check'
-import { GetDocumentColors, GetColorPresentation, GetColorRender } from './providers/color'
+import { GetDocumentColors, GetColorPresentation, GetConfigFileColorRender } from './providers/color'
 import * as path from 'path'
 
 
@@ -37,6 +37,7 @@ let hasDiagnosticRelatedInformationCapability = false
 let settings: MasterCSSSettings
 
 let MasterCSSObject: MasterCSS | undefined
+let configFileLocation: string = ''
 
 // The example settings
 interface MasterCSSSettings {
@@ -67,7 +68,7 @@ const defaultSettings: MasterCSSSettings = {
     classNameMatches: [
         '(class(?:Name)?\\s?=\\s?)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
         '(class(?:Name)?={)([^}]*)}',
-        '(?:(\\$|(?:(?:element|el)\\.[^\\s.`]+)`)([^`]+)`)',
+        '(?:(\\$|(?:(?:element|el|style)\\.[^\\s.`]+)`)([^`]+)`)',
         '(classList.(?:add|remove|replace|replace|toggle)\\()([^)]*)\\)',
         '(template\\s*\\:\\s*)((?:\"[^\"]+\")|(?:\'[^\']+\')|(?:`[^`]+`))',
         '(?<=classes\\s*(?:=|:)\\s*{[\\s\\S]*)([^\']*)(\'[^\']*\')',
@@ -111,8 +112,7 @@ async function getDocumentSettings(resource: string): Promise<MasterCSSSettings>
             section: 'masterCSS'
         })
         documentSettings.set(resource, result)
-    }
-    
+    }    
     return result
 }
 
@@ -127,30 +127,39 @@ documents.onDidOpen(change => {
     validateTextDocument(change.document)
 })
 
+documents.onDidSave(async change => {
+    if (path.parse(change.document.uri).name === 'master.css') {
+        await loadMasterCssConfig(change.document.uri)
+    }
+})
+
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     // In this simple example we get the settings for every validate run.
     settings = await getDocumentSettings(textDocument.uri)
+    await loadMasterCssConfig(textDocument.uri)
+}
 
+async function loadMasterCssConfig(resource: string) {
     const workspaceFolders = await connection.workspace.getWorkspaceFolders()
     let root: WorkspaceFolder | undefined
     if (workspaceFolders?.length === 1) {
         root = workspaceFolders[0]
     } else {
-        root = workspaceFolders?.find(x => textDocument.uri.includes(x.uri))
+        root = workspaceFolders?.find(x => resource.includes(x.uri))
     }
     if (root?.uri) {
         try {
             try {
-                const uri2path = await import('file-uri-to-path');
-                const compiler = await new MasterCSSCompiler({ cwd: path.join(uri2path(root.uri.replace('%3A', ':')), settings.configFileLocation) })
+                const uri2path = await import('file-uri-to-path')
+                configFileLocation = path.join(uri2path(root.uri.replace('%3A', ':')), settings.configFileLocation)
+                const compiler = await new MasterCSSCompiler({ cwd: configFileLocation })
                 const config: any = compiler.readConfig()
-                MasterCSSObject = new MasterCSS(config)
+                MasterCSSObject = new MasterCSS({ config })
             } catch (_) {
                 MasterCSSObject = new MasterCSS()
             }
         } catch (_) { /* empty */ }
     }
-
 }
 
 connection.onInitialize((params: InitializeParams) => {
@@ -179,7 +188,7 @@ connection.onInitialize((params: InitializeParams) => {
             completionProvider: {
                 resolveProvider: true,
                 workDoneProgress: false,
-                triggerCharacters: [':', '@', '~']
+                triggerCharacters: [':', '@', '~', '\'']
             },
             colorProvider: {},
             hoverProvider: true
@@ -203,14 +212,16 @@ connection.onInitialized(() => {
 })
 
 connection.onCompletion(
-    (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-        if (settings.suggestions == true && CheckFilesExclude(_textDocumentPosition.textDocument.uri)) {
+    (textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
+        if (settings.suggestions == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
 
-            const inMasterCSS = PositionCheck(_textDocumentPosition.textDocument.uri, _textDocumentPosition.position, documents, settings.classNameMatches).IsMatch
+            const inMasterCSS = PositionCheck(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches).IsMatch
 
-            const lastInstance = GetLastInstance(_textDocumentPosition, documents)
+            const lastInstance = GetLastInstance(textDocumentPosition, documents)
             if (lastInstance.isInstance == true && inMasterCSS == true) {
                 return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language, MasterCSSObject)
+            } else if (lastInstance.isInstance == true && lastInstance.isConfigColorsBlock == true) {
+                return GetConfigColorsCompletionItem(MasterCSSObject)
             }
         }
         return []
@@ -230,8 +241,9 @@ connection.onDocumentColor(
             return []
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            let colorInformation = await GetDocumentColors(documentColor, documents, settings.classNameMatches, MasterCSSObject)
-            colorInformation = colorInformation.concat(await GetColorRender(documentColor, documents))
+            let colorInformation = await GetDocumentColors(documentColor, documents, settings.classNameMatches, MasterCSSObject)        
+            colorInformation = colorInformation.concat(await GetConfigFileColorRender(documentColor, documents, MasterCSSObject))
+
             return colorInformation
         }
         return []
