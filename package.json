@@ -8,7 +8,7 @@
     "private": false,
     "license": "MIT",
     "publisher": "masterco",
-    "version": "2.1.29",
+    "version": "2.1.30",
     "icon": "images/icon.png",
     "repository": {
         "type": "git",
@@ -155,9 +155,9 @@
                     "type": "boolean",
                     "default": true
                 },
-                "masterCSS.configFileLocation": {
+                "masterCSS.config": {
                     "type": "string",
-                    "default": ""
+                    "default": "master.css.{ts,js,mjs,cjs}"
                 }
             }
         }

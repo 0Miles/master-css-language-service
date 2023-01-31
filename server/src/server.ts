@@ -48,7 +48,7 @@ interface MasterCSSSettings {
     suggestions: boolean,
     PreviewOnHovers: boolean,
     PreviewColor: boolean,
-    configFileLocation: string
+    config: string
 }
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
@@ -80,7 +80,7 @@ const defaultSettings: MasterCSSSettings = {
     suggestions: true,
     PreviewOnHovers: true,
     PreviewColor: true,
-    configFileLocation: ''
+    config: 'master.css.{ts,js,mjs,cjs}'
 }
 let globalSettings: MasterCSSSettings = defaultSettings
 
@@ -152,8 +152,8 @@ async function loadMasterCssConfig(resource: string) {
         try {
             try {
                 const uri2path = await import('file-uri-to-path')
-                configFileLocation = path.join(uri2path(root.uri.replace('%3A', ':')), settings.configFileLocation)
-                const compiler = await new MasterCSSCompiler({ cwd: configFileLocation })
+                configFileLocation = uri2path(root.uri.replace('%3A', ':'))
+                const compiler = await new MasterCSSCompiler({ cwd: configFileLocation, config: settings.config })
                 const config: any = compiler.readConfig()
                 MasterCSSObject = new MasterCSS({ config })
             } catch (_) {
