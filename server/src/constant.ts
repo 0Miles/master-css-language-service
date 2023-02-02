@@ -47,6 +47,25 @@ export const masterCssCommonValues = [
     'unset'
 ]
 
+export const commonUnit = [
+    { label: '0%', kind: CompletionItemKind.Unit },
+    { label: '0ch', kind: CompletionItemKind.Unit },
+    { label: '0cm', kind: CompletionItemKind.Unit },
+    { label: '0em', kind: CompletionItemKind.Unit },
+    { label: '0ex', kind: CompletionItemKind.Unit },
+    { label: '0fr', kind: CompletionItemKind.Unit },
+    { label: '0in', kind: CompletionItemKind.Unit },
+    { label: '0mm', kind: CompletionItemKind.Unit },
+    { label: '0pc', kind: CompletionItemKind.Unit },
+    { label: '0pt', kind: CompletionItemKind.Unit },
+    { label: '0px', kind: CompletionItemKind.Unit },
+    { label: '0rem', kind: CompletionItemKind.Unit },
+    { label: '0vh', kind: CompletionItemKind.Unit },
+    { label: '0vmax', kind: CompletionItemKind.Unit },
+    { label: '0vmin', kind: CompletionItemKind.Unit },
+    { label: '0vw', kind: CompletionItemKind.Unit }
+]
+
 export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['color', 'fg', 'foreground'],
@@ -834,12 +853,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
     {
         key: ['margin-top', 'mt', 'margin-bottom', 'mb', 'margin-left', 'ml', 'margin-right', 'mr', 'margin', 'm', 'mx', 'my'],
         colorful: false,
-        values: []
+        values: [...commonUnit]
     },
     {
         key: ['padding-top', 'pt', 'padding-bottom', 'pb', 'padding-left', 'pl', 'padding-right', 'pr', 'padding', 'p', 'px', 'py'],
         colorful: false,
-        values: []
+        values: [...commonUnit]
     },
     {
         key: ['word-spacing'],

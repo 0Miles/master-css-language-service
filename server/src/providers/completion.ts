@@ -159,7 +159,6 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         const originalCssValues = originalCssProperty?.values ?? []
         for (const masterKey of x.key) {
             if (!masterCssKeyCompletionItems.find(existedValue => existedValue.label === masterKey + ':')) {
-
                 masterCssKeyCompletionItems.push({
                     label: masterKey + ':',
                     kind: CompletionItemKind.Property,
@@ -169,9 +168,16 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         }
 
         if (x.key.includes(key)) {
+            // constant.ts custom values
+            masterCssValues = masterCssValues.concat(
+                x.values.filter(cssValue =>
+                    !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
+                )
+            )
+            
             masterCssValues = masterCssValues.concat(
                 originalCssValues
-                    .filter(cssValue => cssValue?.description)
+                    .filter((cssValue, index) => cssValue.description || (!cssValue.description && originalCssValues.indexOf(cssValue)===index))
                     .map(cssValue => ({
                         label: cssValue.name,
                         kind: CompletionItemKind.Property,
@@ -181,6 +187,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
                         !masterCssValues.find(existedValue => (typeof existedValue === 'string' ? existedValue : existedValue.label) === (typeof cssValue === 'string' ? cssValue : cssValue.label))
                     )
             )
+
+            
             const pascalCaseFullKey = pascalCase(fullKey)
             if (masterCss.config.values?.[pascalCaseFullKey]) {
                 const masterCustomValues = Object.keys(masterCss.config.values[pascalCaseFullKey])
@@ -253,7 +261,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     }
     else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, CompletionItemKind.Enum))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, CompletionItemKind.Property))
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum).map(x => { x.sortText = 'z' + x; return x }))
 
         if (isColorful) {
