@@ -8,8 +8,8 @@
         "node": "*"
     },
     "dependencies": {
-        "@master/css": "^2.0.0-beta.103",
-        "@master/css-compiler": "^2.0.0-beta.103",
+        "@master/css": "^2.0.0-beta.106",
+        "@master/css-compiler": "^2.0.0-beta.106",
         "file-uri-to-path": "^2.0.0",
         "js-beautify": "^1.14.7",
         "minimatch": "^5.1.2",

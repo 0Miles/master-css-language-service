@@ -131,7 +131,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     let masterCssKeyCompletionItems: Array<CompletionItem> = []
     let masterCssValues: Array<string | CompletionItem> = []
 
-    const masterCustomSelectors = Object.keys(masterCss.config.selectors ?? {})
+    const masterCustomSelectors = Object.keys(masterCss.config?.selectors ?? {})
         .map(x => x.endsWith('(') ? `${x})` : x)
         .filter(x => x.match(/:[^:]+/) && !masterCssSelectors.find(existedSelector => (typeof existedSelector === 'string' ? existedSelector : existedSelector.label) === `:${x}`))
         .map(x => {
@@ -142,7 +142,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
             return x
         })
 
-    const masterCustomElements = Object.keys(masterCss.config.selectors ?? {})
+    const masterCustomElements = Object.keys(masterCss.config?.selectors ?? {})
         .map(x => x.endsWith('(') ? `${x})` : x)
         .filter(x => x.match(/::[^:]+/) && !masterCssElements.find(existedElement => (typeof existedElement === 'string' ? existedElement : existedElement.label) === `::${x}`))
         .map(x => {
@@ -190,8 +190,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
             
             const pascalCaseFullKey = pascalCase(fullKey)
-            if (masterCss.config.values?.[pascalCaseFullKey]) {
-                const masterCustomValues = Object.keys(masterCss.config.values[pascalCaseFullKey])
+            if (masterCss.config?.values?.[pascalCaseFullKey]) {
+                const masterCustomValues = Object.keys(masterCss.config?.values[pascalCaseFullKey])
                 masterCssValues = masterCssValues.concat(
                     masterCustomValues
                         .filter(customValue =>
@@ -212,7 +212,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (startWithSpace == true && triggerKey !== '@' && triggerKey !== ':') {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(masterCssKeyCompletionItems)
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), CompletionItemKind.Property))
 
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem)
@@ -225,7 +225,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (!masterCssKeys.includes(key) && triggerKey !== ':') {        //show key //ex "backgr"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.semantics ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), CompletionItemKind.Property))
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem)
         }
@@ -243,7 +243,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config.breakpoints ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.breakpoints ?? {}), CompletionItemKind.Property))
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCss.themeNames, CompletionItemKind.Property))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
             return HaveDash('@' + last, masterStyleCompletionItem)
@@ -251,7 +251,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         return masterStyleCompletionItem
     }
 
-    if (Object.keys(masterCss.config.semantics ?? {}).includes(key) && !masterCssKeyValues.find(x => x.key.includes(key))) {
+    if (Object.keys(masterCss.config?.semantics ?? {}).includes(key) && !masterCssKeyValues.find(x => x.key.includes(key))) {
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property))
         masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors, CompletionItemKind.Property))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {

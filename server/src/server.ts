@@ -155,7 +155,7 @@ async function loadMasterCssConfig(resource: string) {
                 configFileLocation = uri2path(root.uri.replace('%3A', ':'))
                 const compiler = await new MasterCSSCompiler({ cwd: configFileLocation, config: settings.config })
                 const config: any = compiler.readConfig()
-                MasterCSSObject = new MasterCSS({ config })
+                MasterCSSObject = new MasterCSS(config)
             } catch (_) {
                 MasterCSSObject = new MasterCSS()
             }
