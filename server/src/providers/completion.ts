@@ -8,13 +8,8 @@ import {
     masterCssCommonValues
 } from '../constant'
 
-import {
-    TextDocuments,
-    CompletionItem,
-    CompletionItemKind,
-    TextDocumentPositionParams
-} from 'vscode-languageserver/node'
-import { Position, TextDocument } from 'vscode-languageserver-textdocument'
+import type { CompletionItem, CompletionItemKind } from 'vscode-languageserver/node'
+import type { Position, TextDocument } from 'vscode-languageserver-textdocument'
 import MasterCSS from '@master/css'
 import { pascalCase } from 'pascal-case'
 import { getDefaultCSSDataProvider } from 'vscode-css-languageservice'
@@ -28,7 +23,12 @@ masterCssKeyValues.forEach(x => {
 const masterCssKeys: Array<string | CompletionItem> = [...new Set(cssKeys)]
 
 // temporary
-function checkConfigColorsBlock(document: TextDocument, position: Position, lineText: string) {
+export function checkConfigColorsBlock(document: TextDocument, position: Position) {
+    const lineText: string = (document?.getText({
+        start: { line: position.line, character: 0 },
+        end: { line: position.line, character: position.character },
+    }) ?? '').trim()
+
     if ((lineText.match(/'|"|`/g)?.length ?? 0) % 2 === 0) {
         return false
     }
@@ -52,53 +52,30 @@ function checkConfigColorsBlock(document: TextDocument, position: Position, line
     return false
 }
 
-export function GetLastInstance(textDocumentPosition: TextDocumentPositionParams, documents: TextDocuments<TextDocument>) {
-    const documentUri = textDocumentPosition.textDocument.uri
-    const language = documentUri.substring(documentUri.lastIndexOf('.') + 1)
-    const position = textDocumentPosition.position
-
+export function GetLastInstance(lineText: string, position: Position, language: string) {
     const classPattern = /(?:[^"{'\s])+(?=>\s|\b)/g
     let classMatch: RegExpExecArray | null
     let lastKey = ''
 
-    const document = documents.get(documentUri)
-    if (document) {
-        const line = document?.getText({
-            start: { line: position.line, character: 0 },
-            end: { line: position.line, character: position.character },
-        })
+    let triggerKey = lineText.charAt(lineText.length - 1)
+    let isStart = position.character == 1 || lineText.charAt(lineText.length - 2) === ' ' || lineText.charAt(lineText.length - 2) === '' || lineText.charAt(lineText.length - 2) === '"' || lineText.charAt(lineText.length - 2) === '\'' || lineText.charAt(lineText.length - 2) === '{'
 
-        let lineText: string = line == null ? '' : line
-        lineText = lineText.trim()
-
-        const text = document?.getText({
-            start: { line: 0, character: 0 },
-            end: { line: position.line, character: position.character },
-        })
-
-
-        let triggerKey = lineText.charAt(lineText.length - 1)
-        let isStart = position.character == 1 || lineText.charAt(lineText.length - 2) === ' ' || lineText.charAt(lineText.length - 2) === '' || lineText.charAt(lineText.length - 2) === '"' || lineText.charAt(lineText.length - 2) === '\'' || lineText.charAt(lineText.length - 2) === '{'
-        let isConfigColorsBlock = checkConfigColorsBlock(document, position, lineText)
-
-        if (lineText.match(classPattern) === null) {
-            return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock }
-        }
-        else {
-            while ((classMatch = classPattern.exec(lineText)) !== null) {
-                lastKey = classMatch[0]
-            }
-        }
-
-
-        if (lineText.charAt(lineText.length - 2) === ':' && lineText.charAt(lineText.length - 1) === ':') {
-            triggerKey = '::'
-            isStart = false
-        }
-
-        return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language, isConfigColorsBlock }
+    if (lineText.match(classPattern) === null) {
+        return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language }
     }
-    return { isInstance: false, lastKey: '', triggerKey: '', isStart: false, language: language, isConfigColorsBlock: false }
+    else {
+        while ((classMatch = classPattern.exec(lineText)) !== null) {
+            lastKey = classMatch[0]
+        }
+    }
+
+
+    if (lineText.charAt(lineText.length - 2) === ':' && lineText.charAt(lineText.length - 1) === ':') {
+        triggerKey = '::'
+        isStart = false
+    }
+
+    return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language }
 }
 
 export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS()) {
@@ -137,7 +114,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         .map(x => {
             x = x.substring(1)
             if (x.endsWith(')')) {
-                return { label: x, kind: CompletionItemKind.Function }
+                return { label: x, kind: 3 }
             }
             return x
         })
@@ -148,7 +125,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
         .map(x => {
             x = x.substring(2)
             if (x.endsWith(')')) {
-                return { label: x, kind: CompletionItemKind.Function }
+                return { label: x, kind: 3 }
             }
             return x
         })
@@ -161,7 +138,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
             if (!masterCssKeyCompletionItems.find(existedValue => existedValue.label === masterKey + ':')) {
                 masterCssKeyCompletionItems.push({
                     label: masterKey + ':',
-                    kind: CompletionItemKind.Property,
+                    kind: 10,
                     documentation: originalCssProperty?.description ?? ''
                 })
             }
@@ -180,7 +157,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
                     .filter((cssValue, index) => cssValue.description || (!cssValue.description && originalCssValues.indexOf(cssValue)===index))
                     .map(cssValue => ({
                         label: cssValue.name,
-                        kind: CompletionItemKind.Property,
+                        kind: 10,
                         documentation: cssValue?.description ?? ''
                     } as CompletionItem))
                     .filter(cssValue =>
@@ -204,7 +181,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
                 isColorful = true
                 const needPushList = masterCssType.find(y => y.type === 'color')?.values.filter(z => !masterCssValues.find(a => (typeof a === 'string' ? a : a.label) === (typeof z === 'string' ? z : z.label)))
                 if (needPushList) {
-                    masterCssValues = masterCssValues.concat(needPushList)
+                    masterCssValues = masterCssValues.concat(needPushList as any)
                 }
             }
         }
@@ -212,7 +189,7 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     if (startWithSpace == true && triggerKey !== '@' && triggerKey !== ':') {  //ex " background"
         masterStyleCompletionItem = masterStyleCompletionItem.concat(masterCssKeyCompletionItems)
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), 10))
 
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem)
@@ -224,8 +201,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (!masterCssKeys.includes(key) && triggerKey !== ':') {        //show key //ex "backgr"
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, CompletionItemKind.Property, ':'))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssKeys, 10, ':'))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.semantics ?? {}), 10))
         if (language == 'tsx' || language == 'vue' || language == 'jsx') {
             return HaveDash(key, masterStyleCompletionItem)
         }
@@ -233,8 +210,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (masterCssKeys.includes(key) && key !== null && isElements === true) { //show elements
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssElements, CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomElements, CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssElements as any, 10))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomElements as any, 10))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
             return HaveDash(last, masterStyleCompletionItem)
         }
@@ -242,9 +219,9 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (masterCssKeys.includes(key) && key !== null && isMedia === true) { //show media
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia, CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.breakpoints ?? {}), CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCss.themeNames, CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssMedia as any, 10))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(Object.keys(masterCss.config?.breakpoints ?? {}), 10))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCss.themeNames, 10))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
             return HaveDash('@' + last, masterStyleCompletionItem)
         }
@@ -252,8 +229,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (Object.keys(masterCss.config?.semantics ?? {}).includes(key) && !masterCssKeyValues.find(x => x.key.includes(key))) {
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors, CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors as any, 10))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors as any, 10))
         if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
             return HaveDash(last, masterStyleCompletionItem)
         }
@@ -261,8 +238,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
 
     }
     else if (masterCssKeys.includes(key) && haveValue <= 2 && !(haveValue == 2 && triggerKey === ':')) {  //show value
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, CompletionItemKind.Property))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues, CompletionItemKind.Enum).map(x => { x.sortText = 'z' + x; return x }))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssValues, 10))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssCommonValues as any, 13).map(x => { x.sortText = 'z' + x; return x }))
 
         if (isColorful) {
             masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss))
@@ -274,8 +251,8 @@ export function GetCompletionItem(instance: string, triggerKey: string, startWit
     }
 
     if (masterCssKeys.includes(key) && (haveValue == 2 && triggerKey === ':' || haveValue >= 3) || masterCssKeyValues.find(x => x.values.includes(key))) { //show select
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors, CompletionItemKind.Function))
-        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors, CompletionItemKind.Property))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCssSelectors as any, 3))
+        masterStyleCompletionItem = masterStyleCompletionItem.concat(getReturnItem(masterCustomSelectors as any, 10))
     }
 
     if ((language == 'tsx' || language == 'vue' || language == 'jsx') && triggerKey !== '@' && triggerKey !== ':') {
@@ -332,7 +309,7 @@ function getColorsItem(masterCss: MasterCSS = new MasterCSS()): CompletionItem[]
             masterStyleCompletionItem.push({
                 label: colorName,
                 documentation: Object.values<string>(colorValue)[0],
-                kind: CompletionItemKind.Color,
+                kind: 16,
                 sortText: `${colorName}`
             })
         })

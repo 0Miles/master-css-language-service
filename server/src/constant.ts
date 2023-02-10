@@ -1,4 +1,4 @@
-import { CompletionItem, CompletionItemKind } from 'vscode-languageserver'
+import type { CompletionItem } from 'vscode-languageserver'
 
 interface MasterCssKey {
     key: string[];
@@ -7,32 +7,32 @@ interface MasterCssKey {
 }
 
 export const masterCssSelectors = [
-    { label: 'lang()', kind: CompletionItemKind.Function }, { label: 'has()', kind: CompletionItemKind.Function }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
+    { label: 'lang()', kind: 3 }, { label: 'has()', kind: 3 }, 'any-link', 'link', 'visited', 'target', 'scope', 'hover', 'active', 'focus', 'focus-visible', 'focus-within',
     'autofill', 'enabled', 'disabled', 'read-only', 'read-write', 'placeholder-shown', 'default', 'checked', 'indeterminate', 'valid', 'invalid', 'in-range',
     'out-of-range', 'required', 'optional', 'root', 'empty',
-    { label: 'nth-child()', kind: CompletionItemKind.Function },
-    { label: 'nth-last-child()', kind: CompletionItemKind.Function }, 'first-child', 'last-child', 'only-child',
-    { label: 'nth-of-type()', kind: CompletionItemKind.Function },
+    { label: 'nth-child()', kind: 3 },
+    { label: 'nth-last-child()', kind: 3 }, 'first-child', 'last-child', 'only-child',
+    { label: 'nth-of-type()', kind: 3 },
 
-    { label: 'nth-last-of-type()', kind: CompletionItemKind.Function }, 'first-of-type', 'last-of-type', 'only-of-type', 'defined', 'first', 'fullscreen',
-    { label: 'host()', kind: CompletionItemKind.Function },
-    { label: 'host-context()', kind: CompletionItemKind.Function },
-    { label: 'is()', kind: CompletionItemKind.Function }, 'left',
-    { label: 'not()', kind: CompletionItemKind.Function },
+    { label: 'nth-last-of-type()', kind: 3 }, 'first-of-type', 'last-of-type', 'only-of-type', 'defined', 'first', 'fullscreen',
+    { label: 'host()', kind: 3 },
+    { label: 'host-context()', kind: 3 },
+    { label: 'is()', kind: 3 }, 'left',
+    { label: 'not()', kind: 3 },
     'right',
-    { label: 'where()', kind: CompletionItemKind.Function }
+    { label: 'where()', kind: 3 }
 ]
 
 export const masterCssElements = ['after', 'before', 'backdrop', 'cue', 'first-letter', 'first-line', 'file-selector-button', 'marker',
-    { label: 'part()', kind: CompletionItemKind.Function }, 'placeholder'
+    { label: 'part()', kind: 3 }, 'placeholder'
     , 'selection',
-    { label: 'slotted()', kind: CompletionItemKind.Function }, 'resizer',
+    { label: 'slotted()', kind: 3 }, 'resizer',
     'search-cancel-button', 'search-results-button'
 ]
 
 export const masterCssMedia = [
     'all', 'print', 'screen', 'portrait', 'landscape', 'motion', 'reduced-motion',
-    { label: 'media()', kind: CompletionItemKind.Function }
+    { label: 'media()', kind: 3 }
 ]
 
 export const masterCssOtherKeys = [
@@ -40,30 +40,30 @@ export const masterCssOtherKeys = [
 ]
 
 export const masterCssCommonValues = [
-    { label: 'var()', kind: CompletionItemKind.Function },
-    { label: 'calc()', kind: CompletionItemKind.Function },
+    { label: 'var()', kind: 3 },
+    { label: 'calc()', kind: 3 },
     'inherit',
     'initial',
     'unset'
 ]
 
-export const commonUnit = [
-    { label: '0%', kind: CompletionItemKind.Unit },
-    { label: '0ch', kind: CompletionItemKind.Unit },
-    { label: '0cm', kind: CompletionItemKind.Unit },
-    { label: '0em', kind: CompletionItemKind.Unit },
-    { label: '0ex', kind: CompletionItemKind.Unit },
-    { label: '0fr', kind: CompletionItemKind.Unit },
-    { label: '0in', kind: CompletionItemKind.Unit },
-    { label: '0mm', kind: CompletionItemKind.Unit },
-    { label: '0pc', kind: CompletionItemKind.Unit },
-    { label: '0pt', kind: CompletionItemKind.Unit },
-    { label: '0px', kind: CompletionItemKind.Unit },
-    { label: '0rem', kind: CompletionItemKind.Unit },
-    { label: '0vh', kind: CompletionItemKind.Unit },
-    { label: '0vmax', kind: CompletionItemKind.Unit },
-    { label: '0vmin', kind: CompletionItemKind.Unit },
-    { label: '0vw', kind: CompletionItemKind.Unit }
+export const commonUnit: any = [
+    { label: '0%', kind: 11 },
+    { label: '0ch', kind: 11 },
+    { label: '0cm', kind: 11 },
+    { label: '0em', kind: 11 },
+    { label: '0ex', kind: 11 },
+    { label: '0fr', kind: 11 },
+    { label: '0in', kind: 11 },
+    { label: '0mm', kind: 11 },
+    { label: '0pc', kind: 11 },
+    { label: '0pt', kind: 11 },
+    { label: '0px', kind: 11 },
+    { label: '0rem', kind: 11 },
+    { label: '0vh', kind: 11 },
+    { label: '0vmax', kind: 11 },
+    { label: '0vmin', kind: 11 },
+    { label: '0vw', kind: 11 }
 ]
 
 export const masterCssKeyValues: MasterCssKey[] = [
@@ -207,7 +207,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['grid-auto-columns', 'grid-auto-cols'],
         colorful: false,
         values: ['auto', 'min-content', 'max-content',
-            { label: 'minmax(,)', kind: CompletionItemKind.Function }]
+            { label: 'minmax(,)', kind: 3 }]
     },
     {
         key: ['grid-auto-flow'],
@@ -218,7 +218,7 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['grid-auto-rows'],
         colorful: false,
         values: ['auto', 'min-content', 'max-content',
-            { label: 'minmax(,)', kind: CompletionItemKind.Function }]
+            { label: 'minmax(,)', kind: 3 }]
     },
     {
         key: ['grid-column', 'grid-col', 'grid-column-span', 'grid-col-span', 'grid-column-start', 'grid-col-start', 'grid-column-end', 'grid-col-end'],
@@ -254,17 +254,17 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['grid-template-columns', 'grid-template-cols'],
         colorful: false,
         values: ['none', 'min-content', 'max-content',
-            { label: 'repeat(,)', kind: CompletionItemKind.Function },
-            { label: 'fit-content()', kind: CompletionItemKind.Function },
-            { label: 'minmax()', kind: CompletionItemKind.Function }]
+            { label: 'repeat(,)', kind: 3 },
+            { label: 'fit-content()', kind: 3 },
+            { label: 'minmax()', kind: 3 }]
     },
     {
         key: ['grid-template-rows'],
         colorful: false,
         values: ['none', 'min-content', 'max-content',
-            { label: 'repeat(,)', kind: CompletionItemKind.Function },
-            { label: 'fit-content()', kind: CompletionItemKind.Function },
-            { label: 'minmax()', kind: CompletionItemKind.Function }]
+            { label: 'repeat(,)', kind: 3 },
+            { label: 'fit-content()', kind: 3 },
+            { label: 'minmax()', kind: 3 }]
     },
     //GRID AND FLEXBOX
     {
@@ -383,22 +383,22 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['font-size', 'font', 'f'],
         colorful: false,
         values: [
-            { label: '8', kind: CompletionItemKind.Unit, sortText: '!0' },
-            { label: '9', kind: CompletionItemKind.Unit, sortText: '!1' },
-            { label: '10', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '11', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '12', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '14', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '16', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '18', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '20', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '22', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '24', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '26', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '28', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '36', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '48', kind: CompletionItemKind.Unit, sortText: '!2' },
-            { label: '72', kind: CompletionItemKind.Unit, sortText: '!2' },
+            { label: '8', kind: 11, sortText: '!0' },
+            { label: '9', kind: 11, sortText: '!1' },
+            { label: '10', kind: 11, sortText: '!2' },
+            { label: '11', kind: 11, sortText: '!2' },
+            { label: '12', kind: 11, sortText: '!2' },
+            { label: '14', kind: 11, sortText: '!2' },
+            { label: '16', kind: 11, sortText: '!2' },
+            { label: '18', kind: 11, sortText: '!2' },
+            { label: '20', kind: 11, sortText: '!2' },
+            { label: '22', kind: 11, sortText: '!2' },
+            { label: '24', kind: 11, sortText: '!2' },
+            { label: '26', kind: 11, sortText: '!2' },
+            { label: '28', kind: 11, sortText: '!2' },
+            { label: '36', kind: 11, sortText: '!2' },
+            { label: '48', kind: 11, sortText: '!2' },
+            { label: '72', kind: 11, sortText: '!2' },
         ]
     },
     {
@@ -547,12 +547,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['list-style-image', 'list-style'],
         colorful: false,
         values: [
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'linear-gradient()', kind: CompletionItemKind.Function },
-            { label: 'radial-gradient()', kind: CompletionItemKind.Function },
-            { label: 'repeating-linear-gradient()', kind: CompletionItemKind.Function },
-            { label: 'repeating-radial-gradient()', kind: CompletionItemKind.Function },
-            { label: 'conic-gradient()', kind: CompletionItemKind.Function }]
+            { label: 'url()', kind: 3 },
+            { label: 'linear-gradient()', kind: 3 },
+            { label: 'radial-gradient()', kind: 3 },
+            { label: 'repeating-linear-gradient()', kind: 3 },
+            { label: 'repeating-radial-gradient()', kind: 3 },
+            { label: 'conic-gradient()', kind: 3 }]
     },
     {
         key: ['list-style-position', 'list-style'],
@@ -589,11 +589,11 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['content'],
         colorful: false,
         values: ['normal', 'none', 'no-open-quote', 'no-close-quote',
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'linear-gradient()', kind: CompletionItemKind.Function },
-            { label: 'image-set()', kind: CompletionItemKind.Function },
-            { label: 'counter()', kind: CompletionItemKind.Function },
-            { label: 'attr()', kind: CompletionItemKind.Function }]
+            { label: 'url()', kind: 3 },
+            { label: 'linear-gradient()', kind: 3 },
+            { label: 'image-set()', kind: 3 },
+            { label: 'counter()', kind: 3 },
+            { label: 'attr()', kind: 3 }]
     },
     {
         key: ['vertical-align', 'v'],
@@ -630,17 +630,17 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['backdrop-filter', 'bd'],
         colorful: false,
         values: ['none',
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'blur()', kind: CompletionItemKind.Function },
-            { label: 'brightness()', kind: CompletionItemKind.Function },
-            { label: 'contrast()', kind: CompletionItemKind.Function },
-            { label: 'grayscale()', kind: CompletionItemKind.Function },
-            { label: 'hue-rotate(degree)', kind: CompletionItemKind.Function },
-            { label: 'invert()', kind: CompletionItemKind.Function },
-            { label: 'sepia()', kind: CompletionItemKind.Function },
-            { label: 'saturate()', kind: CompletionItemKind.Function },
-            { label: 'opacity()', kind: CompletionItemKind.Function },
-            { label: 'drop-shadow()', kind: CompletionItemKind.Function }]
+            { label: 'url()', kind: 3 },
+            { label: 'blur()', kind: 3 },
+            { label: 'brightness()', kind: 3 },
+            { label: 'contrast()', kind: 3 },
+            { label: 'grayscale()', kind: 3 },
+            { label: 'hue-rotate(degree)', kind: 3 },
+            { label: 'invert()', kind: 3 },
+            { label: 'sepia()', kind: 3 },
+            { label: 'saturate()', kind: 3 },
+            { label: 'opacity()', kind: 3 },
+            { label: 'drop-shadow()', kind: 3 }]
     },
     {
         key: ['background-attachment', 'background', 'bg'],
@@ -666,12 +666,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['background-image', 'background', 'bg'],
         colorful: false,
         values: [
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'linear-gradient()', kind: CompletionItemKind.Function },
-            { label: 'radial-gradient()', kind: CompletionItemKind.Function },
-            { label: 'repeating-linear-gradient()', kind: CompletionItemKind.Function },
-            { label: 'repeating-radial-gradient()', kind: CompletionItemKind.Function },
-            { label: 'conic-gradient()', kind: CompletionItemKind.Function }]
+            { label: 'url()', kind: 3 },
+            { label: 'linear-gradient()', kind: 3 },
+            { label: 'radial-gradient()', kind: 3 },
+            { label: 'repeating-linear-gradient()', kind: 3 },
+            { label: 'repeating-radial-gradient()', kind: 3 },
+            { label: 'conic-gradient()', kind: 3 }]
     },
     {
         key: ['background-origin', 'bg'],
@@ -768,21 +768,21 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['shape-margin', 'shape'],
         colorful: false,
         values: [
-            { label: 'max()', kind: CompletionItemKind.Function },
-            { label: 'min()', kind: CompletionItemKind.Function },
-            { label: 'calc()', kind: CompletionItemKind.Function },
-            { label: 'clamp()', kind: CompletionItemKind.Function }]
+            { label: 'max()', kind: 3 },
+            { label: 'min()', kind: 3 },
+            { label: 'calc()', kind: 3 },
+            { label: 'clamp()', kind: 3 }]
     },
     {
         key: ['shape-outside', 'shape'],
         colorful: false,
         values: ['none', 'content-box', 'border-box', 'padding-box', 'margin-box',
-            { label: 'inset()', kind: CompletionItemKind.Function },
-            { label: 'circle()', kind: CompletionItemKind.Function },
-            { label: 'ellipse()', kind: CompletionItemKind.Function },
-            { label: 'polygon()', kind: CompletionItemKind.Function },
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'linear-gradient()', kind: CompletionItemKind.Function }]
+            { label: 'inset()', kind: 3 },
+            { label: 'circle()', kind: 3 },
+            { label: 'ellipse()', kind: 3 },
+            { label: 'polygon()', kind: 3 },
+            { label: 'url()', kind: 3 },
+            { label: 'linear-gradient()', kind: 3 }]
     },
     {
         key: ['clip-path', 'clip'],
@@ -796,12 +796,12 @@ export const masterCssKeyValues: MasterCssKey[] = [
             'fill-box',
             'stroke-box',
             'view-box',
-            { label: 'inset()', kind: CompletionItemKind.Function },
-            { label: 'circle()', kind: CompletionItemKind.Function },
-            { label: 'ellipse()', kind: CompletionItemKind.Function },
-            { label: 'polygon()', kind: CompletionItemKind.Function },
-            { label: 'path()', kind: CompletionItemKind.Function },
-            { label: 'url()', kind: CompletionItemKind.Function }]
+            { label: 'inset()', kind: 3 },
+            { label: 'circle()', kind: 3 },
+            { label: 'ellipse()', kind: 3 },
+            { label: 'polygon()', kind: 3 },
+            { label: 'path()', kind: 3 },
+            { label: 'url()', kind: 3 }]
     },
     //SIZING
     {
@@ -890,36 +890,36 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['transition-timing-function', '~easing'],
         colorful: false,
         values: ['ease', 'ease-in', 'ease-out', 'linear', 'step-start', 'step-end',
-            { label: 'steps(,)', kind: CompletionItemKind.Function },
-            { label: 'cubic-bezier(,,,)', kind: CompletionItemKind.Function },
-            { label: 'frames()', kind: CompletionItemKind.Function }]
+            { label: 'steps(,)', kind: 3 },
+            { label: 'cubic-bezier(,,,)', kind: 3 },
+            { label: 'frames()', kind: 3 }]
     },
     //TRANSFORM
     {
         key: ['transform'],
         colorful: false,
         values: [
-            { label: 'translate()', kind: CompletionItemKind.Function },
-            { label: 'translate3d()', kind: CompletionItemKind.Function },
-            { label: 'translateX()', kind: CompletionItemKind.Function },
-            { label: 'translateY()', kind: CompletionItemKind.Function },
-            { label: 'translateZ()', kind: CompletionItemKind.Function },
-            { label: 'scale()', kind: CompletionItemKind.Function },
-            { label: 'scale3d()', kind: CompletionItemKind.Function },
-            { label: 'scaleX()', kind: CompletionItemKind.Function },
-            { label: 'scaleY()', kind: CompletionItemKind.Function },
-            { label: 'scaleZ()', kind: CompletionItemKind.Function },
-            { label: 'skew()', kind: CompletionItemKind.Function },
-            { label: 'skewX()', kind: CompletionItemKind.Function },
-            { label: 'skewY()', kind: CompletionItemKind.Function },
-            { label: 'rotate()', kind: CompletionItemKind.Function },
-            { label: 'rotate3d()', kind: CompletionItemKind.Function },
-            { label: 'rotateX()', kind: CompletionItemKind.Function },
-            { label: 'rotateY()', kind: CompletionItemKind.Function },
-            { label: 'rotateZ()', kind: CompletionItemKind.Function },
-            { label: 'perspective()', kind: CompletionItemKind.Function },
-            { label: 'matrix()', kind: CompletionItemKind.Function },
-            { label: 'matrix3d()', kind: CompletionItemKind.Function }]
+            { label: 'translate()', kind: 3 },
+            { label: 'translate3d()', kind: 3 },
+            { label: 'translateX()', kind: 3 },
+            { label: 'translateY()', kind: 3 },
+            { label: 'translateZ()', kind: 3 },
+            { label: 'scale()', kind: 3 },
+            { label: 'scale3d()', kind: 3 },
+            { label: 'scaleX()', kind: 3 },
+            { label: 'scaleY()', kind: 3 },
+            { label: 'scaleZ()', kind: 3 },
+            { label: 'skew()', kind: 3 },
+            { label: 'skewX()', kind: 3 },
+            { label: 'skewY()', kind: 3 },
+            { label: 'rotate()', kind: 3 },
+            { label: 'rotate3d()', kind: 3 },
+            { label: 'rotateX()', kind: 3 },
+            { label: 'rotateY()', kind: 3 },
+            { label: 'rotateZ()', kind: 3 },
+            { label: 'perspective()', kind: 3 },
+            { label: 'matrix()', kind: 3 },
+            { label: 'matrix3d()', kind: 3 }]
     },
     {
         key: ['transform-box', 'transform'],
@@ -987,9 +987,9 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['animation-timing-function', '@easing'],
         colorful: false,
         values: ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear', 'step-start', 'step-end',
-            { label: 'steps(,)', kind: CompletionItemKind.Function },
-            { label: 'cubic-bezier(,,,)', kind: CompletionItemKind.Function },
-            { label: 'frames()', kind: CompletionItemKind.Function }]
+            { label: 'steps(,)', kind: 3 },
+            { label: 'cubic-bezier(,,,)', kind: 3 },
+            { label: 'frames()', kind: 3 }]
     },
     //SVG
     {
@@ -1024,17 +1024,17 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['backdrop-filter', 'bd'],
         colorful: false,
         values: ['none',
-            { label: 'url(svg)', kind: CompletionItemKind.Function },
-            { label: 'blur()', kind: CompletionItemKind.Function },
-            { label: 'brightness()', kind: CompletionItemKind.Function },
-            { label: 'contrast()', kind: CompletionItemKind.Function },
-            { label: 'grayscale()', kind: CompletionItemKind.Function },
-            { label: 'hue-rotate(degree)', kind: CompletionItemKind.Function },
-            { label: 'invert()', kind: CompletionItemKind.Function },
-            { label: 'sepia()', kind: CompletionItemKind.Function },
-            { label: 'saturate()', kind: CompletionItemKind.Function },
-            { label: 'opacity()', kind: CompletionItemKind.Function },
-            { label: 'drop-shadow()', kind: CompletionItemKind.Function }]
+            { label: 'url(svg)', kind: 3 },
+            { label: 'blur()', kind: 3 },
+            { label: 'brightness()', kind: 3 },
+            { label: 'contrast()', kind: 3 },
+            { label: 'grayscale()', kind: 3 },
+            { label: 'hue-rotate(degree)', kind: 3 },
+            { label: 'invert()', kind: 3 },
+            { label: 'sepia()', kind: 3 },
+            { label: 'saturate()', kind: 3 },
+            { label: 'opacity()', kind: 3 },
+            { label: 'drop-shadow()', kind: 3 }]
     },
     {
         key: ['background-blend-mode'],
@@ -1050,17 +1050,17 @@ export const masterCssKeyValues: MasterCssKey[] = [
         key: ['filter'],
         colorful: false,
         values: ['none',
-            { label: 'url()', kind: CompletionItemKind.Function },
-            { label: 'blur()', kind: CompletionItemKind.Function },
-            { label: 'brightness()', kind: CompletionItemKind.Function },
-            { label: 'contrast()', kind: CompletionItemKind.Function },
-            { label: 'drop-shadow()', kind: CompletionItemKind.Function },
-            { label: 'grayscale()', kind: CompletionItemKind.Function },
-            { label: 'hue-rotate(degree)', kind: CompletionItemKind.Function },
-            { label: 'invert()', kind: CompletionItemKind.Function },
-            { label: 'opacity()', kind: CompletionItemKind.Function },
-            { label: 'saturate()', kind: CompletionItemKind.Function },
-            { label: 'sepia()', kind: CompletionItemKind.Function }]
+            { label: 'url()', kind: 3 },
+            { label: 'blur()', kind: 3 },
+            { label: 'brightness()', kind: 3 },
+            { label: 'contrast()', kind: 3 },
+            { label: 'drop-shadow()', kind: 3 },
+            { label: 'grayscale()', kind: 3 },
+            { label: 'hue-rotate(degree)', kind: 3 },
+            { label: 'invert()', kind: 3 },
+            { label: 'opacity()', kind: 3 },
+            { label: 'saturate()', kind: 3 },
+            { label: 'sepia()', kind: 3 }]
     },
     {
         key: ['mask-image'],
@@ -1183,7 +1183,7 @@ export const masterCssType = [
     {
         type: 'color',
         values: ['#',
-            { label: 'rgb()', kind: CompletionItemKind.Function },
-            { label: 'hsl()', kind: CompletionItemKind.Function }]
+            { label: 'rgb()', kind: 3 },
+            { label: 'hsl()', kind: 3 }]
     }
 ]

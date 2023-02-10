@@ -1,14 +1,8 @@
-import {
-    TextDocuments,
-    ColorInformation,
+import type {
     Color,
-    DocumentColorParams,
-    Position,
     ColorPresentationParams,
-    ColorPresentation,
-    TextEdit
+    ColorPresentation
 } from 'vscode-languageserver/node'
-import { TextDocument } from 'vscode-languageserver-textdocument'
 
 import MasterCSS from '@master/css'
 import { hexToRgb } from '../utils/hex-to-rgb'
@@ -18,16 +12,10 @@ import { hslToRgb } from '../utils/hsl-to-rgb'
 import { toTwoDigitHex } from '../utils/to-two-digit-hex'
 
 
-export async function GetConfigFileColorRender(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>, masterCss: MasterCSS = new MasterCSS()): Promise<ColorInformation[]> {
+export async function GetConfigFileColorRender(text: string, masterCss: MasterCSS = new MasterCSS()): Promise<any[]> {
     
-    const colors: ColorInformation[] = []
-    const documentUri = DocumentColor.textDocument.uri
-    const document = documents.get(documentUri)
-    const text = document?.getText() ?? ''
+    const colors: any[] = []
 
-    if (typeof document == undefined) {
-        return []
-    }
     let classMatch: RegExpExecArray | null
     const colorNamePattern = /(:\s*)['"`]([^'"`]+)['"`]/g
     let colorMatch: RegExpExecArray | null
@@ -37,31 +25,23 @@ export async function GetConfigFileColorRender(DocumentColor: DocumentColorParam
         while ((colorMatch = colorNamePattern.exec(classMatch[0]))) {
             const colorValue = parseColorString(colorMatch[2], '', masterCss)
             if (colorValue) {
-                const colorInformation: ColorInformation = {
-                    range: {
-                        start: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[1].length) ?? Position.create(0, 0),
-                        end: document?.positionAt(classMatch.index + colorMatch.index + colorMatch[0].length - 1) ?? Position.create(0, 0)
+                const colorIndex: any = {
+                    index: {
+                        start: classMatch.index + colorMatch.index + colorMatch[1].length,
+                        end: classMatch.index + colorMatch.index + colorMatch[0].length - 1
                     },
                     color: colorValue
                 }
-                colors.push(colorInformation)
+                colors.push(colorIndex)
             }
         }
     }
     return colors
 }
 
-export async function GetDocumentColors(DocumentColor: DocumentColorParams, documents: TextDocuments<TextDocument>, classAttributes: string[], masterCss: MasterCSS = new MasterCSS()
-): Promise<ColorInformation[]> {
-    let colors: ColorInformation[] = []
-
-    const documentUri = DocumentColor.textDocument.uri
-    const document = documents.get(documentUri)
-    const text = document?.getText() ?? ''
-
-    if (typeof document == undefined) {
-        return []
-    }
+export async function GetDocumentColors(text: string, masterCss: MasterCSS = new MasterCSS()
+): Promise<any[]> {
+    let colors: any[] = []
 
     let instanceMatch: RegExpExecArray | null
     while ((instanceMatch = instancePattern.exec(text)) !== null) {
@@ -75,27 +55,18 @@ export async function GetDocumentColors(DocumentColor: DocumentColorParams, docu
         while ((colorMatch = colorPattern.exec(instanceMatch[0])) !== null) {
             const colorValue = parseColorString(colorMatch[0], theme, masterCss)
             if (colorValue) {
-                const colorInformation: ColorInformation = {
-                    range: {
-                        start: document?.positionAt(instanceStartIndex + colorMatch.index) ?? Position.create(0, 0),
-                        end: document?.positionAt(instanceStartIndex + colorMatch.index + colorMatch[0].length) ?? Position.create(0, 0)
+                const colorIndex: any = {
+                    index: {
+                        start: instanceStartIndex + colorMatch.index,
+                        end: instanceStartIndex + colorMatch.index + colorMatch[0].length
                     },
                     color: colorValue
                 }
-                colors.push(colorInformation)
+                colors.push(colorIndex)
             }
         }
     }
 
-    const set = new Set()
-    colors = colors.filter(item => {
-        if (set.has(document?.offsetAt(item.range.start))) {
-            return false
-        } else {
-            set.add(document?.offsetAt(item.range.start))
-            return true
-        }
-    })
 
     return colors
 }
@@ -169,7 +140,7 @@ export function GetColorPresentation(params: ColorPresentationParams, isColorRen
         } else {
             label = `'#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`
         }
-        result.push({ label: label, textEdit: TextEdit.replace(range, label) })
+        result.push({ label: label, textEdit: { range: range, newText: label } })
         return result
     }
 
@@ -178,14 +149,14 @@ export function GetColorPresentation(params: ColorPresentationParams, isColorRen
     } else {
         label = `rgba(${red256},${green256},${blue256},${color.alpha})`
     }
-    result.push({ label: label, textEdit: TextEdit.replace(range, label) })
+    result.push({ label: label, textEdit: { range: range, newText: label } })
 
     if (color.alpha === 1) {
         label = `#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}`
     } else {
         label = `#${toTwoDigitHex(red256)}${toTwoDigitHex(green256)}${toTwoDigitHex(blue256)}${toTwoDigitHex(Math.round(color.alpha * 255))}`
     }
-    result.push({ label: label, textEdit: TextEdit.replace(range, label) })
+    result.push({ label: label, textEdit: { range: range, newText: label } })
 
     const hsl = rgbToHsl(color)
     if (hsl.a === 1) {
@@ -193,7 +164,7 @@ export function GetColorPresentation(params: ColorPresentationParams, isColorRen
     } else {
         label = `hsla(${hsl.h},${Math.round(hsl.s * 100)}%,${Math.round(hsl.l * 100)}%,${hsl.a})`
     }
-    result.push({ label: label, textEdit: TextEdit.replace(range, label) })
+    result.push({ label: label, textEdit: { range: range, newText: label } })
 
     return result
 }

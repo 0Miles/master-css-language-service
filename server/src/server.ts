@@ -14,13 +14,13 @@ import {
     ColorPresentationParams
 } from 'vscode-languageserver/node'
 
-import { WorkspaceFolder } from 'vscode-languageserver'
+import { Position, WorkspaceFolder } from 'vscode-languageserver'
 import MasterCSS from '@master/css'
 
 import * as minimatch from 'minimatch'
 
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import { GetLastInstance, GetCompletionItem, GetConfigColorsCompletionItem } from './providers/completion'
+import { GetLastInstance, GetCompletionItem, GetConfigColorsCompletionItem, checkConfigColorsBlock } from './providers/completion'
 import { doHover } from './providers/hover'
 import { PositionCheck } from './position-check'
 import { GetDocumentColors, GetColorPresentation, GetConfigFileColorRender } from './providers/color'
@@ -113,7 +113,7 @@ async function getDocumentSettings(resource: string): Promise<MasterCSSSettings>
             section: 'masterCSS'
         })
         documentSettings.set(resource, result)
-    }    
+    }
     return result
 }
 
@@ -216,13 +216,32 @@ connection.onCompletion(
     (textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
         if (settings.suggestions == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
 
-            const inMasterCSS = PositionCheck(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches).IsMatch
+            const documentUri = textDocumentPosition.textDocument.uri
+            const document = documents.get(documentUri)
+            const language = documentUri.substring(documentUri.lastIndexOf('.') + 1)
+            const position = textDocumentPosition.position
+            if (document) {
+                let text = document.getText()
+                const positionIndex = document.offsetAt(position) ?? 0
+                const startIndex = document.offsetAt({ line: position.line - 100, character: 0 }) ?? 0
+                const endIndex = document.offsetAt({ line: position.line + 100, character: 0 }) ?? undefined
+                const inMasterCSS = PositionCheck(text.substring(startIndex, endIndex), positionIndex, startIndex, settings.classNameMatches).IsMatch
 
-            const lastInstance = GetLastInstance(textDocumentPosition, documents)
-            if (lastInstance.isInstance == true && inMasterCSS == true) {
-                return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language, MasterCSSObject)
-            } else if (lastInstance.isInstance == true && lastInstance.isConfigColorsBlock == true) {
-                return GetConfigColorsCompletionItem(MasterCSSObject)
+                
+                const lineText: string = document.getText({
+                    start: { line: position.line, character: 0 },
+                    end: { line: position.line, character: position.character },
+                }).trim()
+
+                
+                const lastInstance = GetLastInstance(lineText, position, language)
+
+
+                if (lastInstance.isInstance == true && inMasterCSS == true) {
+                    return GetCompletionItem(lastInstance.lastKey, lastInstance.triggerKey, lastInstance.isStart, lastInstance.language, MasterCSSObject)
+                } else if (lastInstance.isInstance == true && checkConfigColorsBlock(document, textDocumentPosition.position) == true) {
+                    return GetConfigColorsCompletionItem(MasterCSSObject)
+                }
             }
         }
         return []
@@ -242,29 +261,73 @@ connection.onDocumentColor(
             return []
         }
         if (settings.PreviewColor == true && CheckFilesExclude(documentColor.textDocument.uri)) {
-            let colorInformation = await GetDocumentColors(documentColor, documents, settings.classNameMatches, MasterCSSObject)        
-            colorInformation = colorInformation.concat(await GetConfigFileColorRender(documentColor, documents, MasterCSSObject))
+            const documentUri = documentColor.textDocument.uri
+            const document = documents.get(documentUri)
+            if (document) {
+                const text = document.getText() ?? ''
+                if (typeof document == undefined) {
+                    return []
+                }
 
-            return colorInformation
+                let colorIndexs = (await GetDocumentColors(text, MasterCSSObject))
+
+                colorIndexs = colorIndexs.concat(await GetConfigFileColorRender(text, MasterCSSObject))
+
+                const colorIndexSet = new Set()
+                const colorInformations = colorIndexs
+                    .filter(item => {
+                        if (colorIndexSet.has(item.index.start)) {
+                            return false
+                        } else {
+                            colorIndexSet.add(item.index.start)
+                            return true
+                        }
+                    })
+                    .map(x => ({
+                        range: {
+                            start: document.positionAt(x.index.start),
+                            end: document.positionAt(x.index.end)
+                        },
+                        color: x.color
+                    }))
+
+                return colorInformations
+            }
         }
         return []
     })
 
 connection.onColorPresentation((params: ColorPresentationParams) => {
     if (settings.PreviewColor == true && CheckFilesExclude(params.textDocument.uri)) {
-        const colorRender = ['(?<=colors:\\s*{\\s*.*)([^}]*)}']
-        const isColorRender = PositionCheck(params.textDocument.uri, params.range.start, documents, colorRender)
+        const document = documents.get(params.textDocument.uri)
+        if (document) {
+            let text = document.getText()
+            const colorRender = ['(?<=colors:\\s*{\\s*.*)([^}]*)}']
 
-        return GetColorPresentation(params, isColorRender.IsMatch)
+            const positionIndex = document.offsetAt(params.range.start) ?? 0
+            const startIndex = document.offsetAt({ line: params.range.start.line - 100, character: 0 }) ?? 0
+            const endIndex = document.offsetAt({ line: params.range.start.line + 100, character: 0 }) ?? undefined
+            const isColorRender = PositionCheck(text.substring(startIndex, endIndex), positionIndex, startIndex, colorRender)
+            return GetColorPresentation(params, isColorRender.IsMatch)
+        }
+
     }
     return []
 })
 
 connection.onHover(textDocumentPosition => {
     if (settings.PreviewOnHovers == true && CheckFilesExclude(textDocumentPosition.textDocument.uri)) {
-        const HoverInstance = PositionCheck(textDocumentPosition.textDocument.uri, textDocumentPosition.position, documents, settings.classNameMatches)
-        if (HoverInstance.IsMatch) {
-            return doHover(HoverInstance.instance.instanceString, HoverInstance.instance.range, MasterCSSObject)
+        const document = documents.get(textDocumentPosition.textDocument.uri)
+        const position = textDocumentPosition.position
+        if (document) {
+            let text = document.getText()
+            const positionIndex = document.offsetAt(position) ?? 0
+            const startIndex = document.offsetAt({ line: position.line - 100, character: 0 }) ?? 0
+            const endIndex = document.offsetAt({ line: position.line + 100, character: 0 }) ?? undefined
+            const HoverInstance = PositionCheck(text.substring(startIndex, endIndex), positionIndex, startIndex, settings.classNameMatches)
+            if (HoverInstance.IsMatch) {
+                return doHover(HoverInstance.instance.instanceString, indexToRange(HoverInstance.instance.index, document), MasterCSSObject)
+            }
         }
     }
     return null
@@ -277,6 +340,13 @@ function CheckFilesExclude(path: string): boolean {
         }
     }
     return true
+}
+
+function indexToRange(index: { start: number, end: number}, document: TextDocument) {
+    return {
+        start: document.positionAt(index.start),
+        end: document.positionAt(index.end)
+    }
 }
 
 // Make the text document manager listen on the connection
