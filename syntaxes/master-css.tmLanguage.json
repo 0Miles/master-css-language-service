@@ -145,7 +145,7 @@
                     }
                 },
                 {
-                    "match": "(?<![\\-])\\b(sr\\-only|center\\-content|break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|max\\-vh|max\\-vw|min\\-vh|min\\-vw|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|grid|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel|vw|vh)\\b",
+                    "match": "(?<![\\-])\\b(sr\\-only|center\\-content|break\\-word|inline\\-block|inline\\-flex|inline\\-grid|inline\\-table|untouchable|capitalize|invisible|lowercase|uppercase|contents|oblique|visible|rounded|italic|max\\-vh|max\\-vw|min\\-vh|min\\-vw|static|sticky|hidden|inline|square|fixed|block|table|round|hide|full|grid|(?:flex(?!\\:(?:row|col|column|wrap|nowrap|\\d)(?:\\-reverse)?))|abs|rel|vw|vh)(?:\\b|_)",
                     "captures": {
                         "1": {
                             "name": "support.constant.property-value.css"
