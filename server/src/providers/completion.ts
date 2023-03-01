@@ -78,7 +78,7 @@ export function GetLastInstance(lineText: string, position: Position, language: 
     return { isInstance: true, lastKey: lastKey, triggerKey: triggerKey, isStart: isStart, language: language }
 }
 
-export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS()) {
+export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterCSS({ observe: false })) {
     let masterStyleCompletionItem: CompletionItem[] = []
 
     masterStyleCompletionItem = masterStyleCompletionItem.concat(getColorsItem(masterCss))
@@ -86,7 +86,7 @@ export function GetConfigColorsCompletionItem(masterCss: MasterCSS = new MasterC
     return masterStyleCompletionItem
 }
 
-export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS()) {
+export function GetCompletionItem(instance: string, triggerKey: string, startWithSpace: boolean, language: string, masterCss: MasterCSS = new MasterCSS({ observe: false })) {
 
     const cssDataProvider = getDefaultCSSDataProvider()
     const cssProperties = cssDataProvider.provideProperties()
@@ -300,7 +300,7 @@ function getReturnItem(items: Array<string | CompletionItem>, kind: CompletionIt
 
 
 
-function getColorsItem(masterCss: MasterCSS = new MasterCSS()): CompletionItem[] {
+function getColorsItem(masterCss: MasterCSS = new MasterCSS({ observe: false })): CompletionItem[] {
 
     const masterStyleCompletionItem: CompletionItem[] = []
     Object.keys(masterCss.colorThemesMap)

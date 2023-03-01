@@ -6,7 +6,7 @@ import { getDefaultCSSDataProvider } from 'vscode-css-languageservice'
 import { getCssEntryMarkdownDescription } from '../utils/get-css-entry-markdown-description'
 import { masterCssKeyValues } from '../constant'
 
-export function doHover(instance: string, range: Range, masterCss: MasterCSS = new MasterCSS()): Hover | null {
+export function doHover(instance: string, range: Range, masterCss: MasterCSS = new MasterCSS({ observe: false })): Hover | null {
     
     const contents = []
 
@@ -26,7 +26,7 @@ export function doHover(instance: string, range: Range, masterCss: MasterCSS = n
     }
 }
 
-function getCssPreview(instance: string, masterCss: MasterCSS = new MasterCSS()) {
+function getCssPreview(instance: string, masterCss: MasterCSS = new MasterCSS({ observe: false })) {
     const renderText = render(instance.split(' '), masterCss.config)
     if (!renderText || renderText == ' ') {
         return null

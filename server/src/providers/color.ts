@@ -12,7 +12,7 @@ import { hslToRgb } from '../utils/hsl-to-rgb'
 import { toTwoDigitHex } from '../utils/to-two-digit-hex'
 
 
-export async function GetConfigFileColorRender(text: string, masterCss: MasterCSS = new MasterCSS()): Promise<any[]> {
+export async function GetConfigFileColorRender(text: string, masterCss: MasterCSS = new MasterCSS({ observe: false })): Promise<any[]> {
     
     const colors: any[] = []
 
@@ -39,7 +39,7 @@ export async function GetConfigFileColorRender(text: string, masterCss: MasterCS
     return colors
 }
 
-export async function GetDocumentColors(text: string, masterCss: MasterCSS = new MasterCSS()
+export async function GetDocumentColors(text: string, masterCss: MasterCSS = new MasterCSS({ observe: false })
 ): Promise<any[]> {
     let colors: any[] = []
 
@@ -71,7 +71,7 @@ export async function GetDocumentColors(text: string, masterCss: MasterCSS = new
     return colors
 }
 
-function parseColorString(colorString: string, theme: string, masterCss: MasterCSS = new MasterCSS()) {
+function parseColorString(colorString: string, theme: string, masterCss: MasterCSS = new MasterCSS({ observe: false })) {
     const rgbaColorPattern = /rgba?\(([\d.]+),([\d.]+),([\d.]+)(?:,([\d.]+))?\)/g
     const hslaColorPattern = /hsla?\(([\d.]+),([\d.]+)%,([\d.]+)%(?:,([\d.]+))?\)/g
     const hexColorPattern = /#([0-9a-fA-F]{6,8})/g
@@ -108,7 +108,7 @@ function parseColorString(colorString: string, theme: string, masterCss: MasterC
     //#endregion  for mastercss color
 }
 
-function getColorsRGBA(colorName: string, colorAlpha = 1, theme = '', masterCss: MasterCSS = new MasterCSS()): Color {
+function getColorsRGBA(colorName: string, colorAlpha = 1, theme = '', masterCss: MasterCSS = new MasterCSS({ observe: false })): Color {
     try {
         const colorNumberMap = masterCss.colorThemesMap[colorName]
         const levelRgb = hexToRgb(colorNumberMap[theme] ?? colorNumberMap[''] ?? Object.values(colorNumberMap)[0])
